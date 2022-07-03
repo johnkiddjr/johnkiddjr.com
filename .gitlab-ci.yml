@@ -49,8 +49,8 @@ include:
 publish vue for qa:
   stage: publish
   image: $NODE_BUILD
-  only:
-    - develop
+  # only:
+  #   - develop
   artifacts:
     paths:
       - dist/
@@ -77,8 +77,8 @@ publish vue for prod:
 publish dotnet for qa:
   stage: publish
   image: $DOTNET_BUILD
-  only:
-    - develop
+  # only:
+  #   - develop
   artifacts:
     paths:
       - publish/
