@@ -1,9 +1,13 @@
 <template>
   <div class="contact">
     <h1>Contact Me</h1>
-    <span class="name">John Kidd Jr</span>
-    <a href="mailto:johnkiddjr@outlook.com">johnkiddjr@outlook.com</a>
-    Download a copy of my resume here.
+    <span class="bodytext">
+      Want to get in touch with me?
+      Use the information below to email me, view my resume, or connect with me on LinkedIn.
+    </span><br /><br />
+    <span class="name">John Kidd Jr</span><br />
+    <a href="mailto:johnkiddjr@outlook.com">johnkiddjr@outlook.com</a><br /><br />
+    Download a copy of my resume here.<br /><br />
     <div style="width: 250px; margin: auto;">
       <div
         class="badge-base LI-profile-badge"
