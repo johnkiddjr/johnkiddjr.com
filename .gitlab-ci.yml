@@ -7,16 +7,14 @@
 # See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
 
 variables:
-  PROJECT_CSPROJ: "API/API.csproj"
-  PROJECT_APPSETTINGS: "API/appsettings.json"
-  NODE_BUILD: "node:latest"
-  DOTNET_BUILD: "mcr.microsoft.com/dotnet/sdk:6.0"
-  WEBHOOK: "https://discord.com/api/webhooks/993051950985781298/6EEpA-7MN_p1ChNWfNMOy8XXV11eJLMBf1NGZHWIjXWcgdULcWn-7AG0Z70zzVWKflUk"
+  API_IMAGE_TAG: $CI_REGISTRY/$CI_PROJECT_PATH/johnkiddjrcomapi:latest
+  UI_IMAGE_TAG: $CI_REGISTRY/$CI_PROJECT_PATH/johnkiddjrcomui:latest
 
 stages:
 - build
 - test
 - publish
+- containerize
 - deploy
 - notify
 
@@ -104,6 +102,32 @@ publish dotnet for prod:
     # do appsettings replacements here
     - dotnet restore
     - dotnet publish -c Release -o ./publish $PROJECT_CSPROJ --no-restore
+
+containerize dotnet:
+  stage: containerize
+  image: $DOCKER_DIND
+  services:
+    - docker:dind
+  only:
+    - develop
+    - tags
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $API_IMAGE_TAG .
+    - docker push $API_IMAGE_TAG
+
+containerize vue:
+  stage: containerize
+  image: $DOCKER_DIND
+  services:
+    - docker:dind
+  only:
+    - develop
+    - tags
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $UI_IMAGE_TAG .
+    - docker push $UI_IMAGE_TAG
 
 # deploy vue to qa:
 
