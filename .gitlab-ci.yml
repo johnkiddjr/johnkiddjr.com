@@ -31,6 +31,7 @@ build vue:
   stage: build
   image: $NODE_BUILD
   script:
+    - cd ui
     - npm ci
     - npm run build
 
@@ -56,6 +57,7 @@ publish vue for qa:
       - dist/
     expire_in: 1 week
   script:
+    - cd ui
     - npm ci
     # do variable replacements here
     - npm run build
@@ -70,6 +72,7 @@ publish vue for prod:
       - dist/
     expire_in: 1 week
   script:
+    - cd ui
     - npm ci
     # do variable replacements here
     - npm run build
