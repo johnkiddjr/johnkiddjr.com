@@ -59,6 +59,7 @@ publish vue for qa:
     - npm ci
     # do variable replacements here
     - npm run build
+    - mv dist ..
 
 publish vue for prod:
   stage: publish
@@ -112,6 +113,7 @@ containerize dotnet:
   #   - develop
   #   - tags
   script:
+    - mv Dockerfile.api Dockerfile
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -t $API_IMAGE_TAG .
     - docker push $API_IMAGE_TAG
@@ -125,6 +127,7 @@ containerize vue:
   #   - develop
   #   - tags
   script:
+    - mv Dockerfile.ui Dockerfile
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -t $UI_IMAGE_TAG .
     - docker push $UI_IMAGE_TAG
