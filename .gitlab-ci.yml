@@ -108,9 +108,9 @@ containerize dotnet:
   image: $DOCKER_DIND
   services:
     - docker:dind
-  only:
-    - develop
-    - tags
+  # only:
+  #   - develop
+  #   - tags
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -t $API_IMAGE_TAG .
@@ -121,9 +121,9 @@ containerize vue:
   image: $DOCKER_DIND
   services:
     - docker:dind
-  only:
-    - develop
-    - tags
+  # only:
+  #   - develop
+  #   - tags
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker build -t $UI_IMAGE_TAG .
