@@ -5,9 +5,109 @@
 # Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
 # Note that environment variables can be set in several places
 # See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
+
+variables:
+  PROJECT_CSPROJ: "API/API.csproj"
+  PROJECT_APPSETTINGS: "API/appsettings.json"
+  NODE_BUILD: "node:latest"
+  DOTNET_BUILD: "mcr.microsoft.com/dotnet/sdk:6.0"
+  WEBHOOK: "https://discord.com/api/webhooks/993051950985781298/6EEpA-7MN_p1ChNWfNMOy8XXV11eJLMBf1NGZHWIjXWcgdULcWn-7AG0Z70zzVWKflUk"
+
 stages:
+- build
 - test
+- publish
+- deploy
+- notify
+
+build dotnet:
+  stage: build
+  image: $DOTNET_BUILD
+  script:
+    - dotnet restore
+    - dotnet build -c Release --no-restore
+
+build vue:
+  stage: build
+  image: $NODE_BUILD
+  script:
+    - npm ci
+    - npm run build
+
+dotnet test:
+  stage: test
+  image: $DOTNET_BUILD
+  script:
+    - dotnet restore
+    - dotnet test -v n --no-restore
+
 sast:
   stage: test
 include:
 - template: Security/SAST.gitlab-ci.yml
+
+publish vue for qa:
+  stage: publish
+  image: $NODE_BUILD
+  only:
+    - develop
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 week
+  script:
+    - npm ci
+    # do variable replacements here
+    - npm run build
+
+publish vue for prod:
+  stage: publish
+  image: $NODE_BUILD
+  only:
+    - tags
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 week
+  script:
+    - npm ci
+    # do variable replacements here
+    - npm run build
+
+publish dotnet for qa:
+  stage: publish
+  image: $DOTNET_BUILD
+  only:
+    - develop
+  artifacts:
+    paths:
+      - publish/
+    expire_in: 1 week
+  script:
+    # do appsettings replacements here
+    - dotnet restore
+    - dotnet publish -c Release -o ./publish $PROJECT_CSPROJ --no-restore
+
+publish dotnet for prod:
+  stage: publish
+  image: $DOTNET_BUILD
+  only:
+    - tags
+  artifacts:
+    paths:
+      - publish/
+    expire_in: 1 week
+  script:
+    # do appsettings replacements here
+    - dotnet restore
+    - dotnet publish -c Release -o ./publish $PROJECT_CSPROJ --no-restore
+
+# deploy vue to qa:
+
+# deploy vue to prod:
+
+# deploy dotnet to qa:
+
+# deploy dotnet to prod:
+
+# notify:
