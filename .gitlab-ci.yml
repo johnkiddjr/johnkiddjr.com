@@ -186,7 +186,7 @@ notify discord success:
     - apt update && apt install git curl wget -y
     - wget https://raw.githubusercontent.com/DiscordHooks/gitlab-ci-discord-webhook/master/send.sh
     - chmod +x send.sh
-    - /bin/bash ./send.sh success $DISCORD_WEBHOOK
+    - /bin/bash ./send.sh success $WEBHOOK_URL
   when: on_success
 
 notify discord failure:
@@ -199,5 +199,5 @@ notify discord failure:
     - apt update && apt install git curl wget -y
     - wget https://raw.githubusercontent.com/DiscordHooks/gitlab-ci-discord-webhook/master/send.sh
     - chmod +x send.sh
-    - /bin/bash ./send.sh failure $DISCORD_WEBHOOK
+    - /bin/bash ./send.sh failure $WEBHOOK_URL
   when: on_failure
