@@ -7,7 +7,7 @@
     </span><br /><br />
     <span class="name">John Kidd Jr</span><br />
     <a href="mailto:johnkiddjr@outlook.com">johnkiddjr@outlook.com</a><br /><br />
-    Download a copy of my resume here.<br /><br />
+    Download a copy of my resume <a href="#">here</a>.<br /><br />
     <div style="width: 250px; margin: auto;">
       <div
         class="badge-base LI-profile-badge"
