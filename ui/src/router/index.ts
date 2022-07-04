@@ -20,6 +20,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'contact',
     component: () => import('../views/ContactView.vue'),
   },
+  {
+    path: '/objectives',
+    name: 'objectives',
+    component: () => import('../views/ObjectivesView.vue'),
+  },
 ];
 
 const router = createRouter({
