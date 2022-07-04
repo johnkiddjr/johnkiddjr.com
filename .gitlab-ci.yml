@@ -48,8 +48,8 @@ include:
 publish vue for qa:
   stage: publish
   image: $NODE_BUILD
-  # only:
-  #   - develop
+  only:
+    - develop
   artifacts:
     paths:
       - dist/
@@ -79,8 +79,8 @@ publish vue for prod:
 publish dotnet for qa:
   stage: publish
   image: $DOTNET_BUILD
-  # only:
-  #   - develop
+  only:
+    - develop
   artifacts:
     paths:
       - publish/
@@ -109,9 +109,9 @@ containerize dotnet:
   image: $DOCKER_IMAGE
   services:
     - docker:dind
-  # only:
-  #   - develop
-  #   - tags
+  only:
+    - develop
+    - tags
   script:
     - mv Dockerfile.api Dockerfile
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
@@ -123,9 +123,9 @@ containerize vue:
   image: $DOCKER_IMAGE
   services:
     - docker:dind
-  # only:
-  #   - develop
-  #   - tags
+  only:
+    - develop
+    - tags
   script:
     - mv Dockerfile.ui Dockerfile
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
@@ -137,8 +137,8 @@ deploy to qa:
   image: $DOCKER_IMAGE
   services:
     - docker:dind
-  # only:
-  #   - develop
+  only:
+    - develop
   before_script:
     - eval $(ssh-agent -s)
     - echo "${SSH_PRIVATE_KEY}" | base64 -d | tr -d '\r' | ssh-add - > /dev/null
