@@ -29,7 +29,7 @@ export default {
 }
 
 nav {
-  padding: 30px;
+  padding: 0px 30px 30px 30px;
 
   a {
     font-weight: bold;
@@ -39,5 +39,11 @@ nav {
       color: #42b983;
     }
   }
+}
+
+.bodytext {
+  text-align: left;
+  max-width: 800px;
+  margin: auto;
 }
 </style>
