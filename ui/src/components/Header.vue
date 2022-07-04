@@ -8,6 +8,7 @@
       <router-link to="/about">About</router-link> |
       <router-link to="/contact">Contact</router-link>
     </nav>
+    <hr class="drop-shadow" />
   </div>
 </template>
 
@@ -18,3 +19,15 @@ export default defineComponent({
   name: 'HeaderComponent',
 });
 </script>
+
+<style lang="scss">
+hr.drop-shadow {
+  height: 1px;
+  border: 0;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.75),
+    rgba(0, 0, 0, 0));
+}
+</style>

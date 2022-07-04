@@ -25,6 +25,11 @@ const routes: Array<RouteRecordRaw> = [
     name: 'objectives',
     component: () => import('../views/ObjectivesView.vue'),
   },
+  {
+    path: '/portfolio',
+    name: 'portfolio',
+    component: () => import('../views/PortfolioView.vue'),
+  },
 ];
 
 const router = createRouter({
