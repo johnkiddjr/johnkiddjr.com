@@ -106,7 +106,7 @@ publish dotnet for prod:
 
 containerize dotnet:
   stage: containerize
-  image: $DOCKER_DIND
+  image: $DOCKER_IMAGE
   services:
     - docker:dind
   # only:
@@ -120,7 +120,7 @@ containerize dotnet:
 
 containerize vue:
   stage: containerize
-  image: $DOCKER_DIND
+  image: $DOCKER_IMAGE
   services:
     - docker:dind
   # only:
@@ -132,12 +132,72 @@ containerize vue:
     - docker build -t $UI_IMAGE_TAG .
     - docker push $UI_IMAGE_TAG
 
-# deploy vue to qa:
+deploy to qa:
+  stage: deploy
+  image: $DOCKER_IMAGE
+  services:
+    - docker:dind
+  # only:
+  #   - develop
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | base64 -d | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -t rsa $DESTINATION_HOST >> ~/.ssh/known_hosts
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker pull $UI_IMAGE_TAG
+    - docker pull $API_IMAGE_TAG
+    - docker container rm -f $UI_CONTAINER_NAME > /dev/null 2>&1
+    - docker container rm -f $API_CONTAINER_NAME > /dev/null 2>&1
+    - docker run -p $UI_STAGE_DOCKER_PORT:80 --name $UI_STAGE_CONTAINER_NAME -d $UI_IMAGE_TAG
+    - docker run -p $API_STAGE_DOCKER_PORT:5000 --name $API_STAGE_CONTAINER_NAME -d $API_IMAGE_TAG
 
-# deploy vue to prod:
+# deploy to prod:
+#   stage: deploy
+#   image: $DOCKER_IMAGE
+#   services:
+#     - docker:dind
+#   only:
+#     - tags
+#   before_script:
+#     - eval $(ssh-agent -s)
+#     - echo "$SSH_PRIVATE_KEY" | base64 -d | tr -d '\r' | ssh-add - > /dev/null
+#     - mkdir -p ~/.ssh
+#     - chmod 700 ~/.ssh
+#     - ssh-keyscan -t rsa $DESTINATION_HOST >> ~/.ssh/known_hosts
+#   script:
+#     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+#     - docker pull $UI_IMAGE_TAG
+#     - docker pull $API_IMAGE_TAG
+#     - docker container rm -f $UI_CONTAINER_NAME > /dev/null 2>&1
+#     - docker container rm -f $API_CONTAINER_NAME > /dev/null 2>&1
+#     - docker run -p $UI_STAGE_DOCKER_PORT:80 --name $UI_STAGE_CONTAINER_NAME -d $UI_IMAGE_TAG
+#     - docker run -p $API_STAGE_DOCKER_PORT:5000 --name $API_STAGE_CONTAINER_NAME -d $API_IMAGE_TAG
 
-# deploy dotnet to qa:
+notify discord success:
+  stage: notify
+  image: $UBUNTU_IMAGE
+  # only:
+  #   - develop
+  #   - tags
+  script:
+    - apt install git curl
+    - wget https://raw.githubusercontent.com/DiscordHooks/gitlab-ci-discord-webhook/master/send.sh
+    - chmod +x send.sh
+    - /bin/bash ./send.sh success $DISCORD_WEBHOOK
+  when: on_success
 
-# deploy dotnet to prod:
-
-# notify:
+notify discord failure:
+  stage: notify
+  image: $UBUNTU_IMAGE
+  # only:
+  #   - develop
+  #   - tags
+  script:
+    - apt install git curl
+    - wget https://raw.githubusercontent.com/DiscordHooks/gitlab-ci-discord-webhook/master/send.sh
+    - chmod +x send.sh
+    - /bin/bash ./send.sh failure $DISCORD_WEBHOOK
+  when: on_failure
