@@ -33,18 +33,18 @@ build vue:
     - npm ci
     - npm run build
 
-generate version:
-  stage: build
-  image: $UBUNTU_IMAGE
-  only:
-    - develop
-    - tags
-  artifacts:
-    paths:
-      - vars/
-    expire_in: 1 day
-  script:
-    - 
+# generate version:
+#   stage: build
+#   image: $UBUNTU_IMAGE
+#   only:
+#     - develop
+#     - tags
+#   artifacts:
+#     paths:
+#       - vars/
+#     expire_in: 1 day
+#   script:
+#     - 
 
 dotnet test:
   stage: test
