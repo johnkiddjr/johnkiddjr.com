@@ -99,7 +99,10 @@ publish dotnet for qa:
       - publish/
     expire_in: 1 week
   script:
-    # do appsettings replacements here
+    - apt install jq -y
+    - mv $PROJECT_APPSETTINGS appsettings.temp
+    - jq -c --arg connection_string $STAGE_CONNECTION_STRING '.ConnectionStrings.MainSite = $connection_string' appsettings.temp > $PROJECT_APPSETTINGS
+    - rm appsettings.temp
     - dotnet restore
     - dotnet publish -c Release -o ./publish $PROJECT_CSPROJ --no-restore
 
