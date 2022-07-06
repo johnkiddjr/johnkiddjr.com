@@ -1,6 +1,12 @@
+using Infrastructure.Contexts;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("MainSite");
+var mariaDbVersion = ServerVersion.AutoDetect(connectionString);
+builder.Services.AddDbContext<MainSiteContext>(options => options.UseMySql(connectionString, mariaDbVersion));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -10,6 +10,14 @@
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 
+const linkedInScript = document.createElement('script');
+linkedInScript.setAttribute('src', 'https://platform.linkedin.com/badges/js/profile.js');
+linkedInScript.setAttribute('type', 'text/javascript');
+linkedInScript.async = true;
+linkedInScript.defer = true;
+
+document.head.appendChild(linkedInScript);
+
 export default {
   components: {
     Header,
