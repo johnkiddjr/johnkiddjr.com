@@ -106,6 +106,8 @@ publish dotnet for qa:
     - rm appsettings.temp
     - dotnet restore
     - dotnet publish -c Release -o ./publish $PROJECT_CSPROJ --no-restore
+    - dotnet tool install --global dotnet-ef
+    - dotnet ef database update --project ./Infrastructure/ --startup-project ./API/
 
 publish dotnet for prod:
   stage: publish
@@ -117,9 +119,15 @@ publish dotnet for prod:
       - publish/
     expire_in: 1 week
   script:
-    # do appsettings replacements here
+    - apt update
+    - apt install jq -y
+    - mv $PROJECT_APPSETTINGS appsettings.temp
+    - jq -c --arg connection_string $PROD_CONNECTION_STRING '.ConnectionStrings.MainSite = $connection_string' appsettings.temp > $PROJECT_APPSETTINGS
+    - rm appsettings.temp
     - dotnet restore
     - dotnet publish -c Release -o ./publish $PROJECT_CSPROJ --no-restore
+    - dotnet tool install --global dotnet-ef
+    - dotnet ef database update --project ./Infrastructure/ --startup-project ./API/
 
 containerize dotnet:
   stage: containerize
