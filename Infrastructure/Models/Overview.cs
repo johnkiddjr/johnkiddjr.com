@@ -7,5 +7,6 @@ namespace Infrastructure.Models
         public Guid OverviewId { get; set; }
         public string? HeaderText { get; set; }
         public string? BodyHtml { get; set; }
+        public DateTime? CreatedDate { get; set; }
     }
 }
