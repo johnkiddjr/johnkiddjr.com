@@ -107,6 +107,7 @@ publish dotnet for qa:
     - dotnet restore
     - dotnet publish -c Release -o ./publish $PROJECT_CSPROJ --no-restore
     - dotnet tool install --global dotnet-ef
+    - export PATH="$PATH:/root/.dotnet/tools"
     - dotnet ef database update --project ./Infrastructure/ --startup-project ./API/
 
 publish dotnet for prod:
@@ -127,6 +128,7 @@ publish dotnet for prod:
     - dotnet restore
     - dotnet publish -c Release -o ./publish $PROJECT_CSPROJ --no-restore
     - dotnet tool install --global dotnet-ef
+    - export PATH="$PATH:/root/.dotnet/tools"
     - dotnet ef database update --project ./Infrastructure/ --startup-project ./API/
 
 containerize dotnet:
