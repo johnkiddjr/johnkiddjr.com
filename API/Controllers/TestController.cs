@@ -22,8 +22,8 @@ namespace API.Controllers
             if (resume != null && resume.Length > 0)
             {
                 using var fStream = resume.OpenReadStream();
-                Span<byte> bytes = new Span<byte>();
-                fStream.Read(bytes);
+                byte[] bytes = new byte[fStream.Length];
+                fStream.Read(bytes, 0, (int)fStream.Length);
 
                 if (context.Files is not null && context.Files.Any())
                 {

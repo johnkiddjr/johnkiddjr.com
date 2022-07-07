@@ -54,7 +54,7 @@ export default defineComponent({
     async retrieveContactData() {
       this.viewData = await getContactPage();
     },
-    async retrieveResume(resumeId: string) {
+    retrieveResume(resumeId: string) {
       return getResume(resumeId);
     },
   },
