@@ -65,9 +65,13 @@ export default defineComponent({
     async retrievePortfolioData() {
       this.viewData = await getPortfolioPage();
       this.projectData = await getProjectsPage();
-      console.log(this.viewData);
-      console.log(this.projectData);
     },
   },
 });
 </script>
+
+<style lang="scss">
+td.align-top {
+  vertical-align: top;
+}
+</style>
