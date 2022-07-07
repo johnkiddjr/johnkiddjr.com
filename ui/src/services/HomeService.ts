@@ -1,7 +1,12 @@
 import get from 'axios';
 
-export default function getHomePage() {
-  get(`${process.env.VUE_APP_API_ENDPOINT}/api/home`)
-    .then((response) => response)
-    .catch((error) => console.log(error));
-}
+const getHomePage = async () => {
+  try {
+    const { data: response } = await get(`${process.env.VUE_APP_API_ENDPOINT}/api/home`);
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export default getHomePage;
