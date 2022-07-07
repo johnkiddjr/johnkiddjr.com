@@ -19,5 +19,6 @@ export default defineComponent({
   bottom: 5px;
   width: 100%;
   text-align: center;
+  background: white;
 }
 </style>

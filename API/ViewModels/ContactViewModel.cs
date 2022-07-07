@@ -2,7 +2,7 @@
 {
     public class ContactViewModel
     {
-        public FileViewModel? Resume { get; set; }
+        public string ResumeGuid { get; set; }
         public ContactDetailsViewModel ContactDetails { get; set; }
     }
 }

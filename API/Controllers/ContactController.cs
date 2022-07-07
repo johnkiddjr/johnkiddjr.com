@@ -24,6 +24,24 @@ namespace API.Controllers
             return Ok(viewModel);
         }
 
+        [HttpGet("{fileGuid}")]
+        public IActionResult DownloadFile(string fileGuid)
+        {
+            if (Guid.TryParse(fileGuid, out var fileId))
+            {
+                var file = GetFileData(fileId);
+
+                if (file.FileData is null || file.FileName is null)
+                {
+                    return BadRequest();
+                }
+
+                return File(file.FileData, "application/octet-stream", file.FileName);
+            }
+
+            return NotFound();
+        }
+
         private ContactViewModel GenerateViewModel()
         {
             var viewModel = new ContactViewModel();
@@ -42,22 +60,25 @@ namespace API.Controllers
 
                 if (details.ResumeId != Guid.Empty)
                 {
-                    var resume = (from file in context.Files
-                                  where file.FileId == details.ResumeId
-                                  select file).FirstOrDefault();
-
-                    if (resume is not null)
-                    {
-                        viewModel.Resume = new FileViewModel
-                        {
-                            FileData = resume.FileData,
-                            FileName = resume.FileName
-                        };
-                    }
+                    viewModel.ResumeGuid = details.ResumeId.ToString();
                 }
             }
 
             return viewModel;
+        }
+
+        private (string? FileName, byte[]? FileData) GetFileData(Guid fileId)
+        {
+            var file = (from files in context.Files
+                        where files.FileId == fileId
+                        select files).FirstOrDefault();
+
+            if (file is null)
+            {
+                return (null, null);
+            }
+
+            return (file.FileName, file.FileData);
         }
     }
 }
