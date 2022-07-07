@@ -1,18 +1,31 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <h1>Welcome!</h1>
+    <h2>{{ viewData.headerText }}</h2>
+    <p class="bodytext">
+      {{ viewData.bodyHtml }}
+    </p>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import { getHomePage } from '../services';
 
 export default defineComponent({
   name: 'HomeView',
-  components: {
-    HelloWorld,
+  data() {
+    return {
+      viewData: {},
+    };
+  },
+  created() {
+    this.retrieveHomeData();
+  },
+  methods: {
+    async retrieveHomeData() {
+      this.viewData = await getHomePage();
+    },
   },
 });
 </script>
