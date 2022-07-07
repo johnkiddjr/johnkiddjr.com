@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(MainSiteContext))]
-    partial class MainSiteContextModelSnapshot : ModelSnapshot
+    [Migration("20220707052701_SeedData")]
+    partial class SeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,9 +111,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("Order")
-                        .HasColumnType("int");
-
                     b.HasKey("BioSectionId");
 
                     b.ToTable("BioSections");
@@ -120,26 +119,22 @@ namespace Infrastructure.Migrations
                         new
                         {
                             BioSectionId = new Guid("efe97e6f-6a1c-4fc0-b53a-11efe24c5f9c"),
-                            Name = "General",
-                            Order = 1
+                            Name = "General"
                         },
                         new
                         {
                             BioSectionId = new Guid("491fe316-cdcb-4b68-915b-5d086dec4970"),
-                            Name = "Education",
-                            Order = 2
+                            Name = "Education"
                         },
                         new
                         {
                             BioSectionId = new Guid("381488e3-3550-4db1-a412-259a283cee64"),
-                            Name = "Experience",
-                            Order = 3
+                            Name = "Experience"
                         },
                         new
                         {
                             BioSectionId = new Guid("e852053a-a46e-4ae3-a26e-ef31a0386e3c"),
-                            Name = "Hobbies",
-                            Order = 4
+                            Name = "Hobbies"
                         });
                 });
 
@@ -352,7 +347,7 @@ namespace Infrastructure.Migrations
                         {
                             OverviewId = new Guid("416c2518-4151-4241-8ede-70d97ef8855c"),
                             BodyHtml = "Welcome to my portfolio! Use the navigation to look at what I have to offer. Feel free to contact me through email or LinkedIn if you want to talk about a job, a collaboration, or even if just to say \"Hi!\"",
-                            CreatedDate = new DateTime(2022, 7, 7, 2, 34, 39, 364, DateTimeKind.Local).AddTicks(2721),
+                            CreatedDate = new DateTime(2022, 7, 7, 1, 27, 1, 664, DateTimeKind.Local).AddTicks(8273),
                             HeaderText = "Software Engineer with years of experience with C++, C#, VB, and many others on multiple platforms"
                         });
                 });

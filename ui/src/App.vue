@@ -2,6 +2,7 @@
   <div>
     <Header />
     <router-view/>
+    <div style="padding-top: 100px;" />
     <Footer />
   </div>
 </template>
