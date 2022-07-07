@@ -9,6 +9,8 @@
 variables:
   API_IMAGE_TAG: $CI_REGISTRY/$CI_PROJECT_PATH/johnkiddjrcomapi:latest
   UI_IMAGE_TAG: $CI_REGISTRY/$CI_PROJECT_PATH/johnkiddjrcomui:latest
+  STAGE_API_IMAGE_TAG: $CI_REGISTRY/$CI_PROJECT_PATH/johnkiddjrcomapi-qa:latest
+  STAGE_UI_IMAGE_TAG: $CI_REGISTRY/$CI_PROJECT_PATH/johnkiddjrcomui-qa:latest
 
 stages:
 - build
@@ -132,13 +134,25 @@ publish dotnet for prod:
     - export PATH="$PATH:/root/.dotnet/tools"
     - dotnet ef database update --project ./Infrastructure/ --startup-project ./API/
 
-containerize dotnet:
+containerize dotnet qa:
   stage: containerize
   image: $DOCKER_IMAGE
   services:
     - docker:dind
   only:
     - develop
+  script:
+    - mv Dockerfile.api Dockerfile
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $STAGE_API_IMAGE_TAG .
+    - docker push $STAGE_API_IMAGE_TAG
+
+containerize dotnet prod:
+  stage: containerize
+  image: $DOCKER_IMAGE
+  services:
+    - docker:dind
+  only:
     - tags
   script:
     - mv Dockerfile.api Dockerfile
@@ -146,13 +160,25 @@ containerize dotnet:
     - docker build -t $API_IMAGE_TAG .
     - docker push $API_IMAGE_TAG
 
-containerize vue:
+containerize vue for qa:
   stage: containerize
   image: $DOCKER_IMAGE
   services:
     - docker:dind
   only:
     - develop
+  script:
+    - mv Dockerfile.ui Dockerfile
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build -t $STAGE_UI_IMAGE_TAG .
+    - docker push $STAGE_UI_IMAGE_TAG
+
+containerize vue for prod:
+  stage: containerize
+  image: $DOCKER_IMAGE
+  services:
+    - docker:dind
+  only:
     - tags
   script:
     - mv Dockerfile.ui Dockerfile
@@ -175,12 +201,12 @@ deploy to qa:
     - ssh-keyscan -t rsa $DESTINATION_HOST >> ~/.ssh/known_hosts
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker pull $UI_IMAGE_TAG
-    - docker pull $API_IMAGE_TAG
+    - docker pull $STAGE_UI_IMAGE_TAG
+    - docker pull $STAGE_API_IMAGE_TAG
     - docker container rm -f $UI_STAGE_CONTAINER_NAME > /dev/null 2>&1
     - docker container rm -f $API_STAGE_CONTAINER_NAME > /dev/null 2>&1
-    - docker run -p $UI_STAGE_DOCKER_PORT:80 --name $UI_STAGE_CONTAINER_NAME -d $UI_IMAGE_TAG
-    - docker run -p $API_STAGE_DOCKER_PORT:5000 --name $API_STAGE_CONTAINER_NAME -d $API_IMAGE_TAG
+    - docker run -p $UI_STAGE_DOCKER_PORT:80 --name $UI_STAGE_CONTAINER_NAME -d $STAGE_UI_IMAGE_TAG
+    - docker run -p $API_STAGE_DOCKER_PORT:5000 --name $API_STAGE_CONTAINER_NAME -d $STAGE_API_IMAGE_TAG
 
 deploy to prod:
   stage: deploy
