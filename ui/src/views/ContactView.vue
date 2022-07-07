@@ -9,7 +9,8 @@
       {{ viewData.contactDetails.emailAddress }}
     </a>
     <br /><br />
-    Download a copy of my resume <a href="#">here</a>.<br /><br />
+    Download a copy of my resume <a :href="retrieveResume(viewData.resumeGuid)" download>here</a>.
+    <br /><br />
     <div style="width: 250px; margin: auto;">
       <div
         class="badge-base LI-profile-badge"
@@ -20,7 +21,7 @@
         data-vanity="johnkiddjr"
         data-version="v1">
         <a class="badge-base__link LI-simple-link" href="https://www.linkedin.com/in/johnkiddjr?trk=profile-badge">
-          LinkedIn Card not loaded? Click here to see my LinkedIn profile.
+          <img src="../assets/linkedin.png" alt="Connect with me on LinkedIn" width="50" />
         </a>
       </div>
     </div>
@@ -29,7 +30,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { getContactPage } from '../services';
+import { getContactPage, getResume } from '../services';
 
 const linkedInScript = document.createElement('script');
 linkedInScript.setAttribute('src', 'https://platform.linkedin.com/badges/js/profile.js');
@@ -52,7 +53,9 @@ export default defineComponent({
   methods: {
     async retrieveContactData() {
       this.viewData = await getContactPage();
-      console.log(this.viewData);
+    },
+    async retrieveResume(resumeId: string) {
+      return getResume(resumeId);
     },
   },
 });
