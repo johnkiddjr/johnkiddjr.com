@@ -18,6 +18,7 @@ namespace API
             var mariaDbVersion = ServerVersion.AutoDetect(connectionString);
             services.AddDbContext<MainSiteContext>(options => options.UseMySql(connectionString, mariaDbVersion));
 
+            services.AddCors();
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
@@ -32,6 +33,8 @@ namespace API
             }
 
             app.UseRouting();
+
+            app.UseCors(x => x.AllowAnyMethod().AllowAnyHeader().SetIsOriginAllowed(origin => true).AllowCredentials());
 
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

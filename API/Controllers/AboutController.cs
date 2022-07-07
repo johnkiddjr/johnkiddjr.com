@@ -29,7 +29,12 @@ namespace API.Controllers
         {
             var viewModel = new AboutViewModel();
 
-            var bioSections = context.BioSections;
+            if (context.BioSections is null)
+            {
+                return viewModel;
+            }
+
+            var bioSections = context.BioSections.OrderBy(x => x.Order);
 
             if (bioSections is null)
             {

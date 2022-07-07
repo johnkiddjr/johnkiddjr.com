@@ -40,8 +40,10 @@ namespace Infrastructure.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //seed data here
             base.OnModelCreating(modelBuilder);
+
+            //seed data here
+            modelBuilder.SeedData();
         }
     }
 }
