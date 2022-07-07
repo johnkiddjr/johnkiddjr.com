@@ -1,7 +1,12 @@
 import get from 'axios';
 
-export default function getObjectivesPage() {
-  get(`${process.env.VUE_APP_API_ENDPOINT}/api/objectives`)
-    .then((response) => response)
-    .catch((error) => console.log(error));
-}
+const getObjectivesPage = async () => {
+  try {
+    const { data: response } = await get(`${process.env.VUE_APP_API_ENDPOINT}/api/objectives`);
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export default getObjectivesPage;
