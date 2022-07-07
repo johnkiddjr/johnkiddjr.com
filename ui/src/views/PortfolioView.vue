@@ -1,20 +1,11 @@
 <template>
   <div class="portfolio">
     <h1>Portfolio</h1>
-    <div class="section bodytext">
-      <h2>Code</h2>
+    <div class="section bodytext" v-for="group in viewData.linkGroups" :key="group.groupName">
+      <h2>{{ group.groupName }}</h2>
       <ul>
-        <li><a href="https://github.com/johnkiddjr">GitHub Repositories</a></li>
-        <li><a href="https://source.kiddclan.com/johnkiddjr">GitLab Repositories</a></li>
-      </ul>
-    </div>
-    <div class="section bodytext">
-      <h2>Articles</h2>
-      <ul>
-        <li>
-          <a href="https://www.bizstream.com/blog/january-2022/windows-authentication-with-net-5" target="blank">
-            Windows Authentication with .Net 5
-          </a>
+        <li v-for="link in group.links" :key="link.link">
+          <a :href="link.link" target="blank">{{ link.text }}</a>
         </li>
       </ul>
     </div>
@@ -23,8 +14,22 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { getPortfolioPage } from '../services';
 
 export default defineComponent({
   name: 'PortfolioView',
+  data() {
+    return {
+      viewData: {},
+    };
+  },
+  created() {
+    this.retrievePortfolioData();
+  },
+  methods: {
+    async retrievePortfolioData() {
+      this.viewData = await getPortfolioPage();
+    },
+  },
 });
 </script>
