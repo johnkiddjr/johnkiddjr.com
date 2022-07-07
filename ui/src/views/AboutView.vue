@@ -2,7 +2,7 @@
   <div class="about">
     <h1>{{ viewData.name }}</h1>
     <img :src="viewData.pictureUrl" alt="The man himself" width="300" />
-    <div class="about-sections" v-for="section in viewData.sections" :key="section.name">
+    <div class="bodytext" v-for="section in viewData.sections" :key="section.name">
       <h2>{{ section.name }}</h2>
       <table>
         <tr v-for="detail in section.details" :key="detail.description">
