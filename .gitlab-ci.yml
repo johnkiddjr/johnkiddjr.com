@@ -70,7 +70,7 @@ publish vue for qa:
   script:
     - cd ui
     - npm ci
-    # do variable replacements here
+    - sed -i "s|VUE_APP_API_ENDPOINT=.*|VUE_APP_API_ENDPOINT=$STAGE_API_ENDPOINT|" .env
     - npm run build
     - mv dist ..
 
@@ -86,8 +86,9 @@ publish vue for prod:
   script:
     - cd ui
     - npm ci
-    # do variable replacements here
+    - sed -i "s|VUE_APP_API_ENDPOINT=.*|VUE_APP_API_ENDPOINT=$PROD_API_ENDPOINT|" .env
     - npm run build
+    - mv dist ..
 
 publish dotnet for qa:
   stage: publish
