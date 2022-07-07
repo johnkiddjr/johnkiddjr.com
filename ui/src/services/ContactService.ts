@@ -1,7 +1,12 @@
 import get from 'axios';
 
-export default function getContactPage() {
-  get(`${process.env.VUE_APP_API_ENDPOINT}/api/contact`)
-    .then((response) => response)
-    .catch((error) => console.log(error));
-}
+const getContactPage = async () => {
+  try {
+    const { data: response } = await get(`${process.env.VUE_APP_API_ENDPOINT}/api/contact`);
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+export default getContactPage;
