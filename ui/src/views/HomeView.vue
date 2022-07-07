@@ -24,7 +24,6 @@ export default defineComponent({
   methods: {
     async retrieveHomeData() {
       this.viewData = await getHomePage();
-      console.log(this.viewData);
     },
   },
 });
