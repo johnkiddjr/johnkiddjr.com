@@ -43,7 +43,7 @@ security-code-scan-sast:
     SAST_ANALYZER_IMAGE_TAG: 3
   artifacts:
     reports:
-      sast: scss-sast.xml
+      sast: *.json
 
 dotnet test:
   stage: test
