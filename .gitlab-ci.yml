@@ -12,6 +12,9 @@ variables:
   STAGE_API_IMAGE_TAG: $CI_REGISTRY/$CI_PROJECT_PATH/johnkiddjrcomapi-qa:latest
   STAGE_UI_IMAGE_TAG: $CI_REGISTRY/$CI_PROJECT_PATH/johnkiddjrcomui-qa:latest
 
+include:
+- template: Security/SAST.gitlab-ci.yml
+
 stages:
 - build
 - test
@@ -57,8 +60,11 @@ dotnet test:
 
 sast:
   stage: test
-include:
-- template: Security/SAST.gitlab-ci.yml
+  variables:
+    SAST_ANALYZER_IMAGE_TAG: 3
+  artifacts:
+    reports:
+      sast: sast_results.json
 
 publish vue for qa:
   stage: publish
