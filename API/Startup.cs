@@ -1,4 +1,5 @@
-﻿using Infrastructure.Contexts;
+﻿using API.Options;
+using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace API
@@ -14,6 +15,8 @@ namespace API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CDNOptions>(Configuration.GetSection(key: nameof(CDNOptions)));
+
             var connectionString = Configuration.GetConnectionString("MainSite");
             var mariaDbVersion = ServerVersion.AutoDetect(connectionString);
             services.AddDbContext<MainSiteContext>(options => options.UseMySql(connectionString, mariaDbVersion));

@@ -26,6 +26,7 @@ namespace Infrastructure.Contexts
         public virtual DbSet<Objective>? Objectives { get; set; }
         public virtual DbSet<ObjectiveDetail>? ObjectivesDetails { get; set; }
         public virtual DbSet<Overview>? Overviews { get; set; }
+        public virtual DbSet<Article>? Articles { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
