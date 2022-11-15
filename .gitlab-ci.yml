@@ -38,18 +38,9 @@ build vue:
     - npm ci
     - npm run build
 
-# generate version:
-#   stage: build
-#   image: $UBUNTU_IMAGE
-#   only:
-#     - develop
-#     - tags
-#   artifacts:
-#     paths:
-#       - vars/
-#     expire_in: 1 day
-#   script:
-#     - 
+security-code-scan-sast:
+  variables:
+    SAST_ANALYZER_IMAGE_TAG: 3
 
 dotnet test:
   stage: test
@@ -57,14 +48,6 @@ dotnet test:
   script:
     - dotnet restore
     - dotnet test -v n --no-restore
-
-sast:
-  stage: test
-  variables:
-    SAST_ANALYZER_IMAGE_TAG: 3
-  artifacts:
-    reports:
-      sast: sast_results.json
 
 publish vue for qa:
   stage: publish
