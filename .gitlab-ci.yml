@@ -41,7 +41,7 @@ build vue:
 security-code-scan-sast:
   variables:
     SAST_ANALYZER_IMAGE_TAG: 3
-  artifcats:
+  artifacts:
     reports:
       sast: scss-sast.xml
 
