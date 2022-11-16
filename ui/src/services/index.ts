@@ -5,6 +5,7 @@ import getObjectivesPage from './ObjectivesService';
 import getPortfolioPage from './PortfolioService';
 import getResume from './ResumeService';
 import getProjectsPage from './ProjectsService';
+import { getArticleIndexPage, getArticlePage } from './ArticleService';
 
 export {
   getAboutPage,
@@ -14,4 +15,6 @@ export {
   getPortfolioPage,
   getResume,
   getProjectsPage,
+  getArticleIndexPage,
+  getArticlePage,
 };

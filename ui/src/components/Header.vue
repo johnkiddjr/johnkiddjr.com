@@ -5,6 +5,7 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/portfolio">Portfolio</router-link> |
       <router-link to="/objectives">Objectives</router-link> |
+      <router-link to="/articles">Articles</router-link> |
       <router-link to="/about">About</router-link> |
       <router-link to="/contact">Contact</router-link>
     </nav>
@@ -24,10 +25,9 @@ export default defineComponent({
 hr.drop-shadow {
   height: 1px;
   border: 0;
-  background-image: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 0.75),
-    rgba(0, 0, 0, 0));
+  background-image: linear-gradient(to right,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0.75),
+      rgba(0, 0, 0, 0));
 }
 </style>
