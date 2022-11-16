@@ -147,6 +147,7 @@ namespace API.Controllers
                 .FirstOrDefault("N/A");
 
             articleViewModel.Author = authorName;
+            articleViewModel.Slug = article.Slug;
             articleViewModel.PreviewText = article.PreviewText;
             articleViewModel.Title = article.Title;
             articleViewModel.PublishDate = article.AvailableDate;
