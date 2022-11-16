@@ -9,7 +9,7 @@ export const getArticleIndexPage = async () => {
   }
 };
 
-export const getArticlePage = async (articleStub: string) => {
+export const getArticlePage = async (articleStub: string|string[]) => {
   try {
     const { data: response } = await get(`${process.env.VUE_APP_API_ENDPOINT}/api/article/${articleStub}`);
     return response;
