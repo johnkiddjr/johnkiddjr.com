@@ -36,7 +36,7 @@ namespace MainSite.Controllers
             return View(viewModel);
         }
 
-        [Route("{controller}/{articleSlug}")]
+        [Route("{controller}/View/{articleSlug}")]
         public async Task<IActionResult> ViewArticle(string articleSlug)
         {
             var viewModel = await GenerateArticleViewModel(articleSlug);
@@ -45,7 +45,7 @@ namespace MainSite.Controllers
         }
 
         [Authorize]
-        [Route("{controller}/upload")]
+        [Route("{controller}/Upload")]
         public IActionResult UploadArticle()
         {
             return View(new UploadArticleViewModel());
@@ -53,7 +53,7 @@ namespace MainSite.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("{controller}/uploadArticle")]
+        [Route("{controller}/UploadArticle")]
         [RequestSizeLimit(209715200)]
         public async Task<IActionResult> UploadNewArticle([FromForm] UploadArticleViewModel viewModel)
         {
