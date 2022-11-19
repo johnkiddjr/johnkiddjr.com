@@ -43,8 +43,35 @@ nav {
     padding: 0px 30px 30px 30px;
 }
 
+table.center {
+    display: inline;
+}
+
+td.align-left {
+    padding-left: 10px;
+    text-align: left;
+}
+
+td.align-right {
+    padding-right: 10px;
+    text-align: right;
+}
+
 td.align-top {
     vertical-align: top;
+}
+
+ul.no-style {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#validation ul li {
+    list-style-type: none;
+    color: #cc0033;
+    font-weight: bold;
+    line-height: 20px;
+    text-shadow: 1px 1px rgba(250, 250, 250, .3);
 }
 
 .bodytext {
@@ -53,7 +80,12 @@ td.align-top {
     margin: auto;
 }
 
-ul.no-style {
-    list-style-type: none;
-    padding-left: 0;
+.text-danger {
+    background-color: #fce4e4;
+    border: 1px solid #fcc2c3;
+    padding: 20px 30px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
 }
