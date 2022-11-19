@@ -1,0 +1,10 @@
+﻿@model ArticleViewModel
+
+<div class="article-detail">
+    <h1>@Model.Title</h1>
+    <h5>
+        By: @Model.Author on
+        @Model.PublishDate.ToString("MM/dd/yyyy hh:mm tt");
+    </h5>
+    @Html.Raw(Model.HtmlText)
+</div>

@@ -1,0 +1,55 @@
+a.nav {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+a.nav-selected {
+    color: #42b983;
+}
+
+div {
+    display: block;
+}
+
+div.app {
+    text-align: center;
+    font-family: Arial;
+}
+
+div.footer {
+    position: fixed;
+    left: 0;
+    bottom: 5px;
+    width: 100%;
+    text-align: center;
+    background: white;
+}
+
+div.pad-bottom {
+    padding-top: 100px;
+}
+
+hr.drop-shadow {
+    height: 1px;
+    border: 0;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+nav {
+    padding: 0px 30px 30px 30px;
+}
+
+td.align-top {
+    vertical-align: top;
+}
+
+.bodytext {
+    text-align: left;
+    max-width: 800px;
+    margin: auto;
+}
+
+ul.no-style {
+    list-style-type: none;
+    padding-left: 0;
+}
