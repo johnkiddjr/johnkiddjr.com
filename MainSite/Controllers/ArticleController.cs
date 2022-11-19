@@ -43,18 +43,30 @@ namespace MainSite.Controllers
             return View(viewModel);
         }
 
-        [HttpPut]
+        [Route("{controller}/upload")]
+        public IActionResult UploadArticle()
+        {
+            return View(new UploadArticleViewModel());
+        }
+
+        [HttpPost]
+        [Route("{controller}/uploadArticle")]
         [RequestSizeLimit(209715200)]
         public async Task<IActionResult> UploadNewArticle([FromForm] UploadArticleViewModel viewModel)
         {
             if (!viewModel.Content.FileName.EndsWith(".zip", true, null))
             {
-                return BadRequest("File must be a zip file containing 1 Markdown file and accompanying media...");
+                ModelState.AddModelError("", "File must be a zip file containing 1 Markdown file and accompanying media...");
             }
 
             if (viewModel.Content.Length <= 0)
             {
-                return BadRequest("File uploaded has no data!");
+                ModelState.AddModelError("", "File uploaded has no data!");
+            }
+
+            if (ModelState.ErrorCount > 0)
+            {
+                return View("UploadArticle", viewModel);
             }
 
             //generate a filename with a guid or something
@@ -66,7 +78,7 @@ namespace MainSite.Controllers
 
             if (archive.Entries.Count(x => x.Name.EndsWith(".md")) != 1)
             {
-                return BadRequest("Zip file must contain exactly 1 Markdown file!");
+                ModelState.AddModelError("", "Zip file must contain exactly 1 Markdown file!");
             }
 
             foreach (var entry in archive.Entries)
@@ -103,9 +115,17 @@ namespace MainSite.Controllers
             };
 
             await _context.Articles.AddAsync(article);
-            _context.SaveChanges();
+            if (_context.SaveChanges() < 1)
+            {
+                ModelState.AddModelError("", "Unable to save to database...");
+            }
 
-            return Ok();
+            if (ModelState.ErrorCount > 0)
+            {
+                return View("UploadArticle", viewModel);
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         private async Task<ArticleIndexViewModel> GenerateArticleIndexViewModel()

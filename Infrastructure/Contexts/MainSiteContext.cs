@@ -43,6 +43,10 @@ namespace Infrastructure.Contexts
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Article>()
+                .HasIndex(a => a.Slug)
+                .IsUnique(true);
+
             //seed data here
             modelBuilder.SeedData();
         }
