@@ -1,0 +1,25 @@
+﻿@model ObjectivesViewModel
+
+<div class="objectives">
+    <h1>Objectives</h1>
+    <div class="bodytext">
+        @foreach (var objective in Model.Objectives)
+        {
+            <div>
+                <h2>@(objective.Name)</h2>
+                <p>@(objective.Description)</p>
+                @if(objective.Details.Any())
+                {
+                    <ul>
+                        @foreach (var detail in objective.Details)
+                        {
+                            <li>
+                                <a href="@(detail.LinkUrl)">@(detail.Name)</a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+        }
+    </div>
+</div>
