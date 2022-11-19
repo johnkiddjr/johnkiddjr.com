@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
 
 WORKDIR /app
 COPY /publish ./
@@ -6,4 +6,4 @@ RUN ln -sf /usr/share/zoneinfo/America/Detroit /etc/localtime
 
 EXPOSE 5000/tcp
 
-ENTRYPOINT [ "dotnet", "API.dll" ]
+ENTRYPOINT [ "dotnet", "MainSite.dll" ]
