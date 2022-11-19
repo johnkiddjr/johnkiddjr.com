@@ -1,42 +1,38 @@
 ﻿@model MainSite.ViewModels.UploadArticleViewModel
 
 <h1>Upload an Article</h1>
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="UploadNewArticle" enctype="multipart/form-data" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger" id="validation"></div>
-            <table class="center">
-                <tr>
-                    <td class="align-right"><label asp-for="Content"></label></td>
-                    <td class="align-left"><input asp-for="Content" type="file" /><span asp-validation-for="Content"></span></td>
-                </tr>
-                <tr>
-                    <td class="align-right"><label asp-for="Slug"></label></td>
-                    <td class="align-left"><input asp-for="Slug" /><span asp-validation-for="Slug"></span></td>
-                </tr>
-                <tr>
-                    <td class="align-right"><label asp-for="Title"></label></td>
-                    <td class="align-left"><input asp-for="Title" /><span asp-validation-for="Title"></span></td>
-                </tr>
-                <tr>
-                    <td class="align-right"><label asp-for="PreviewText"></label></td>
-                    <td class="align-left"><input asp-for="PreviewText" /><span asp-validation-for="PreviewText"></span></td>
-                </tr>
-                <tr>
-                    <td class="align-right"><label asp-for="AvailableDate"></label></td>
-                    <td class="align-left"><input asp-for="AvailableDate" asp-format="{0:yyyy-MM-ddTHH:mm}" /><span asp-validation-for="AvailableDate"></span></td>
-                </tr>
-                <tr>
-                    <td class="align-right"><label asp-for="Visible"></label></td>
-                    <td class="align-left"><input asp-for="Visible" checked /><span asp-validation-for="Visible"></span></td>
-                </tr>
-            </table>
-            <br /><br />
-            <div class="form-group">
-                <input type="submit" value="Submit" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+<div>
+    <form asp-action="UploadNewArticle" enctype="multipart/form-data" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+        <table class="center">
+            <tr>
+                <td class="align-right"><label asp-for="Content"></label></td>
+                <td class="align-left"><input asp-for="Content" type="file" /><span asp-validation-for="Content"></span></td>
+            </tr>
+            <tr>
+                <td class="align-right"><label asp-for="Slug"></label></td>
+                <td class="align-left"><input asp-for="Slug" /><span asp-validation-for="Slug"></span></td>
+            </tr>
+            <tr>
+                <td class="align-right"><label asp-for="Title"></label></td>
+                <td class="align-left"><input asp-for="Title" /><span asp-validation-for="Title"></span></td>
+            </tr>
+            <tr>
+                <td class="align-right"><label asp-for="PreviewText"></label></td>
+                <td class="align-left"><input asp-for="PreviewText" /><span asp-validation-for="PreviewText"></span></td>
+            </tr>
+            <tr>
+                <td class="align-right"><label asp-for="AvailableDate"></label></td>
+                <td class="align-left"><input asp-for="AvailableDate" asp-format="{0:yyyy-MM-ddTHH:mm}" /><span asp-validation-for="AvailableDate"></span></td>
+            </tr>
+            <tr>
+                <td class="align-right"><label asp-for="Visible"></label></td>
+                <td class="align-left"><input asp-for="Visible" checked /><span asp-validation-for="Visible"></span></td>
+            </tr>
+        </table>
+        <br /><br />
+        <input type="submit" value="Submit" />
+    </form>
 </div>
 
 @section Scripts {

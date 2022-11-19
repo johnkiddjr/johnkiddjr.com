@@ -13,6 +13,9 @@ using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using MainSite.Helpers;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Infrastructure.Models.Identity;
+using System.Security.Claims;
 
 namespace MainSite.Controllers
 {
@@ -21,12 +24,14 @@ namespace MainSite.Controllers
         private readonly ILogger<ArticleController> _logger;
         private readonly MainSiteContext _context;
         private readonly CDNOptions _cdnOptions;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ArticleController(ILogger<ArticleController> logger, MainSiteContext context, IOptions<CDNOptions> options)
+        public ArticleController(ILogger<ArticleController> logger, MainSiteContext context, IOptions<CDNOptions> options, UserManager<ApplicationUser> userManager)
         { 
             _logger = logger;
             _context = context;
             _cdnOptions = options.Value;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
@@ -72,6 +77,11 @@ namespace MainSite.Controllers
                 return View("UploadArticle", viewModel);
             }
 
+            //get the bioid from the logged in user
+            var userGuid = User.Claims.Where(x => x.Type == ClaimTypes.NameIdentifier).Select(x => x.Value).FirstOrDefault();
+            var user = await _userManager.FindByIdAsync(userGuid);
+            var bioId = user.BioId;
+
             //generate a filename with a guid or something
             var filename = GenerateRandomFilename("md");
 
@@ -107,7 +117,7 @@ namespace MainSite.Controllers
 
             var article = new Article()
             {
-                AuthorId = viewModel.AuthorId,
+                AuthorId = bioId,
                 AvailableDate = viewModel.AvailableDate,
                 UploadDate = DateTime.Now,
                 FileName = filename,
@@ -133,7 +143,7 @@ namespace MainSite.Controllers
 
         private async Task<ArticleIndexViewModel> GenerateArticleIndexViewModel()
         {
-            var articles = (from article in _context.Articles where article.Visible select article).ToList();
+            var articles = (from article in _context.Articles where article.Visible select article).OrderByDescending(x => x.AvailableDate).ToList();
 
             var viewModel = new ArticleIndexViewModel();
             viewModel.Articles = new List<ArticleViewModel>();

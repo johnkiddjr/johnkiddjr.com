@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(MainSiteContext))]
-    partial class MainSiteContextModelSnapshot : ModelSnapshot
+    [Migration("20221119212034_AddedAuthViaScaffold")]
+    partial class AddedAuthViaScaffold
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -273,9 +276,6 @@ namespace Infrastructure.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("BioId")
-                        .HasColumnType("char(36)");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("longtext");
@@ -498,7 +498,7 @@ namespace Infrastructure.Migrations
                         {
                             OverviewId = new Guid("416c2518-4151-4241-8ede-70d97ef8855c"),
                             BodyHtml = "Welcome to my portfolio! Use the navigation to look at what I have to offer. Feel free to contact me through email or LinkedIn if you want to talk about a job, a collaboration, or even if just to say \"Hi!\"",
-                            CreatedDate = new DateTime(2022, 11, 19, 16, 59, 43, 417, DateTimeKind.Local).AddTicks(7143),
+                            CreatedDate = new DateTime(2022, 11, 19, 16, 20, 34, 516, DateTimeKind.Local).AddTicks(4281),
                             HeaderText = "Software Engineer with years of experience with C++, C#, VB, and many others on multiple platforms"
                         });
                 });

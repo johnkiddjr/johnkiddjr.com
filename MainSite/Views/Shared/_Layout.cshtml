@@ -19,12 +19,12 @@
         <div>
             <img src="@ContentHelper.GetUrlForResource(ContentType.images, "header.png")" alt="John Kidd Jr Header" />
             <nav>
-                <a class="nav @(Accessor.HttpContext.Request.Path.Value.ToLowerInvariant() == "/" ? "nav-selected" : "")" href="/">Home</a> |
-                <a class="nav @(Accessor.HttpContext.Request.Path.Value.ToLowerInvariant().StartsWith("/portfolio") ? "nav-selected" : "")" href="/portfolio">Portfolio</a> |
-                <a class="nav @(Accessor.HttpContext.Request.Path.Value.ToLowerInvariant().StartsWith("/objectives") ? "nav-selected" : "")" href="/objectives">Objectives</a> |
-                <a class="nav @(Accessor.HttpContext.Request.Path.Value.ToLowerInvariant().StartsWith("/article") ? "nav-selected" : "")" href="/article">Articles</a> |
-                <a class="nav @(Accessor.HttpContext.Request.Path.Value.ToLowerInvariant().StartsWith("/about") ? "nav-selected" : "")" href="/about">About</a> |
-                <a class="nav @(Accessor.HttpContext.Request.Path.Value.ToLowerInvariant().StartsWith("/contact") ? "nav-selected" : "")" href="/contact">Contact</a>
+                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/", "nav-selected"))" href="/">Home</a> |
+                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/portfolio", "nav-selected", false))" href="/portfolio">Portfolio</a> |
+                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/objectives", "nav-selected", false))" href="/objectives">Objectives</a> |
+                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/article", "nav-selected", false))" href="/article">Articles</a> |
+                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/about", "nav-selected", false))" href="/about">About</a> |
+                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/contact", "nav-selected", false))" href="/contact">Contact</a>
             </nav>
             <hr class="drop-shadow" />
         </div>
@@ -32,6 +32,8 @@
         <div class="pad-bottom"></div>
         <div class="footer">
             &copy; 2022 John Kidd Jr. All rights reserved.
+            <br />
+            <partial name="_LoginPartial" />
         </div>
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

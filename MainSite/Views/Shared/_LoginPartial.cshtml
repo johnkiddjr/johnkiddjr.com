@@ -1,0 +1,19 @@
+﻿@using Infrastructure.Models.Identity;
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    @*<a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>*@
+    <span>Hello @UserManager.GetUserName(User)!</span>
+    <br />
+    <a asp-controller="Article" asp-action="UploadArticle">Upload an Article</a>
+    <span> | </span>
+    <a asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">Logout</a>
+}
+else
+{
+    <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Are you me? Need to login? Do so here.</a>
+}
