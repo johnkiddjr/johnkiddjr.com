@@ -1,6 +1,9 @@
 ﻿using Infrastructure.Contexts;
+using Infrastructure.Models.Identity;
+using MainSite.Helpers;
 using MainSite.Options;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 public class Startup
 {
@@ -19,10 +22,14 @@ public class Startup
         var mariaDbVersion = ServerVersion.AutoDetect(connectionString);
         services.AddDbContext<MainSiteContext>(options => options.UseMySql(connectionString, mariaDbVersion));
 
+        services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                    .AddEntityFrameworkStores<MainSiteContext>();
+
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
         services.AddCors();
         services.AddControllersWithViews();
+        services.AddRazorPages();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
     }
@@ -40,6 +47,14 @@ public class Startup
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
+        //configure ContentHelper to use the correct URL for content
+        var options = app.ApplicationServices.GetService<IOptions<CDNOptions>>();
+        ContentHelper.Configure(options.Value.BaseUrl);
+
+        //configure html helper
+        var accessor = app.ApplicationServices.GetService<IHttpContextAccessor>();
+        HtmlHelper.Configure(accessor);
             
         app.UseStaticFiles();
 
@@ -52,6 +67,7 @@ public class Startup
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapDefaultControllerRoute();
+            endpoints.MapRazorPages();
         });
     }
 }
