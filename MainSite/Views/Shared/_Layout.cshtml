@@ -1,0 +1,44 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor Accessor
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>John Kidd Jr</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+<body>
+    <!-- header -->
+    <div class="app">
+        <div>
+            <img src="@ContentHelper.GetUrlForResource(ContentType.images, "header.png")" alt="John Kidd Jr Header" />
+            <nav>
+                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/", "nav-selected"))" href="/">Home</a> |
+                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/portfolio", "nav-selected", false))" href="/portfolio">Portfolio</a> |
+                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/objectives", "nav-selected", false))" href="/objectives">Objectives</a> |
+                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/article", "nav-selected", false))" href="/article">Articles</a> |
+                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/about", "nav-selected", false))" href="/about">About</a> |
+                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/contact", "nav-selected", false))" href="/contact">Contact</a>
+            </nav>
+            <hr class="drop-shadow" />
+        </div>
+        @RenderBody()
+        <div class="pad-bottom"></div>
+        <div class="footer">
+            &copy; 2022 John Kidd Jr. All rights reserved.
+            <br />
+            <partial name="_LoginPartial" />
+        </div>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </div>
+</body>
+</html>

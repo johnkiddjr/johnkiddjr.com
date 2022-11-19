@@ -1,0 +1,45 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+        <table class="center">
+            <tr>
+                <td class="align-right"><label asp-for="Input.FirstName"></label></td>
+                <td class="align-left"><input asp-for="Input.FirstName" autocomplete="firstname" aria-required="true" placeholder="first name" /><span asp-validation-for="Input.FirstName"></span></td>
+            </tr>
+            <tr>
+                <td class="align-right"><label asp-for="Input.LastName"></label></td>
+                <td class="align-left"><input asp-for="Input.LastName" autocomplete="lastname" aria-required="true" placeholder="last name" /><span asp-validation-for="Input.LastName"></span></td>
+            </tr>
+            <tr>
+                <td class="align-right"><label asp-for="Input.PictureUrl"></label></td>
+                <td class="align-left"><input asp-for="Input.PictureUrl" autocomplete="off" aria-required="false" placeholder="filename.jpg" /><span asp-validation-for="Input.PictureUrl"></span></td>
+            </tr>
+            <tr>
+                <td class="align-right"><label asp-for="Input.Email"></label></td>
+                <td class="align-left"><input asp-for="Input.Email" autocomplete="username" aria-required="true" placeholder="name@example.com" /><span asp-validation-for="Input.Email"></span></td>
+            </tr>
+            <tr>
+                <td class="align-right"><label asp-for="Input.Password"></label></td>
+                <td class="align-left"><input asp-for="Input.Password" autocomplete="new-password" aria-required="true" placeholder="password" /><span asp-validation-for="Input.Password"></span></td>
+            </tr>
+            <tr>
+                <td class="align-right"><label asp-for="Input.ConfirmPassword"></label></td>
+                <td class="align-left"><input asp-for="Input.ConfirmPassword" autocomplete="new-password" aria-required="true" placeholder="confirm password" /><span asp-validation-for="Input.ConfirmPassword"></span></td>
+            </tr>
+        </table>
+        <br /><br />
+        <input type="submit" value="Register" />
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

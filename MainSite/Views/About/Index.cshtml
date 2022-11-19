@@ -1,0 +1,41 @@
+﻿@model AboutViewModel
+
+<div class="about">
+    <h1>@Model.Name</h1>
+    <img src="@(ContentHelper.GetUrlForResource(ContentType.images, Model.PictureUrl))" alt="The man himself" />
+    @{
+        var i = 0;
+    }
+    @foreach (var section in Model.Sections)
+    {
+        <div class="bodytext">
+            <h2>@(section.Name)</h2>
+            <table>
+                @foreach (var detail in section.Details)
+                {
+                    if(i % 2 == 0)
+                    {
+                        <tr>
+                            @if (detail.PhotoUrl != null)
+                            {
+                                <td><img src="@(ContentHelper.GetUrlForResource(ContentType.images, detail.PhotoUrl))" alt="@(section.Name)" /></td>
+                            }
+                            <td class="align-top">@(detail.Description)</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="align-top">@(detail.Description)</td>
+                            @if (detail.PhotoUrl != null)
+                            {
+                                <td><img src="@(ContentHelper.GetUrlForResource(ContentType.images, detail.PhotoUrl))" alt="@(section.Name)" /></td>
+                            }
+                        </tr>
+                    }
+                    i++;
+                }
+            </table>
+        </div>
+    }
+</div>

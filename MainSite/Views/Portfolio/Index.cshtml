@@ -1,0 +1,72 @@
+﻿@model PortfolioPageViewModel
+
+<div class="portfolio">
+    <h1>Portfolio</h1>
+    <div class="section bodytext">
+        <h2>Projects</h2>
+        @if(Model.ProjectData != null)
+        {
+            <ul>
+                @foreach (var project in Model.ProjectData.Projects)
+                {
+                    if(Model.ProjectData.Projects.IndexOf(project) % 2 == 0)
+                    {
+                        <li>
+                            <a href="@(project.DirectUrl)"><h3>@project.Name</h3></a>
+                            <table>
+                                <tr>
+                                    <td class="align-top">
+                                        @project.Description
+                                    </td>
+                                    @if (project.PictureUrl != null)
+                                    {
+                                        <td>
+                                            <img src="@(ContentHelper.GetUrlForResource(ContentType.images, project.PictureUrl))" alt="@(project.Name)" />
+                                        </td>
+                                    }
+                                </tr>
+                            </table>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="@(project.DirectUrl)"><h3>@project.Name</h3></a>
+                            <table>
+                                <tr>
+                                    @if (project.PictureUrl != null)
+                                    {
+                                        <td>
+                                            <img src="@(ContentHelper.GetUrlForResource(ContentType.images, project.PictureUrl))" alt="@(project.Name)" />
+                                        </td>
+                                    }
+                                    <td class="align-top">
+                                        @project.Description
+                                    </td>
+                                </tr>
+                            </table>
+                        </li>
+                    }
+                }
+            </ul>
+        }
+        else
+        {
+            <span>No projects to show</span>
+        }
+    </div>
+    @foreach (var group in Model.PortfolioData.LinkGroups)
+    {
+        <div class="section bodytext">
+            <h2>@group.GroupName</h2>
+            <ul>
+                @foreach (var link in group.Links)
+                {
+                    <li>
+                        <a href="@(link.Link)" target="_blank">@link.Text</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+</div>

@@ -6,7 +6,7 @@ namespace Infrastructure.Models
     {
         public Guid ObjectiveDetailId { get; set; }
         public Guid ObjectiveId { get; set; }
-        public string? Name { get; set; }
-        public string? LinkUrl { get; set; }
+        public string Name { get; set; }
+        public string LinkUrl { get; set; }
     }
 }
