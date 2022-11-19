@@ -102,7 +102,7 @@ namespace MainSite.Controllers
                 Visible = viewModel.Visible
             };
 
-            _context.Articles.Add(article);
+            await _context.Articles.AddAsync(article);
             _context.SaveChanges();
 
             return Ok();
