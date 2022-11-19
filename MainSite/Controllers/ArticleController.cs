@@ -8,6 +8,10 @@ using Microsoft.Extensions.Options;
 using RestSharp;
 using IO = System.IO;
 using System.IO.Compression;
+using Markdig.Renderers;
+using Markdig.Syntax;
+using Markdig.Syntax.Inlines;
+using MainSite.Helpers;
 
 namespace MainSite.Controllers
 {
@@ -165,7 +169,24 @@ namespace MainSite.Controllers
                 return string.Empty;
             }
 
-            return Markdown.ToHtml(response.Content);
+            var md = Markdown.Parse(response.Content);
+            foreach (var mdItem in md)
+            {
+                if (mdItem is ParagraphBlock)
+                {
+                    foreach (var inlineItem in (mdItem as ParagraphBlock).Inline)
+                    {
+                        if (inlineItem is LinkInline && (inlineItem as LinkInline).IsImage)
+                        {
+                            var imageLinkInline = inlineItem as LinkInline;
+                            imageLinkInline.Url = imageLinkInline.Url.ToLowerInvariant().StartsWith("http") ? imageLinkInline.Url : ContentHelper.GetUrlForResource(ContentType.images, imageLinkInline.Url);
+                        }
+                    }
+                }
+            }
+            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+
+            return md.ToHtml(pipeline);
         }
 
         private bool IsFileMarkdownFile(string fileName) =>
