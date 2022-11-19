@@ -2,7 +2,7 @@
 
 <div class="about">
     <h1>@Model.Name</h1>
-    <img src="@(ContentHelper.GetUrlForResource(ContentType.images, Model.PictureUrl))" alt="The man himself" width="300" />
+    <img src="@(ContentHelper.GetUrlForResource(ContentType.images, Model.PictureUrl))" alt="The man himself" />
     @{
         var i = 0;
     }
@@ -18,7 +18,7 @@
                         <tr>
                             @if (detail.PhotoUrl != null)
                             {
-                                <td><img src="@(ContentHelper.GetUrlForResource(ContentType.images, detail.PhotoUrl))" width="300" alt="@(section.Name)" /></td>
+                                <td><img src="@(ContentHelper.GetUrlForResource(ContentType.images, detail.PhotoUrl))" alt="@(section.Name)" /></td>
                             }
                             <td class="align-top">@(detail.Description)</td>
                         </tr>
@@ -29,7 +29,7 @@
                             <td class="align-top">@(detail.Description)</td>
                             @if (detail.PhotoUrl != null)
                             {
-                                <td><img src="@(ContentHelper.GetUrlForResource(ContentType.images, detail.PhotoUrl))" width="300" alt="@(section.Name)" /></td>
+                                <td><img src="@(ContentHelper.GetUrlForResource(ContentType.images, detail.PhotoUrl))" alt="@(section.Name)" /></td>
                             }
                         </tr>
                     }
