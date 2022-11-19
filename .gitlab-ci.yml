@@ -13,6 +13,10 @@ variables:
 include:
 - template: Security/SAST.gitlab-ci.yml
 
+security-code-scan-sast:
+  variables:
+    SAST_ANALYZER_IMAGE_TAG: 3
+
 stages:
 - build
 - test
