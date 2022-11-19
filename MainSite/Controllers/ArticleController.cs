@@ -12,6 +12,7 @@ using Markdig.Renderers;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using MainSite.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MainSite.Controllers
 {
@@ -43,6 +44,7 @@ namespace MainSite.Controllers
             return View(viewModel);
         }
 
+        [Authorize]
         [Route("{controller}/upload")]
         public IActionResult UploadArticle()
         {
@@ -50,6 +52,7 @@ namespace MainSite.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         [Route("{controller}/uploadArticle")]
         [RequestSizeLimit(209715200)]
         public async Task<IActionResult> UploadNewArticle([FromForm] UploadArticleViewModel viewModel)
