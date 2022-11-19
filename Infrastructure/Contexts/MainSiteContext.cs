@@ -1,10 +1,12 @@
 ﻿using Infrastructure.Models;
+using Infrastructure.Models.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace Infrastructure.Contexts
 {
-    public class MainSiteContext : DbContext
+    public class MainSiteContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
         public MainSiteContext()
         {
@@ -15,18 +17,18 @@ namespace Infrastructure.Contexts
         {
         }
 
-        public virtual DbSet<Project>? Projects { get; set; }
-        public virtual DbSet<PortfolioLink>? PortfolioLinks { get; set; }
-        public virtual DbSet<LinkGroup>? LinkGroups { get; set; }
-        public virtual DbSet<Bio>? Bios { get; set; }
-        public virtual DbSet<BioDetail>? BioDetails { get; set; }
-        public virtual DbSet<BioSection>? BioSections { get; set; }
-        public virtual DbSet<Contact>? Contacts { get; set; }
-        public virtual DbSet<File>? Files { get; set; }
-        public virtual DbSet<Objective>? Objectives { get; set; }
-        public virtual DbSet<ObjectiveDetail>? ObjectivesDetails { get; set; }
-        public virtual DbSet<Overview>? Overviews { get; set; }
-        public virtual DbSet<Article>? Articles { get; set; }
+        public virtual DbSet<Project> Projects { get; set; }
+        public virtual DbSet<PortfolioLink> PortfolioLinks { get; set; }
+        public virtual DbSet<LinkGroup> LinkGroups { get; set; }
+        public virtual DbSet<Bio> Bios { get; set; }
+        public virtual DbSet<BioDetail> BioDetails { get; set; }
+        public virtual DbSet<BioSection> BioSections { get; set; }
+        public virtual DbSet<Contact> Contacts { get; set; }
+        public virtual DbSet<File> Files { get; set; }
+        public virtual DbSet<Objective> Objectives { get; set; }
+        public virtual DbSet<ObjectiveDetail> ObjectivesDetails { get; set; }
+        public virtual DbSet<Overview> Overviews { get; set; }
+        public virtual DbSet<Article> Articles { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
