@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Infrastructure.Models.Identity;
 using System.Security.Claims;
+using Markdig.Renderers.Html;
 
 namespace MainSite.Controllers
 {
@@ -254,6 +255,7 @@ namespace MainSite.Controllers
                         {
                             var imageLinkInline = inlineItem as LinkInline;
                             imageLinkInline.Url = imageLinkInline.Url.ToLowerInvariant().StartsWith("http") ? imageLinkInline.Url : ContentHelper.GetUrlForResource(ContentType.images, imageLinkInline.Url);
+                            imageLinkInline.SetAttributes(new HtmlAttributes() { Classes = new List<string>() { "article-image" } });
                         }
                     }
                 }

@@ -5,10 +5,11 @@
     <h1>@Model.Title</h1>
     <h5>
         By: @Model.Author on
-        @Model.PublishDate.ToString("MM/dd/yyyy hh:mm tt");
+        @Model.PublishDate.ToString("MM/dd/yyyy hh:mm tt")
     </h5>
     <div class="bodytext">
         <?prettify linenums=true?>
         @Html.Raw(Model.HtmlText)
     </div>
+    <span><a asp-action="Index"><span class="material-icons">undo</span> Back to Articles Index</a></span>
 </div>

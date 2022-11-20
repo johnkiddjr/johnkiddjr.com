@@ -48,6 +48,11 @@ img {
     max-width: 300px;
 }
 
+img.article-image {
+    max-width: 800px;
+    width: 100%;
+}
+
 input[type=datetime-local] {
     background: #fff;
     border: 1px solid #999;
