@@ -17,7 +17,8 @@ namespace MainSite.ViewModels
         [Display(Name = "Preview Text")]
         [StringLength(300, MinimumLength = 75)]
         public string PreviewText { get; set; } = string.Empty;
-        public Guid AuthorId { get; set; } = Guid.Parse("DC635535-81AF-4CB5-A873-869225A41016");
+        [Display(Name = "Article Tags")]
+        public string Tags { get; set; }
         [Required]
         [Display(Name = "Date Article Available")]
         public DateTime AvailableDate { get; set; } = DateTime.Now;
