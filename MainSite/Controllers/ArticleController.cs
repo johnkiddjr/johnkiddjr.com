@@ -115,6 +115,25 @@ namespace MainSite.Controllers
                 }
             }
 
+            //process tags
+            var tags = viewModel.Tags.Split(",", StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim());
+            var tagsToAdd = new List<Guid>();
+
+            foreach (var tag in tags)
+            {
+                //lookup to see if the tag already exists...
+                var tagToProcess = _context.Tags.AsEnumerable().Where(t => t.Name.ToLowerInvariant() == tag.ToLowerInvariant()).FirstOrDefault();
+
+                if (tagToProcess == null)
+                {
+                    tagToProcess = new Tag() { Name = tag };
+                    await _context.Tags.AddAsync(tagToProcess);
+                    await _context.SaveChangesAsync();
+                }
+
+                tagsToAdd.Add(tagToProcess.TagId);
+            }
+
             var article = new Article()
             {
                 AuthorId = bioId,
@@ -128,7 +147,8 @@ namespace MainSite.Controllers
             };
 
             await _context.Articles.AddAsync(article);
-            if (_context.SaveChanges() < 1)
+
+            if (await _context.SaveChangesAsync() < 1)
             {
                 ModelState.AddModelError("", "Unable to save to database...");
             }
@@ -137,6 +157,14 @@ namespace MainSite.Controllers
             {
                 return View("UploadArticle", viewModel);
             }
+
+            //add tags to relationship table
+            foreach (var tag in tagsToAdd)
+            {
+                await _context.ArticleTagRelations.AddAsync(new ArticleTag() { ArticleId = article.ArticleId, TagId = tag });
+            }
+
+            await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
         }
@@ -180,12 +208,25 @@ namespace MainSite.Controllers
                 .Select(x => x.Name)
                 .FirstOrDefault("N/A");
 
+            var tags = (from relations in _context.ArticleTagRelations
+                        where relations.ArticleId == article.ArticleId
+                        join t in _context.Tags on relations.TagId equals t.TagId
+                        select t.Name).ToList();
+
+            var tagList = new List<TagViewModel>();
+
+            foreach (var tag in tags)
+            {
+                tagList.Add(new TagViewModel() { Name = tag });
+            }
+
             articleViewModel.Author = authorName;
             articleViewModel.Slug = article.Slug;
             articleViewModel.PreviewText = article.PreviewText;
             articleViewModel.Title = article.Title;
             articleViewModel.PublishDate = article.AvailableDate;
             articleViewModel.Visible = article.Visible;
+            articleViewModel.Tags = tagList;
             articleViewModel.HtmlText = await GetMarkdownFileContents(article.FileName);
 
             return articleViewModel;
