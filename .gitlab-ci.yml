@@ -59,7 +59,8 @@ publish dotnet for qa:
     - dotnet publish -c Release -o ./publish $PROJECT_CSPROJ --no-restore
     - dotnet tool install --global dotnet-ef
     - export PATH="$PATH:/root/.dotnet/tools"
-    - dotnet ef database update --project ./Infrastructure/ --startup-project ./MainSite/
+    - dotnet ef database update --project ./Infrastructure/ --startup-project ./MainSite/ --context MainSiteContext
+    - dotnet ef database update --project ./Infrastructure/ --startup-project ./MainSite/ --context AnalyticsContext
 
 publish dotnet for prod:
   stage: publish
@@ -81,7 +82,8 @@ publish dotnet for prod:
     - dotnet publish -c Release -o ./publish $PROJECT_CSPROJ --no-restore
     - dotnet tool install --global dotnet-ef
     - export PATH="$PATH:/root/.dotnet/tools"
-    - dotnet ef database update --project ./Infrastructure/ --startup-project ./MainSite/
+    - dotnet ef database update --project ./Infrastructure/ --startup-project ./MainSite/ --context MainSiteContext
+    - dotnet ef database update --project ./Infrastructure/ --startup-project ./MainSite/ --context AnalyticsContext
 
 containerize dotnet qa:
   stage: containerize
