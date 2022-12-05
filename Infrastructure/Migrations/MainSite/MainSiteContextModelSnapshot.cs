@@ -3,19 +3,16 @@ using System;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Migrations.MainSite
 {
     [DbContext(typeof(MainSiteContext))]
-    [Migration("20221119215943_AddedBioIdToIdentity")]
-    partial class AddedBioIdToIdentity
+    partial class MainSiteContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,6 +55,23 @@ namespace Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Articles");
+                });
+
+            modelBuilder.Entity("Infrastructure.Models.ArticleTag", b =>
+                {
+                    b.Property<Guid>("ArticleTagId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("ArticleId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("TagId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("ArticleTagId");
+
+                    b.ToTable("ArticleTagRelations");
                 });
 
             modelBuilder.Entity("Infrastructure.Models.Bio", b =>
@@ -501,7 +515,7 @@ namespace Infrastructure.Migrations
                         {
                             OverviewId = new Guid("416c2518-4151-4241-8ede-70d97ef8855c"),
                             BodyHtml = "Welcome to my portfolio! Use the navigation to look at what I have to offer. Feel free to contact me through email or LinkedIn if you want to talk about a job, a collaboration, or even if just to say \"Hi!\"",
-                            CreatedDate = new DateTime(2022, 11, 19, 16, 59, 43, 417, DateTimeKind.Local).AddTicks(7143),
+                            CreatedDate = new DateTime(2022, 12, 5, 14, 36, 1, 854, DateTimeKind.Local).AddTicks(6006),
                             HeaderText = "Software Engineer with years of experience with C++, C#, VB, and many others on multiple platforms"
                         });
                 });
@@ -546,6 +560,34 @@ namespace Infrastructure.Migrations
                             Link = "https://www.bizstream.com/blog/january-2022/windows-authentication-with-net-5",
                             LinkGroupId = new Guid("89e84892-e148-4a1e-97a6-2cb7a51dde72"),
                             Text = "Windows Authentication with .Net 5"
+                        });
+                });
+
+            modelBuilder.Entity("Infrastructure.Models.PrivacyPolicy", b =>
+                {
+                    b.Property<Guid>("PrivacyPolicyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("PolicyMarkdownName")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("ValidFrom")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("ValidUntil")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("PrivacyPolicyId");
+
+                    b.ToTable("PrivacyPolicies");
+
+                    b.HasData(
+                        new
+                        {
+                            PrivacyPolicyId = new Guid("aae087b6-be6a-4631-9d49-4ff21220ecd8"),
+                            PolicyMarkdownName = "aae087b6-be6a-4631-9d49-4ff21220ecd8_en.md",
+                            ValidFrom = new DateTime(2022, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -601,6 +643,20 @@ namespace Infrastructure.Migrations
                             Name = "Windows/Linux Console - TicTacToe",
                             PictureUrl = "/images/simple-tictactoe.jpg"
                         });
+                });
+
+            modelBuilder.Entity("Infrastructure.Models.Tag", b =>
+                {
+                    b.Property<Guid>("TagId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("TagId");
+
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

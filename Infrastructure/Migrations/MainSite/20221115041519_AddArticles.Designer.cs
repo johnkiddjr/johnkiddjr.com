@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Migrations.MainSite
 {
     [DbContext(typeof(MainSiteContext))]
-    [Migration("20221115044630_AddArticleTitleAndPreviewText")]
-    partial class AddArticleTitleAndPreviewText
+    [Migration("20221115041519_AddArticles")]
+    partial class AddArticles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,15 +37,7 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("PreviewText")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("longtext");
 
@@ -393,7 +385,7 @@ namespace Infrastructure.Migrations
                         {
                             OverviewId = new Guid("416c2518-4151-4241-8ede-70d97ef8855c"),
                             BodyHtml = "Welcome to my portfolio! Use the navigation to look at what I have to offer. Feel free to contact me through email or LinkedIn if you want to talk about a job, a collaboration, or even if just to say \"Hi!\"",
-                            CreatedDate = new DateTime(2022, 11, 14, 23, 46, 30, 73, DateTimeKind.Local).AddTicks(113),
+                            CreatedDate = new DateTime(2022, 11, 14, 23, 15, 18, 881, DateTimeKind.Local).AddTicks(7760),
                             HeaderText = "Software Engineer with years of experience with C++, C#, VB, and many others on multiple platforms"
                         });
                 });

@@ -2,13 +2,10 @@ using Infrastructure.Contexts;
 using Infrastructure.Models;
 using MainSite.Options;
 using MainSite.ViewModels;
-using Markdig;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using RestSharp;
 using IO = System.IO;
 using System.IO.Compression;
-using Markdig.Renderers;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using MainSite.Helpers;
@@ -17,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using Infrastructure.Models.Identity;
 using System.Security.Claims;
 using Markdig.Renderers.Html;
+using MainSite.Services;
 
 namespace MainSite.Controllers
 {
@@ -26,13 +24,15 @@ namespace MainSite.Controllers
         private readonly MainSiteContext _context;
         private readonly CDNOptions _cdnOptions;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMarkdownService _markdownService;
 
-        public ArticleController(ILogger<ArticleController> logger, MainSiteContext context, IOptions<CDNOptions> options, UserManager<ApplicationUser> userManager)
+        public ArticleController(ILogger<ArticleController> logger, MainSiteContext context, IOptions<CDNOptions> options, UserManager<ApplicationUser> userManager, IMarkdownService markdownService)
         { 
             _logger = logger;
             _context = context;
             _cdnOptions = options.Value;
             _userManager = userManager;
+            _markdownService = markdownService;
         }
 
         public async Task<IActionResult> Index()
@@ -233,37 +233,25 @@ namespace MainSite.Controllers
             return articleViewModel;
         }
 
-        private async Task<string> GetMarkdownFileContents(string markdownFileName)
-        {
-            var client = new RestClient(_cdnOptions.BaseUrl);
-            var request = new RestRequest($"{_cdnOptions.ArticlesStub}/{markdownFileName}", Method.Get);
-            var response = await client.GetAsync(request);
-
-            if (response == null || response.Content == null)
+        private async Task<string> GetMarkdownFileContents(string markdownFileName) =>
+            await _markdownService.GetHtmlFromMarkdownUrl($"{_cdnOptions.ArticlesStub}/{markdownFileName}", md =>
             {
-                return string.Empty;
-            }
-
-            var md = Markdown.Parse(response.Content);
-            foreach (var mdItem in md)
-            {
-                if (mdItem is ParagraphBlock)
+                foreach (var mdItem in md)
                 {
-                    foreach (var inlineItem in (mdItem as ParagraphBlock).Inline)
+                    if (mdItem is ParagraphBlock)
                     {
-                        if (inlineItem is LinkInline && (inlineItem as LinkInline).IsImage)
+                        foreach (var inlineItem in (mdItem as ParagraphBlock).Inline)
                         {
-                            var imageLinkInline = inlineItem as LinkInline;
-                            imageLinkInline.Url = imageLinkInline.Url.ToLowerInvariant().StartsWith("http") ? imageLinkInline.Url : ContentHelper.GetUrlForResource(ContentType.images, imageLinkInline.Url);
-                            imageLinkInline.SetAttributes(new HtmlAttributes() { Classes = new List<string>() { "article-image" } });
+                            if (inlineItem is LinkInline && (inlineItem as LinkInline).IsImage)
+                            {
+                                var imageLinkInline = inlineItem as LinkInline;
+                                imageLinkInline.Url = imageLinkInline.Url.ToLowerInvariant().StartsWith("http") ? imageLinkInline.Url : ContentHelper.GetUrlForResource(ContentType.images, imageLinkInline.Url);
+                                imageLinkInline.SetAttributes(new HtmlAttributes() { Classes = new List<string>() { "article-image" } });
+                            }
                         }
                     }
                 }
-            }
-            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-
-            return md.ToHtml(pipeline);
-        }
+            });
 
         private bool IsFileMarkdownFile(string fileName) =>
             fileName.EndsWith(".md");
