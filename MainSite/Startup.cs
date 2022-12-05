@@ -42,20 +42,20 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+        app.UseForwardedHeaders(new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+        });
+
         // Configure the HTTP request pipeline.
         if (!env.IsDevelopment())
         {
             app.UseExceptionHandler("/Home/Error");
-            
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
 
             app.UseServerSideAnalytics(options =>
             {
                 options.EnableDbLogging = true;
-                options.EnableLoggerLogging = false;
+                options.EnableLoggerLogging = true;
             });
         }
         else
