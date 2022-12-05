@@ -53,7 +53,7 @@ publish dotnet for qa:
     - apt install jq -y
     - mv $PROJECT_APPSETTINGS appsettings.temp
     - |
-      jq -c --arg connection_string $STAGE_CONNECTION_STRING --arg cdn_base $STAGE_CDN_BASE_URL --arg cdn_local $STAGE_CDN_LOCAL_PATH '.ConnectionStrings.MainSite = $connection_string | .CDNOptions.BaseUrl = $cdn_base | .CDNOptions.LocalStoragePath = $cdn_local' appsettings.temp > $PROJECT_APPSETTINGS
+      jq -c --arg connection_string $STAGE_CONNECTION_STRING --arg analytics_cs $STAGE_ANALYTICS_CONNECTION_STRING --arg cdn_base $STAGE_CDN_BASE_URL --arg cdn_local $STAGE_CDN_LOCAL_PATH '.ConnectionStrings.MainSite = $connection_string | .ConnectionStrings.Analytics = $analytics_cs | .CDNOptions.BaseUrl = $cdn_base | .CDNOptions.LocalStoragePath = $cdn_local' appsettings.temp > $PROJECT_APPSETTINGS
     - rm appsettings.temp
     - dotnet restore
     - dotnet publish -c Release -o ./publish $PROJECT_CSPROJ --no-restore
@@ -76,7 +76,7 @@ publish dotnet for prod:
     - apt install jq -y
     - mv $PROJECT_APPSETTINGS appsettings.temp
     - |
-      jq -c --arg connection_string $PROD_CONNECTION_STRING --arg cdn_base $PROD_CDN_BASE_URL --arg cdn_local $PROD_CDN_LOCAL_PATH '.ConnectionStrings.MainSite = $connection_string | .CDNOptions.BaseUrl = $cdn_base | .CDNOptions.LocalStoragePath = $cdn_local' appsettings.temp > $PROJECT_APPSETTINGS
+      jq -c --arg connection_string $PROD_CONNECTION_STRING --arg analytics_cs $PROD_ANALYTICS_CONNECTION_STRING --arg cdn_base $PROD_CDN_BASE_URL --arg cdn_local $PROD_CDN_LOCAL_PATH '.ConnectionStrings.MainSite = $connection_string | .ConnectionStrings.Analytics = $analytics_cs | .CDNOptions.BaseUrl = $cdn_base | .CDNOptions.LocalStoragePath = $cdn_local' appsettings.temp > $PROJECT_APPSETTINGS
     - rm appsettings.temp
     - dotnet restore
     - dotnet publish -c Release -o ./publish $PROJECT_CSPROJ --no-restore
