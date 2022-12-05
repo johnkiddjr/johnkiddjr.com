@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Migrations.MainSite
 {
     [DbContext(typeof(MainSiteContext))]
     [Migration("20221119212034_AddedAuthViaScaffold")]

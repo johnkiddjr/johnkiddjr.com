@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Migrations.MainSite
 {
     /// <inheritdoc />
     public partial class AddedAuthViaScaffold : Migration

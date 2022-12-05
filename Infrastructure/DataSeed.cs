@@ -8,6 +8,17 @@ namespace Infrastructure
     {
         public static ModelBuilder SeedData(this ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<PrivacyPolicy>()
+                .HasData(
+                    new PrivacyPolicy
+                    {
+                        PrivacyPolicyId = Guid.Parse("aae087b6-be6a-4631-9d49-4ff21220ecd8"),
+                        PolicyMarkdownName = "aae087b6-be6a-4631-9d49-4ff21220ecd8_en.md",
+                        ValidFrom = DateTime.Parse("2022-12-05 00:00:00"),
+                        ValidUntil = null
+                    }
+                );
+
             modelBuilder.Entity<Bio>()
                 .HasData(
                     new Bio

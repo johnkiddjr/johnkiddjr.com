@@ -1,7 +1,10 @@
 ﻿using Infrastructure.Contexts;
 using Infrastructure.Models.Identity;
 using MainSite.Helpers;
+using MainSite.Middleware;
 using MainSite.Options;
+using MainSite.Services;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -21,11 +24,14 @@ public class Startup
         var connectionString = Configuration.GetConnectionString("MainSite");
         var mariaDbVersion = ServerVersion.AutoDetect(connectionString);
         services.AddDbContext<MainSiteContext>(options => options.UseMySql(connectionString, mariaDbVersion));
+        services.AddDbContext<AnalyticsContext>(options => options.UseMySql(Configuration.GetConnectionString("Analytics"), mariaDbVersion));
 
         services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                     .AddEntityFrameworkStores<MainSiteContext>();
 
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        services.AddSingleton<IRestService, RestService>();
+        services.AddSingleton<IMarkdownService, MarkdownService>();
 
         services.AddCors();
         services.AddControllersWithViews();
@@ -40,12 +46,29 @@ public class Startup
         if (!env.IsDevelopment())
         {
             app.UseExceptionHandler("/Home/Error");
+            
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
+            app.UseServerSideAnalytics(options =>
+            {
+                options.EnableDbLogging = true;
+                options.EnableLoggerLogging = false;
+            });
         }
         else
         {
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
             app.UseSwaggerUI();
+
+            app.UseServerSideAnalytics(options =>
+            {
+                options.EnableDbLogging = true;
+                options.EnableLoggerLogging = true;
+            });
         }
 
         //configure ContentHelper to use the correct URL for content
@@ -57,6 +80,8 @@ public class Startup
         HtmlHelper.Configure(accessor);
             
         app.UseStaticFiles();
+
+        app.UseStatusCodePages();
 
         app.UseRouting();
 
