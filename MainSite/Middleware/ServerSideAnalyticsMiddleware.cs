@@ -27,7 +27,7 @@ namespace MainSite.Middleware
                 {
                     var logInfo = new StringBuilder();
                     logInfo.Append($"---------- New Request ----------{Environment.NewLine}");
-                    logInfo.Append($"  IP: {httpContext.Connection.RemoteIpAddress}{Environment.NewLine}");
+                    logInfo.Append($"  IP: {httpContext.Request.Headers["X-Forwarded-For"]}{Environment.NewLine}");
                     logInfo.Append($"  Path: {httpContext.Request.Path}{Environment.NewLine}");
                     logInfo.Append($"  Query String: {httpContext.Request.QueryString}{Environment.NewLine}");
                     logInfo.Append($"  User Agent: {httpContext.Request.Headers[HeaderNames.UserAgent]}{Environment.NewLine}");
