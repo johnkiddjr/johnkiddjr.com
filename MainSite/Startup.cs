@@ -67,7 +67,7 @@ public class Startup
             app.UseServerSideAnalytics(options =>
             {
                 options.EnableDbLogging = true;
-                options.EnableLoggerLogging = true;
+                options.EnableLoggerLogging = false;
             });
         }
 
