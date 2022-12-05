@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Migrations.MainSite
 {
     [DbContext(typeof(MainSiteContext))]
-    [Migration("20220706031355_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20220706035248_AddedDateToOverview")]
+    partial class AddedDateToOverview
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -174,6 +174,9 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("BodyHtml")
                         .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("HeaderText")
                         .HasColumnType("longtext");
