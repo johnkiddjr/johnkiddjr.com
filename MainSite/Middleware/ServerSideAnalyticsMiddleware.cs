@@ -43,7 +43,7 @@ namespace MainSite.Middleware
                     {
                         ApplicationName = "johnkiddjr.com",
                         VisitDate = DateTime.Now,
-                        VisitorIpAddress = httpContext.Connection.RemoteIpAddress.ToString(),
+                        VisitorIpAddress = httpContext.Request.Headers["X-Forwarded-For"],
                         RequestPath = httpContext.Request.Path,
                         QueryStringValue = httpContext.Request.QueryString.ToString(),
                         UserAgentValue = httpContext.Request.Headers[HeaderNames.UserAgent],
