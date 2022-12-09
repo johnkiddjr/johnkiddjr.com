@@ -32,6 +32,7 @@ public class Startup
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddSingleton<IRestService, RestService>();
         services.AddSingleton<IMarkdownService, MarkdownService>();
+        services.AddSingleton<IImageTagService, ImageTagService>();
 
         services.AddCors();
         services.AddControllersWithViews();
@@ -42,20 +43,20 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+        app.UseForwardedHeaders(new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+        });
+
         // Configure the HTTP request pipeline.
         if (!env.IsDevelopment())
         {
             app.UseExceptionHandler("/Home/Error");
-            
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
 
             app.UseServerSideAnalytics(options =>
             {
                 options.EnableDbLogging = true;
-                options.EnableLoggerLogging = false;
+                options.EnableLoggerLogging = true;
             });
         }
         else
@@ -67,7 +68,7 @@ public class Startup
             app.UseServerSideAnalytics(options =>
             {
                 options.EnableDbLogging = true;
-                options.EnableLoggerLogging = true;
+                options.EnableLoggerLogging = false;
             });
         }
 
@@ -77,7 +78,8 @@ public class Startup
 
         //configure html helper
         var accessor = app.ApplicationServices.GetService<IHttpContextAccessor>();
-        HtmlHelper.Configure(accessor);
+        var imageHelper = app.ApplicationServices.GetService<IImageTagService>();
+        HtmlHelper.Configure(accessor, imageHelper);
             
         app.UseStaticFiles();
 
