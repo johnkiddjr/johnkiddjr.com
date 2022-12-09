@@ -83,8 +83,11 @@ namespace MainSite.Controllers
             var user = await _userManager.FindByIdAsync(userGuid);
             var bioId = user.BioId;
 
-            //generate a filename with a guid or something
-            var filename = GenerateRandomFilename("md");
+            //create a variable to hold this value for table insertion later
+            string articleFilename = string.Empty;
+            string articleFullLocalPath = string.Empty;
+
+            Dictionary<string, string> filenameChanges = new Dictionary<string, string>();
 
             //read zip file into byte array
             using var fStream = viewModel.Content.OpenReadStream();
@@ -101,19 +104,48 @@ namespace MainSite.Controllers
 
                 if (IsFileMarkdownFile(entry.Name))
                 {
-                    using var fileStream = IO.File.Create($"{_cdnOptions.LocalStoragePath}{_cdnOptions.ArticlesStub}/{filename}");
+                    articleFilename = GenerateRandomFilename(entry.Name);
+                    articleFullLocalPath = $"{_cdnOptions.LocalStoragePath}{_cdnOptions.ArticlesStub}/{articleFilename}";
+                    using var fileStream = IO.File.Create(articleFullLocalPath);
                     entry.Open().CopyTo(fileStream);
+                    fileStream.Close();
                 }
                 else if (IsFileImageFile(entry.Name))
                 {
-                    using var fileStream = IO.File.Create($"{_cdnOptions.LocalStoragePath}{_cdnOptions.ImagesStub}/{entry.Name}");
+                    var newImageName = GenerateRandomFilename(entry.Name);
+                    filenameChanges.Add(entry.Name, newImageName);
+
+                    using var fileStream = IO.File.Create($"{_cdnOptions.LocalStoragePath}{_cdnOptions.ImagesStub}/{newImageName}");
                     entry.Open().CopyTo(fileStream);
+                    fileStream.Close();
                 }
                 else
                 {
-                    using var fileStream = IO.File.Create($"{_cdnOptions.LocalStoragePath} {_cdnOptions.OtherStub}/{entry.Name}");
+                    var newOtherName = GenerateRandomFilename(entry.Name);
+                    filenameChanges.Add(entry.Name, newOtherName);
+
+                    using var fileStream = IO.File.Create($"{_cdnOptions.LocalStoragePath} {_cdnOptions.OtherStub}/{newOtherName}");
                     entry.Open().CopyTo(fileStream);
+                    fileStream.Close();
                 }
+            }
+
+            //created a scoped section so the stream reader and writer get disposed before the end of the function
+            {
+                using var sr = new StreamReader(articleFullLocalPath);
+                string rawMarkdownContents = sr.ReadToEnd();
+                sr.Close();
+
+                //reopen the markdown file and do a simple text replace for each filename we changed
+                foreach (var changedFilename in filenameChanges)
+                {
+                    rawMarkdownContents = rawMarkdownContents.Replace(changedFilename.Key, changedFilename.Value);
+                }
+
+                using var sw = new StreamWriter(articleFullLocalPath, false);
+                sw.Write(rawMarkdownContents);
+                sw.Flush();
+                sw.Close();
             }
 
             //process tags
@@ -140,7 +172,7 @@ namespace MainSite.Controllers
                 AuthorId = bioId,
                 AvailableDate = viewModel.AvailableDate,
                 UploadDate = DateTime.Now,
-                FileName = filename,
+                FileName = articleFilename,
                 Slug = viewModel.Slug,
                 Title = viewModel.Title,
                 PreviewText = viewModel.PreviewText,
@@ -281,7 +313,13 @@ namespace MainSite.Controllers
             return false;
         }
 
-        private string GenerateRandomFilename(string fileExt) =>
-            $"{Guid.NewGuid().ToString("N")}.{fileExt}";
+        private string GenerateRandomFilename(string originalFileName)
+        {
+            // find the file extension
+            int lastPeriod = originalFileName.LastIndexOf(".");
+            var extension = originalFileName.Substring(lastPeriod + 1);
+
+            return $"{Guid.NewGuid().ToString("N")}.{extension}";
+        }
     }
 }
