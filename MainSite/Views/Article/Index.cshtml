@@ -4,17 +4,28 @@
     <h1>Articles</h1>
     @if(Model.Articles.Any())
     {
-        <ul class="no-style">
-            @foreach (var article in Model.Articles)
+        @foreach(var article in Model.Articles)
+        {
+            var cardBackground = MainSite.Helpers.HtmlHelper.GetImageByTags(article.Tags);
+            if(cardBackground == null)
             {
-                <li>
-                    <a asp-controller="Article" asp-action="ViewArticle" asp-route-articleSlug="@(article.Slug)"><h3>@article.Title</h3></a>
-                    <p>
-                        @article.PreviewText
-                    </p>
-                </li>
+                <div class="article-card card-background-image">
+                    <a asp-controller="Article" asp-action="ViewArticle" asp-route-articleSlug="@(article.Slug)" class="no-decoration">
+                        <span class="article-title">@article.Title</span>
+                        <span class="article-preview">@article.PreviewText</span>
+                    </a>
+                </div>
             }
-        </ul>
+            else
+            {
+                <div class="article-card card-background-image" style="background-image: url(@(cardBackground.ImageFileName));">
+                    <a asp-controller="Article" asp-action="ViewArticle" asp-route-articleSlug="@(article.Slug)" class="no-decoration">
+                        <span class="article-title" style="color: @(cardBackground.TitleFontColor)">@article.Title</span>
+                        <span class="article-preview" style="color: @(cardBackground.DescriptionFontColor)">@article.PreviewText</span>
+                    </a>
+                </div>
+            }
+        }
     }
     else
     {

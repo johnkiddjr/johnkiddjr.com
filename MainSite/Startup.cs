@@ -32,6 +32,7 @@ public class Startup
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddSingleton<IRestService, RestService>();
         services.AddSingleton<IMarkdownService, MarkdownService>();
+        services.AddSingleton<IImageTagService, ImageTagService>();
 
         services.AddCors();
         services.AddControllersWithViews();
@@ -77,7 +78,8 @@ public class Startup
 
         //configure html helper
         var accessor = app.ApplicationServices.GetService<IHttpContextAccessor>();
-        HtmlHelper.Configure(accessor);
+        var imageHelper = app.ApplicationServices.GetService<IImageTagService>();
+        HtmlHelper.Configure(accessor, imageHelper);
             
         app.UseStaticFiles();
 
