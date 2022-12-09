@@ -31,6 +31,7 @@ namespace Infrastructure.Contexts
         public virtual DbSet<Article> Articles { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<ArticleTag> ArticleTagRelations { get; set; }
+        public virtual DbSet<CardBackground> CardBackgrounds { get; set; }
         public virtual DbSet<PrivacyPolicy> PrivacyPolicies { get; set; }
 
 

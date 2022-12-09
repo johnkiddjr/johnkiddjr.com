@@ -198,6 +198,29 @@ namespace Infrastructure.Migrations.MainSite
                         });
                 });
 
+            modelBuilder.Entity("Infrastructure.Models.CardBackground", b =>
+            {
+                b.Property<Guid>("CardBackgroundId")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("char(36)");
+
+                b.Property<string>("DescriptionFontColor")
+                    .HasColumnType("longtext");
+
+                b.Property<string>("ImageFileName")
+                    .HasColumnType("longtext");
+
+                b.Property<Guid>("TagId")
+                    .HasColumnType("char(36)");
+
+                b.Property<string>("TitleFontColor")
+                    .HasColumnType("longtext");
+
+                b.HasKey("CardBackgroundId");
+
+                b.ToTable("CardBackgrounds");
+            });
+
             modelBuilder.Entity("Infrastructure.Models.Contact", b =>
                 {
                     b.Property<Guid>("ContactId")
