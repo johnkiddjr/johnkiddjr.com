@@ -33,6 +33,7 @@ namespace Infrastructure.Contexts
         public virtual DbSet<ArticleTag> ArticleTagRelations { get; set; }
         public virtual DbSet<CardBackground> CardBackgrounds { get; set; }
         public virtual DbSet<PrivacyPolicy> PrivacyPolicies { get; set; }
+        public virtual DbSet<HighScore> HighScores { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
