@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations.MainSite
 {
     [DbContext(typeof(MainSiteContext))]
-    partial class MainSiteContextModelSnapshot : ModelSnapshot
+    [Migration("20230226054210_AddHighScores")]
+    partial class AddHighScores
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -289,9 +292,6 @@ namespace Infrastructure.Migrations.MainSite
                     b.Property<int>("Score")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("SubmissionDate")
-                        .HasColumnType("datetime(6)");
-
                     b.HasKey("HighScoreId");
 
                     b.ToTable("HighScores");
@@ -558,7 +558,7 @@ namespace Infrastructure.Migrations.MainSite
                         {
                             OverviewId = new Guid("416c2518-4151-4241-8ede-70d97ef8855c"),
                             BodyHtml = "Welcome to my portfolio! Use the navigation to look at what I have to offer. Feel free to contact me through email or LinkedIn if you want to talk about a job, a collaboration, or even if just to say \"Hi!\"",
-                            CreatedDate = new DateTime(2023, 2, 26, 0, 46, 25, 997, DateTimeKind.Local).AddTicks(7434),
+                            CreatedDate = new DateTime(2023, 2, 26, 0, 42, 10, 386, DateTimeKind.Local).AddTicks(1839),
                             HeaderText = "Software Engineer with years of experience with C++, C#, VB, and many others on multiple platforms"
                         });
                 });
