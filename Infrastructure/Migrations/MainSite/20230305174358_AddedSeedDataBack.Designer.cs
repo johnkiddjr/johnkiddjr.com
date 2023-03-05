@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations.MainSite
 {
     [DbContext(typeof(MainSiteContext))]
-    partial class MainSiteContextModelSnapshot : ModelSnapshot
+    [Migration("20230305174358_AddedSeedDataBack")]
+    partial class AddedSeedDataBack
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,7 +98,7 @@ namespace Infrastructure.Migrations.MainSite
                         {
                             BioId = new Guid("dc635535-81af-4cb5-a873-869225a41016"),
                             Name = "John Kidd Jr",
-                            PictureUrl = "me-small.jpg"
+                            PictureUrl = "/images/me-small.jpg"
                         });
                 });
 
@@ -128,7 +131,7 @@ namespace Infrastructure.Migrations.MainSite
                             BioId = new Guid("dc635535-81af-4cb5-a873-869225a41016"),
                             BioSectionId = new Guid("efe97e6f-6a1c-4fc0-b53a-11efe24c5f9c"),
                             Description = "I was born August 3rd, 1987 in a small town in Michigan named Owosso (yes the one with a castle). I've lived all over since then. Including: Dallas Texas, Phoenix Arizona, and Grand Rapids Michigan. Eventually I settled (for now) in Lansing Michigan. Though, I'm always looking for another reason to move!",
-                            PhotoUrl = "me-bio.jpg"
+                            PhotoUrl = "/images/me-bio.jpg"
                         },
                         new
                         {
@@ -143,7 +146,7 @@ namespace Infrastructure.Migrations.MainSite
                             BioId = new Guid("dc635535-81af-4cb5-a873-869225a41016"),
                             BioSectionId = new Guid("381488e3-3550-4db1-a412-259a283cee64"),
                             Description = "Over the years I've spent some time at a few companies, until 2018 my job title never said \"Programmer\" or \"Developer\" but I've had my hand in developing software for most of those companies anyway. For more information on exactly what I've been up to, head to the contact page and download my resume.",
-                            PhotoUrl = "programming.jpg"
+                            PhotoUrl = "/images/programming.jpg"
                         },
                         new
                         {
@@ -151,7 +154,7 @@ namespace Infrastructure.Migrations.MainSite
                             BioId = new Guid("dc635535-81af-4cb5-a873-869225a41016"),
                             BioSectionId = new Guid("e852053a-a46e-4ae3-a26e-ef31a0386e3c"),
                             Description = "I have a few hobbies, most notably I like to repair/build old arcade machines. So far I've only completed 1 but I'm currently working on getting Ultimate Mortal Kombat 3 into an old Midway cabinet I found! I'm also known for working on and riding my motorcycles, playing video games, or going to the movies.",
-                            PhotoUrl = "arcade-machine.jpg"
+                            PhotoUrl = "/images/arcade-machine.jpg"
                         });
                 });
 
@@ -558,7 +561,7 @@ namespace Infrastructure.Migrations.MainSite
                         {
                             OverviewId = new Guid("416c2518-4151-4241-8ede-70d97ef8855c"),
                             BodyHtml = "Welcome to my portfolio! Use the navigation to look at what I have to offer. Feel free to contact me through email or LinkedIn if you want to talk about a job, a collaboration, or even if just to say \"Hi!\"",
-                            CreatedDate = new DateTime(2023, 3, 5, 15, 12, 21, 832, DateTimeKind.Local).AddTicks(5423),
+                            CreatedDate = new DateTime(2023, 3, 5, 12, 43, 58, 721, DateTimeKind.Local).AddTicks(7662),
                             HeaderText = "Software Engineer with years of experience with C++, C#, VB, and many others on multiple platforms"
                         });
                 });
@@ -661,9 +664,6 @@ namespace Infrastructure.Migrations.MainSite
                     b.Property<string>("ProjectSlug")
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int>("ProjectType")
-                        .HasColumnType("int");
-
                     b.Property<int>("RepositoryType")
                         .HasColumnType("int");
 
@@ -687,7 +687,6 @@ namespace Infrastructure.Migrations.MainSite
                             Description = "This is a board game created as part of my GAM125 class, for this project I served as a content creator and organizer. It plays 2-6 players as they try to work their way through a dungeon together. Only one person gets the treasure though, so watch out for traps by your allies!",
                             Name = "Fantastic Frienemies",
                             ProjectSlug = "FantasticFrienemies",
-                            ProjectType = 0,
                             RepositoryType = 0,
                             ShortDescription = "This is a board game created as part of my GAM125 class, for this project I served as a content creator and organizer. It plays 2-6 players as they try to work their way through a dungeon together. Only one person gets the treasure though, so watch out for traps by your allies!"
                         },
@@ -699,7 +698,6 @@ namespace Infrastructure.Migrations.MainSite
                             LibrariesUsed = "SDL, Lua, sol, glm, ImGui",
                             Name = "Tapper Clone (BizStream Tapper)",
                             ProjectSlug = "BizTapper",
-                            ProjectType = 1,
                             RepositoryType = 0,
                             ShortDescription = "This is a clone of Tapper made by myself and several others at BizStream, written in C++ and using Lua for scripting. While I wrote most of the source code, it is property of BizStream and not linked here."
                         },
@@ -708,11 +706,10 @@ namespace Infrastructure.Migrations.MainSite
                             ProjectId = new Guid("5b4a154e-4c71-45e5-8dee-d7bbdae7abe2"),
                             Description = "This is a website written with C# for backend, with Vue as the frontend. The Vue side utilizes Typescript. Database is MariaDb.",
                             LanguageUsed = "C#",
-                            LibrariesUsed = "Markdig, RestSharp",
+                            LibrariesUsed = "",
                             Name = "My Portfolio Website",
                             NetVersion = "7.0",
                             ProjectSlug = "Portfolio",
-                            ProjectType = 1,
                             RepositoryType = 2,
                             RepositoryUrl = "https://source.kiddclan.com/johnkiddjr/johnkiddjr.com",
                             ShortDescription = "This is a website written with C# for backend, with Vue as the frontend. The Vue side utilizes Typescript. Database is MariaDb."
@@ -725,7 +722,6 @@ namespace Infrastructure.Migrations.MainSite
                             LanguageUsed = "C++",
                             Name = "Tic Tac Toe (Console)",
                             ProjectSlug = "ConsoleTicTacToe",
-                            ProjectType = 1,
                             RepositoryType = 2,
                             RepositoryUrl = "https://source.kiddclan.com/johnkiddjr/console-tictactoe",
                             ShortDescription = "Just a simple game I wrote about a year ago to make sure my C++ skills weren't getting rusty. It's 2 player, with no AI, and very simple."
@@ -759,28 +755,21 @@ namespace Infrastructure.Migrations.MainSite
                             ProjectImageId = new Guid("9694bc54-7f9a-40d4-9101-5059cacc6d41"),
                             AltText = "Fantasic Frienemies",
                             ProjectId = new Guid("2590613c-6eed-4dab-93f6-f687d52dc9fe"),
-                            Url = "ff.jpg"
+                            Url = "/images/ff.jpg"
                         },
                         new
                         {
                             ProjectImageId = new Guid("bc1c350d-6813-4a94-8148-285bc2b4966b"),
                             AltText = "Tapper Clone (BizStream Tapper)",
                             ProjectId = new Guid("35da0f22-1a01-4e36-8e67-986d2f194308"),
-                            Url = "biztapper.jpg"
+                            Url = "/images/biztapper.jpg"
                         },
                         new
                         {
                             ProjectImageId = new Guid("f477507f-186b-43af-a668-38a054098ca7"),
                             AltText = "Tic Tac Toe",
                             ProjectId = new Guid("0a46c060-d62c-4e12-b58c-bed903f98e0f"),
-                            Url = "simple-tictactoe.jpg"
-                        },
-                        new
-                        {
-                            ProjectImageId = new Guid("6d18f31c-beba-44a8-8ad2-494f0ae8089f"),
-                            AltText = "Portfolio Home Snippet",
-                            ProjectId = new Guid("5b4a154e-4c71-45e5-8dee-d7bbdae7abe2"),
-                            Url = "portfolio-web.png"
+                            Url = "/images/simple-tictactoe.jpg"
                         });
                 });
 
@@ -803,7 +792,7 @@ namespace Infrastructure.Migrations.MainSite
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("ProjectLinks");
+                    b.ToTable("ProjectLink");
                 });
 
             modelBuilder.Entity("Infrastructure.Models.Tag", b =>

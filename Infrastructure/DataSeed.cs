@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 
 namespace Infrastructure
 {
@@ -25,7 +26,7 @@ namespace Infrastructure
                     {
                         BioId = Guid.Parse("DC635535-81AF-4CB5-A873-869225A41016"),
                         Name = "John Kidd Jr",
-                        PictureUrl = "/images/me-small.jpg"
+                        PictureUrl = "me-small.jpg"
                     }
                 );
 
@@ -66,7 +67,7 @@ namespace Infrastructure
                         Description = "I was born August 3rd, 1987 in a small town in Michigan named Owosso (yes the one with a castle). I've lived " +
                         "all over since then. Including: Dallas Texas, Phoenix Arizona, and Grand Rapids Michigan. Eventually I settled (for now) in " +
                         "Lansing Michigan. Though, I'm always looking for another reason to move!",
-                        PhotoUrl = "/images/me-bio.jpg",
+                        PhotoUrl = "me-bio.jpg",
                         BioSectionId = Guid.Parse("EFE97E6F-6A1C-4FC0-B53A-11EFE24C5F9C"),
                     },
                     new BioDetail
@@ -85,7 +86,7 @@ namespace Infrastructure
                         Description = "Over the years I've spent some time at a few companies, until 2018 my job title never said \"Programmer\" or " +
                         "\"Developer\" but I've had my hand in developing software for most of those companies anyway. For more information on exactly " +
                         "what I've been up to, head to the contact page and download my resume.",
-                        PhotoUrl = "/images/programming.jpg",
+                        PhotoUrl = "programming.jpg",
                         BioSectionId = Guid.Parse("381488E3-3550-4DB1-A412-259A283CEE64")
                     },
                     new BioDetail
@@ -95,7 +96,7 @@ namespace Infrastructure
                         Description = "I have a few hobbies, most notably I like to repair/build old arcade machines. So far I've only completed 1 " +
                         "but I'm currently working on getting Ultimate Mortal Kombat 3 into an old Midway cabinet I found! I'm also known for " +
                         "working on and riding my motorcycles, playing video games, or going to the movies.",
-                        PhotoUrl = "/images/arcade-machine.jpg",
+                        PhotoUrl = "arcade-machine.jpg",
                         BioSectionId = Guid.Parse("E852053A-A46E-4AE3-A26E-EF31A0386E3C")
                     }
                 );
@@ -240,36 +241,99 @@ namespace Infrastructure
                     }
                 );
 
+            modelBuilder.Entity<ProjectImage>()
+                .HasData(
+                    new ProjectImage
+                    {
+                        AltText = "Fantasic Frienemies",
+                        ProjectId = Guid.Parse("2590613C-6EED-4DAB-93F6-F687D52DC9FE"),
+                        Url = "ff.jpg",
+                        ProjectImageId = Guid.Parse("9694bc54-7f9a-40d4-9101-5059cacc6d41")
+                    },
+                    new ProjectImage
+                    {
+                        AltText = "Tapper Clone (BizStream Tapper)",
+                        Url = "biztapper.jpg",
+                        ProjectId = Guid.Parse("35DA0F22-1A01-4E36-8E67-986D2F194308"),
+                        ProjectImageId = Guid.Parse("bc1c350d-6813-4a94-8148-285bc2b4966b")
+                    },
+                    new ProjectImage
+                    {
+                        Url = "simple-tictactoe.jpg",
+                        AltText = "Tic Tac Toe",
+                        ProjectId = Guid.Parse("0A46C060-D62C-4E12-B58C-BED903F98E0F"),
+                        ProjectImageId = Guid.Parse("f477507f-186b-43af-a668-38a054098ca7")
+                    },
+                    new ProjectImage
+                    {
+                        Url = "portfolio-web.png",
+                        AltText = "Portfolio Home Snippet",
+                        ProjectId = Guid.Parse("5B4A154E-4C71-45E5-8DEE-D7BBDAE7ABE2"),
+                        ProjectImageId = Guid.Parse("6d18f31c-beba-44a8-8ad2-494f0ae8089f")
+                    }
+                );
+
             modelBuilder.Entity<Project>()
                 .HasData(
                     new Project
                     {
                         ProjectId = Guid.Parse("2590613C-6EED-4DAB-93F6-F687D52DC9FE"),
                         Name = "Fantastic Frienemies",
+                        ShortDescription = "This is a board game created as part of my GAM125 class, for this project I served as a content creator and organizer. It plays 2-6 players as they try to work their way through a dungeon together. Only one person gets the treasure though, so watch out for traps by your allies!",
                         Description = "This is a board game created as part of my GAM125 class, for this project I served as a content creator and organizer. It plays 2-6 players as they try to work their way through a dungeon together. Only one person gets the treasure though, so watch out for traps by your allies!",
-                        PictureUrl = "/images/ff.jpg"
+                        RepositoryUrl = null,
+                        DownloadUrl = null,
+                        LanguageUsed = null,
+                        LibrariesUsed = null,
+                        NetVersion = null,
+                        ProjectSlug = "FantasticFrienemies",
+                        RepositoryType = RepositoryType.None,
+                        ProjectType = ProjectType.Other
                     },
                     new Project
                     {
                         ProjectId = Guid.Parse("35DA0F22-1A01-4E36-8E67-986D2F194308"),
                         Name = "Tapper Clone (BizStream Tapper)",
+                        ShortDescription = "This is a clone of Tapper made by myself and several others at BizStream, written in C++ and using Lua for scripting. While I wrote most of the source code, it is property of BizStream and not linked here.",
                         Description = "This is a clone of Tapper made by myself and several others at BizStream, written in C++ and using Lua for scripting. While I wrote most of the source code, it is property of BizStream and not linked here.",
-                        PictureUrl = "/images/biztapper.jpg"
+                        RepositoryUrl = null,
+                        DownloadUrl = null,
+                        LanguageUsed = "C++, Lua",
+                        LibrariesUsed = "SDL, Lua, sol, glm, ImGui",
+                        NetVersion = null,
+                        ProjectSlug = "BizTapper",
+                        RepositoryType = RepositoryType.None,
+                        ProjectType = ProjectType.Programming
                     },
                     new Project
                     {
                         ProjectId = Guid.Parse("5B4A154E-4C71-45E5-8DEE-D7BBDAE7ABE2"),
                         Name = "My Portfolio Website",
+                        ShortDescription = "This is a website written with C# for backend, with Vue as the frontend. The Vue side utilizes Typescript. Database is MariaDb.",
                         Description = "This is a website written with C# for backend, with Vue as the frontend. The Vue side utilizes Typescript. Database is MariaDb.",
-                        DirectUrl = "https://source.kiddclan.com/johnkiddjr/johnkiddjr.com"
+                        RepositoryUrl = "https://source.kiddclan.com/johnkiddjr/johnkiddjr.com",
+                        DownloadUrl = null,
+                        LanguageUsed = "C#",
+                        NetVersion = "7.0",
+                        LibrariesUsed = "Markdig, RestSharp",
+                        ProjectSlug = "Portfolio",
+                        RepositoryType = RepositoryType.GitLab,
+                        ProjectType = ProjectType.Programming
                     },
                     new Project
                     {
                         ProjectId = Guid.Parse("0A46C060-D62C-4E12-B58C-BED903F98E0F"),
-                        Name = "Windows/Linux Console - TicTacToe",
-                        DirectUrl = "https://source.kiddclan.com/johnkiddjr/console-tictactoe",
-                        Description = "Just a simple game I wrote about a year ago to make sure my C++ skills weren't getting rusty. It's 2 player, with no AI, and very simple.",
-                        PictureUrl = "/images/simple-tictactoe.jpg"
+                        Name = "Tic Tac Toe (Console)",
+                        ShortDescription = "Just a simple game I wrote about a year ago to make sure my C++ skills weren't getting rusty. It's 2 player, with no AI, and very simple.",
+                        RepositoryUrl = "https://source.kiddclan.com/johnkiddjr/console-tictactoe",
+                        DownloadUrl = "https://source.kiddclan.com/johnkiddjr/console-tictactoe/-/releases",
+                        LanguageUsed = "C++",
+                        LibrariesUsed = null,
+                        NetVersion = null,
+                        ProjectSlug = "ConsoleTicTacToe",
+                        RepositoryType = RepositoryType.GitLab,
+                        ProjectType = ProjectType.Programming,
+                        Description = "This implementation of Tic Tac Toe is written in C++ and outputs everything to the console. When the game starts, the console will display an empty 3x3 grid representing the Tic Tac Toe board. The two players will take turns placing their symbols on the board by entering the row and column numbers of the space they want to occupy. The game will then check if the move is valid and update the board accordingly. If a player achieves three in a row or all spaces on the board are filled, the game will end and display the result on the console.  This implementation does not include an AI player option, so it is intended for two human players to play against each other.",
                     }
                 );
 

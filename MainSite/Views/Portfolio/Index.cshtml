@@ -6,47 +6,24 @@
         <h2>Projects</h2>
         @if(Model.ProjectData != null)
         {
-            <ul>
+            <ul class="project-card-container">
                 @foreach (var project in Model.ProjectData.Projects)
                 {
-                    if(Model.ProjectData.Projects.IndexOf(project) % 2 == 0)
-                    {
-                        <li>
-                            <a href="@(project.DirectUrl)"><h3>@project.Name</h3></a>
-                            <table>
-                                <tr>
-                                    <td class="align-top">
-                                        @project.Description
-                                    </td>
-                                    @if (project.PictureUrl != null)
+                        <li class="project-card">
+                            <a class="no-decoration" href="@Url.Action("ProjectLanding", new { slug = project.Slug })">
+                                <h3 class="project-card-title"><span>@project.Name</span></h3>
+                                <div class="project-card-section">
+                                    <p class="project-card-description">@project.ShortDescription</p>
+                                    @if (project.Images != null && project.Images.Any())
                                     {
-                                        <td>
-                                            <img src="@(ContentHelper.GetUrlForResource(ContentType.images, project.PictureUrl))" alt="@(project.Name)" />
-                                        </td>
+                                        var image = project.Images.First();
+                                        <div class="project-card-image">
+                                            <img src="@(ContentHelper.GetUrlForResource(ContentType.images, image.ImageUrl))" alt="@image.AltText" />
+                                        </div>
                                     }
-                                </tr>
-                            </table>
+                                </div>
+                            </a>
                         </li>
-                    }
-                    else
-                    {
-                        <li>
-                            <a href="@(project.DirectUrl)"><h3>@project.Name</h3></a>
-                            <table>
-                                <tr>
-                                    @if (project.PictureUrl != null)
-                                    {
-                                        <td>
-                                            <img src="@(ContentHelper.GetUrlForResource(ContentType.images, project.PictureUrl))" alt="@(project.Name)" />
-                                        </td>
-                                    }
-                                    <td class="align-top">
-                                        @project.Description
-                                    </td>
-                                </tr>
-                            </table>
-                        </li>
-                    }
                 }
             </ul>
         }

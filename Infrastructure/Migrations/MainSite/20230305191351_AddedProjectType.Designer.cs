@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations.MainSite
 {
     [DbContext(typeof(MainSiteContext))]
-    partial class MainSiteContextModelSnapshot : ModelSnapshot
+    [Migration("20230305191351_AddedProjectType")]
+    partial class AddedProjectType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,7 +98,7 @@ namespace Infrastructure.Migrations.MainSite
                         {
                             BioId = new Guid("dc635535-81af-4cb5-a873-869225a41016"),
                             Name = "John Kidd Jr",
-                            PictureUrl = "me-small.jpg"
+                            PictureUrl = "/images/me-small.jpg"
                         });
                 });
 
@@ -128,7 +131,7 @@ namespace Infrastructure.Migrations.MainSite
                             BioId = new Guid("dc635535-81af-4cb5-a873-869225a41016"),
                             BioSectionId = new Guid("efe97e6f-6a1c-4fc0-b53a-11efe24c5f9c"),
                             Description = "I was born August 3rd, 1987 in a small town in Michigan named Owosso (yes the one with a castle). I've lived all over since then. Including: Dallas Texas, Phoenix Arizona, and Grand Rapids Michigan. Eventually I settled (for now) in Lansing Michigan. Though, I'm always looking for another reason to move!",
-                            PhotoUrl = "me-bio.jpg"
+                            PhotoUrl = "/images/me-bio.jpg"
                         },
                         new
                         {
@@ -143,7 +146,7 @@ namespace Infrastructure.Migrations.MainSite
                             BioId = new Guid("dc635535-81af-4cb5-a873-869225a41016"),
                             BioSectionId = new Guid("381488e3-3550-4db1-a412-259a283cee64"),
                             Description = "Over the years I've spent some time at a few companies, until 2018 my job title never said \"Programmer\" or \"Developer\" but I've had my hand in developing software for most of those companies anyway. For more information on exactly what I've been up to, head to the contact page and download my resume.",
-                            PhotoUrl = "programming.jpg"
+                            PhotoUrl = "/images/programming.jpg"
                         },
                         new
                         {
@@ -151,7 +154,7 @@ namespace Infrastructure.Migrations.MainSite
                             BioId = new Guid("dc635535-81af-4cb5-a873-869225a41016"),
                             BioSectionId = new Guid("e852053a-a46e-4ae3-a26e-ef31a0386e3c"),
                             Description = "I have a few hobbies, most notably I like to repair/build old arcade machines. So far I've only completed 1 but I'm currently working on getting Ultimate Mortal Kombat 3 into an old Midway cabinet I found! I'm also known for working on and riding my motorcycles, playing video games, or going to the movies.",
-                            PhotoUrl = "arcade-machine.jpg"
+                            PhotoUrl = "/images/arcade-machine.jpg"
                         });
                 });
 
@@ -558,7 +561,7 @@ namespace Infrastructure.Migrations.MainSite
                         {
                             OverviewId = new Guid("416c2518-4151-4241-8ede-70d97ef8855c"),
                             BodyHtml = "Welcome to my portfolio! Use the navigation to look at what I have to offer. Feel free to contact me through email or LinkedIn if you want to talk about a job, a collaboration, or even if just to say \"Hi!\"",
-                            CreatedDate = new DateTime(2023, 3, 5, 15, 12, 21, 832, DateTimeKind.Local).AddTicks(5423),
+                            CreatedDate = new DateTime(2023, 3, 5, 14, 13, 51, 409, DateTimeKind.Local).AddTicks(3858),
                             HeaderText = "Software Engineer with years of experience with C++, C#, VB, and many others on multiple platforms"
                         });
                 });
@@ -708,7 +711,7 @@ namespace Infrastructure.Migrations.MainSite
                             ProjectId = new Guid("5b4a154e-4c71-45e5-8dee-d7bbdae7abe2"),
                             Description = "This is a website written with C# for backend, with Vue as the frontend. The Vue side utilizes Typescript. Database is MariaDb.",
                             LanguageUsed = "C#",
-                            LibrariesUsed = "Markdig, RestSharp",
+                            LibrariesUsed = "",
                             Name = "My Portfolio Website",
                             NetVersion = "7.0",
                             ProjectSlug = "Portfolio",

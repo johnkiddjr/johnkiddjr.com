@@ -1,0 +1,62 @@
+﻿@model ProjectViewModel
+
+<h1 class="project-header">@Model.Name</h1>
+
+<div class="project-details">
+    <div class="project-content">
+        @if (!string.IsNullOrWhiteSpace(Model?.Images?.First()?.ImageUrl))
+        {
+            <div class="project-image">
+                <img src="@(ContentHelper.GetUrlForResource(ContentType.images, Model?.Images?.First()?.ImageUrl))" alt="@(Model.Name)" />
+            </div>
+        }
+
+        <br /><br />
+    </div>
+
+    <div class="project-info">
+        @if (Model.ProjectType == "Programming")
+        {
+            <div class="project-section-tab"><span>Project Details</span></div>
+            <div class="project-section">
+                <div class="project-info-section">
+                    <div class="project-info-label">Language Used:</div>
+                    <div class="project-info-value">@Model.LanguageUsed</div>
+                </div>
+                @if (!string.IsNullOrWhiteSpace(Model.LibrariesUsed))
+                {
+                    <div class="project-info-section">
+                        <div class="project-info-label">Libraries Used:</div>
+                        <div class="project-info-value">@Model.LibrariesUsed</div>
+                    </div>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.LanguageUsed) && Model.LanguageUsed.ToLowerInvariant().Contains("c#"))
+                {
+                    <div class="project-info-section">
+                        <div class="project-info-label">.NET Version:</div>
+                        <div class="project-info-value">@Model.NetVersion</div>
+                    </div>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.RepositoryType))
+                {
+                    <div class="project-info-section">
+                        <div class="project-info-label">Code Repository:</div>
+                        <div class="project-info-value"><a href="@Model.RepositoryUrl">@Model.RepositoryType</a></div>
+                    </div>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.DownloadUrl))
+                {
+                    <div class="project-info-section">
+                        <div class="project-info-label">Download Binary:</div>
+                        <div class="project-info-value"><a href="@Model.DownloadUrl">Download</a></div>
+                    </div>
+                }
+            </div>
+            <br />
+        }
+        <div class="project-section-tab"><span>Project Description</span></div>
+        <div class="project-section">
+            <p>@Model.Description</p>
+        </div>
+    </div>
+</div>
