@@ -2,6 +2,7 @@
 using Infrastructure.Models.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 
 namespace Infrastructure.Contexts
@@ -34,7 +35,10 @@ namespace Infrastructure.Contexts
         public virtual DbSet<CardBackground> CardBackgrounds { get; set; }
         public virtual DbSet<PrivacyPolicy> PrivacyPolicies { get; set; }
         public virtual DbSet<HighScore> HighScores { get; set; }
-
+        public virtual DbSet<ProjectImage> ProjectImages { get; set; }
+        public virtual DbSet<ProjectLink> ProjectLinks { get; set; }
+        public virtual DbSet<AdminSection> AdminSections { get; set; }
+        public virtual DbSet<AdminSectionItem> AdminSectionsItems { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -42,7 +46,7 @@ namespace Infrastructure.Contexts
             {
                 throw new NotSupportedException("DbContext must be configured!");
             }
-
+            
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -52,6 +56,10 @@ namespace Infrastructure.Contexts
 
             modelBuilder.Entity<Article>()
                 .HasIndex(a => a.Slug)
+                .IsUnique(true);
+
+            modelBuilder.Entity<Project>()
+                .HasIndex(a => a.ProjectSlug)
                 .IsUnique(true);
 
             //seed data here

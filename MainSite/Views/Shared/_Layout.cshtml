@@ -1,4 +1,8 @@
-﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor Accessor
+﻿@using Infrastructure.Models.Identity;
+@using Microsoft.AspNetCore.Identity;
+
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor Accessor
+@inject SignInManager<ApplicationUser> SignInManager
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +30,11 @@
                 <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/article", "nav-selected", false))" href="/article">Articles</a> |
                 <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/about", "nav-selected", false))" href="/about">About</a> |
                 <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/contact", "nav-selected", false))" href="/contact">Contact</a>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <span> |</span>
+                    <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/admin", "nav-selected", false))" href="/admin">Admin</a>
+                }
             </nav>
             <hr class="drop-shadow" />
         </div>
