@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations.MainSite
 {
     [DbContext(typeof(MainSiteContext))]
-    partial class MainSiteContextModelSnapshot : ModelSnapshot
+    [Migration("20230305204250_AddedAdminArea")]
+    partial class AddedAdminArea
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,17 +39,7 @@ namespace Infrastructure.Migrations.MainSite
                         new
                         {
                             AdminSectionId = new Guid("860d2bd2-c8ac-4011-980b-a76830b32541"),
-                            SectionTitle = "Article Management"
-                        },
-                        new
-                        {
-                            AdminSectionId = new Guid("08db1dc5-3dd3-425c-820c-4268e219dadd"),
-                            SectionTitle = "Project Management"
-                        },
-                        new
-                        {
-                            AdminSectionId = new Guid("08db1dc5-1ebc-4334-81b4-22ff3c75b527"),
-                            SectionTitle = "Admin Management"
+                            SectionTitle = "Articles"
                         });
                 });
 
@@ -76,27 +69,6 @@ namespace Infrastructure.Migrations.MainSite
                             AdminSectionId = new Guid("860d2bd2-c8ac-4011-980b-a76830b32541"),
                             LinkText = "Upload New Article",
                             LinkUrl = "/Article/Upload"
-                        },
-                        new
-                        {
-                            AdminSectionItemId = new Guid("08db1dd1-dc20-4aac-8d68-94390a576ec9"),
-                            AdminSectionId = new Guid("08db1dc5-1ebc-4334-81b4-22ff3c75b527"),
-                            LinkText = "Add Section",
-                            LinkUrl = "/Admin/AddSection"
-                        },
-                        new
-                        {
-                            AdminSectionItemId = new Guid("08db1dd1-ec7e-4daf-8d3d-859391d415cf"),
-                            AdminSectionId = new Guid("08db1dc5-1ebc-4334-81b4-22ff3c75b527"),
-                            LinkText = "Add Section Item",
-                            LinkUrl = "/Admin/AddSectionItem"
-                        },
-                        new
-                        {
-                            AdminSectionItemId = new Guid("f410c76b-e8d5-4315-ac94-a739b98f7a0c"),
-                            AdminSectionId = new Guid("08db1dc5-3dd3-425c-820c-4268e219dadd"),
-                            LinkText = "Add Project",
-                            LinkUrl = "/Project/AddProject"
                         });
                 });
 
@@ -639,7 +611,7 @@ namespace Infrastructure.Migrations.MainSite
                         {
                             OverviewId = new Guid("416c2518-4151-4241-8ede-70d97ef8855c"),
                             BodyHtml = "Welcome to my portfolio! Use the navigation to look at what I have to offer. Feel free to contact me through email or LinkedIn if you want to talk about a job, a collaboration, or even if just to say \"Hi!\"",
-                            CreatedDate = new DateTime(2023, 3, 6, 2, 6, 36, 350, DateTimeKind.Local).AddTicks(6286),
+                            CreatedDate = new DateTime(2023, 3, 5, 15, 42, 50, 572, DateTimeKind.Local).AddTicks(3398),
                             HeaderText = "Software Engineer with years of experience with C++, C#, VB, and many others on multiple platforms"
                         });
                 });
@@ -721,9 +693,6 @@ namespace Infrastructure.Migrations.MainSite
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("datetime(6)");
-
                     b.Property<string>("Description")
                         .HasColumnType("longtext");
 
@@ -768,7 +737,6 @@ namespace Infrastructure.Migrations.MainSite
                         new
                         {
                             ProjectId = new Guid("2590613c-6eed-4dab-93f6-f687d52dc9fe"),
-                            DateAdded = new DateTime(2023, 3, 6, 2, 6, 36, 350, DateTimeKind.Local).AddTicks(6396),
                             Description = "This is a board game created as part of my GAM125 class, for this project I served as a content creator and organizer. It plays 2-6 players as they try to work their way through a dungeon together. Only one person gets the treasure though, so watch out for traps by your allies!",
                             Name = "Fantastic Frienemies",
                             ProjectSlug = "FantasticFrienemies",
@@ -779,7 +747,6 @@ namespace Infrastructure.Migrations.MainSite
                         new
                         {
                             ProjectId = new Guid("35da0f22-1a01-4e36-8e67-986d2f194308"),
-                            DateAdded = new DateTime(2023, 3, 6, 2, 6, 36, 350, DateTimeKind.Local).AddTicks(6399),
                             Description = "This is a clone of Tapper made by myself and several others at BizStream, written in C++ and using Lua for scripting. While I wrote most of the source code, it is property of BizStream and not linked here.",
                             LanguageUsed = "C++, Lua",
                             LibrariesUsed = "SDL, Lua, sol, glm, ImGui",
@@ -792,7 +759,6 @@ namespace Infrastructure.Migrations.MainSite
                         new
                         {
                             ProjectId = new Guid("5b4a154e-4c71-45e5-8dee-d7bbdae7abe2"),
-                            DateAdded = new DateTime(2023, 3, 6, 2, 6, 36, 350, DateTimeKind.Local).AddTicks(6402),
                             Description = "This is a website written with C# for backend, with Vue as the frontend. The Vue side utilizes Typescript. Database is MariaDb.",
                             LanguageUsed = "C#",
                             LibrariesUsed = "Markdig, RestSharp",
@@ -807,7 +773,6 @@ namespace Infrastructure.Migrations.MainSite
                         new
                         {
                             ProjectId = new Guid("0a46c060-d62c-4e12-b58c-bed903f98e0f"),
-                            DateAdded = new DateTime(2023, 3, 6, 2, 6, 36, 350, DateTimeKind.Local).AddTicks(6405),
                             Description = "This implementation of Tic Tac Toe is written in C++ and outputs everything to the console. When the game starts, the console will display an empty 3x3 grid representing the Tic Tac Toe board. The two players will take turns placing their symbols on the board by entering the row and column numbers of the space they want to occupy. The game will then check if the move is valid and update the board accordingly. If a player achieves three in a row or all spaces on the board are filled, the game will end and display the result on the console.  This implementation does not include an AI player option, so it is intended for two human players to play against each other.",
                             DownloadUrl = "https://source.kiddclan.com/johnkiddjr/console-tictactoe/-/releases",
                             LanguageUsed = "C++",
@@ -817,36 +782,6 @@ namespace Infrastructure.Migrations.MainSite
                             RepositoryType = 2,
                             RepositoryUrl = "https://source.kiddclan.com/johnkiddjr/console-tictactoe",
                             ShortDescription = "Just a simple game I wrote about a year ago to make sure my C++ skills weren't getting rusty. It's 2 player, with no AI, and very simple."
-                        },
-                        new
-                        {
-                            ProjectId = new Guid("08db1e06-2e6d-415c-8bb9-435e511b2a56"),
-                            DateAdded = new DateTime(2023, 3, 6, 2, 6, 36, 350, DateTimeKind.Local).AddTicks(6407),
-                            Description = "I served as Programming Lead on this project, supervising two other programmers while contributing to both this project and the Character Data Editor Tool.\r\n\r\nOfficial description of the game:\r\n\r\nWelcome to KNOCK-OUT ARCADE!\r\n\r\nThis is a 2D retro-inspired fighting game with easy-to-pick-up controls and stylish combos. The game takes place at a famous arcade, owned by a dangerous businessman.",
-                            DownloadUrl = "https://jazz-boy.itch.io/knock-out-arcade",
-                            LanguageUsed = "GameMaker Language (GML)",
-                            Name = "Knockout Arcade",
-                            ProjectSlug = "KOArcade",
-                            ProjectType = 1,
-                            RepositoryType = 1,
-                            RepositoryUrl = "https://github.com/KnockoutArcade/KnockoutArcade",
-                            ShortDescription = "This is a 2D retro-inspired fighting game with easy-to-pick-up controls and stylish combos. The game takes place at a famous arcade, owned by a dangerous businessman."
-                        },
-                        new
-                        {
-                            ProjectId = new Guid("08db1e07-c533-41a9-86e9-aafee37468dd"),
-                            DateAdded = new DateTime(2023, 3, 6, 2, 6, 36, 350, DateTimeKind.Local).AddTicks(6410),
-                            Description = "For Knockout Arcade I served as the Lead Programmer. As part of my responsibilities, I created and maintained this Character Editor Tool.\r\n\r\nThis editor is used to create and modify the data for the characters in Knockout Arcade. The data is exported in JSON format to be imported and used by the game directly. This greatly improved the usability of the code and made it trivial to add new characters or make changes to the character's stats or moves.\r\n\r\nAdditionally, this tool allows designers to make palette changes in real-time. Greatly reducing the time it takes to try out new palettes for the characters.",
-                            DownloadUrl = "https://github.com/KnockoutArcade/Character-Data-Editor/releases",
-                            LanguageUsed = "C#, GLSL",
-                            LibrariesUsed = "ImGui.Net, Raylib-cs, Newtonsoft.Json, Serilog, System.Commandline, Hardware.Info",
-                            Name = "Knockout Arcade Character Editor Tool",
-                            NetVersion = "7.0",
-                            ProjectSlug = "KOArcadeTool",
-                            ProjectType = 1,
-                            RepositoryType = 1,
-                            RepositoryUrl = "https://github.com/KnockoutArcade/Character-Data-Editor",
-                            ShortDescription = "This is an editor for creating and modifying the data for the characters in Knockout Arcade!"
                         });
                 });
 
@@ -897,69 +832,6 @@ namespace Infrastructure.Migrations.MainSite
                             AltText = "Portfolio Home Snippet",
                             ProjectId = new Guid("5b4a154e-4c71-45e5-8dee-d7bbdae7abe2"),
                             Url = "portfolio-web.png"
-                        },
-                        new
-                        {
-                            ProjectImageId = new Guid("08db1e06-2e75-49ab-896f-9788075da899"),
-                            AltText = "Title Screen for Knockout Arcade",
-                            ProjectId = new Guid("08db1e06-2e6d-415c-8bb9-435e511b2a56"),
-                            Url = "f03912f92b3e4f96be8df8e6fc481986.png"
-                        },
-                        new
-                        {
-                            ProjectImageId = new Guid("08db1e06-2e76-4ee2-8768-aa567530f060"),
-                            AltText = "Fight!",
-                            ProjectId = new Guid("08db1e06-2e6d-415c-8bb9-435e511b2a56"),
-                            Url = "8a1635ea5b05404883bf8f0c488172eb.png"
-                        },
-                        new
-                        {
-                            ProjectImageId = new Guid("08db1e06-2e77-4ca4-8782-afb4b7d6d86e"),
-                            AltText = "Character Select screen for Knockout Arcade",
-                            ProjectId = new Guid("08db1e06-2e6d-415c-8bb9-435e511b2a56"),
-                            Url = "4bf524eb3b584c66b822e8056c3ddee4.png"
-                        },
-                        new
-                        {
-                            ProjectImageId = new Guid("08db1e06-2e78-47e6-8845-2a3ef9a1f023"),
-                            AltText = "Stage Select screen for Knockout Arcade",
-                            ProjectId = new Guid("08db1e06-2e6d-415c-8bb9-435e511b2a56"),
-                            Url = "10ac07360ab749d0bbc3b8a63e09bb10.png"
-                        },
-                        new
-                        {
-                            ProjectImageId = new Guid("08db1e06-2e79-42c5-8560-3997e920306d"),
-                            AltText = "Close up of a kick happening in Knockout Arcade",
-                            ProjectId = new Guid("08db1e06-2e6d-415c-8bb9-435e511b2a56"),
-                            Url = "9f83759f89c14e979311acd4cb3c14ce.png"
-                        },
-                        new
-                        {
-                            ProjectImageId = new Guid("08db1e07-c53a-446b-81a2-82876521112f"),
-                            AltText = "Editor Project Selection Page",
-                            ProjectId = new Guid("08db1e07-c533-41a9-86e9-aafee37468dd"),
-                            Url = "3e54a89bd2684eba95f68c838cd95ce3.png"
-                        },
-                        new
-                        {
-                            ProjectImageId = new Guid("08db1e07-c53a-4d9f-8777-04fdc4b93ae7"),
-                            AltText = "Editor Character Selection Page",
-                            ProjectId = new Guid("08db1e07-c533-41a9-86e9-aafee37468dd"),
-                            Url = "1af8b33b248e4fb985691b6cbe9f12f4.png"
-                        },
-                        new
-                        {
-                            ProjectImageId = new Guid("08db1e07-c53b-4b3f-854d-f3fc6f3c73b2"),
-                            AltText = "Default palette, move editor visible.",
-                            ProjectId = new Guid("08db1e07-c533-41a9-86e9-aafee37468dd"),
-                            Url = "2613367a2bdc4cbea5fbbf4a241a2f97.png"
-                        },
-                        new
-                        {
-                            ProjectImageId = new Guid("08db1e07-c53c-4852-8185-7f60db2bbee2"),
-                            AltText = "Yellow palette, palette editor visible.",
-                            ProjectId = new Guid("08db1e07-c533-41a9-86e9-aafee37468dd"),
-                            Url = "4a29d56dd5124a2fb310ddb814334f1e.png"
                         });
                 });
 
@@ -981,22 +853,6 @@ namespace Infrastructure.Migrations.MainSite
                     b.HasKey("ProjectLinkId");
 
                     b.ToTable("ProjectLinks");
-
-                    b.HasData(
-                        new
-                        {
-                            ProjectLinkId = new Guid("08db1e06-2e79-4530-8bcd-de7c94012db5"),
-                            ProjectId = new Guid("08db1e06-2e6d-415c-8bb9-435e511b2a56"),
-                            Text = "Character Editor Tool",
-                            Url = "/portfolio/KOArcadeTool"
-                        },
-                        new
-                        {
-                            ProjectLinkId = new Guid("08db1e07-c53c-4866-88a1-69d0f8e25d06"),
-                            ProjectId = new Guid("08db1e07-c533-41a9-86e9-aafee37468dd"),
-                            Text = "Knockout Arcade",
-                            Url = "/portfolio/KOArcade"
-                        });
                 });
 
             modelBuilder.Entity("Infrastructure.Models.Tag", b =>

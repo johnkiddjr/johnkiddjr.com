@@ -1,0 +1,128 @@
+﻿@model ProjectViewModel
+
+<div class="project-add">
+    <h1>Add New Project</h1>
+    @using (Html.BeginForm("PostAddProject", "Project", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="project-add-inputgroup">
+            @Html.LabelFor(m => m.Name, new { @class = "project-add-label" })*
+            @Html.TextBoxFor(m => m.Name, new { @class = "project-add-input" })
+        </div>
+
+        <div class="project-add-inputgroup">
+            @Html.LabelFor(m => m.Slug, new { @class = "project-add-label" })*
+            @Html.TextBoxFor(m => m.Slug, new { @class = "project-add-input" })
+        </div>
+
+        <div class="project-add-inputgroup">
+            @Html.LabelFor(m => m.ShortDescription, new { @class = "project-add-label" })*
+            @Html.TextBoxFor(m => m.ShortDescription, new { @class = "project-add-input" })
+        </div>
+
+        <div class="project-add-inputgroup">
+            @Html.LabelFor(m => m.Description, new { @class = "project-add-label" })*
+            @Html.TextAreaFor(m => m.Description, new { @class = "project-add-input" })
+        </div>
+
+        <div class="project-add-inputgroup">
+            @Html.LabelFor(m => m.RepositoryUrl, new { @class = "project-add-label" })
+            @Html.TextBoxFor(m => m.RepositoryUrl, new { @class = "project-add-input" })
+        </div>
+
+        <div class="project-add-inputgroup">
+            @Html.LabelFor(m => m.RepositoryType, new { @class = "project-add-label" })
+            @Html.DropDownListFor(m => m.RepositoryType, new SelectList(Enum.GetValues(typeof(RepositoryType))), new { @class = "project-add-input" })
+        </div>
+
+
+        <div class="project-add-inputgroup">
+            @Html.LabelFor(m => m.ProjectType, new { @class = "project-add-label" })
+            @Html.DropDownListFor(m => m.ProjectType, new SelectList(Enum.GetValues(typeof(ProjectType))), new { @class = "project-add-input" })
+        </div>
+
+        <div class="project-add-inputgroup">
+            @Html.LabelFor(m => m.DownloadUrl, new { @class = "project-add-label" })
+            @Html.TextBoxFor(m => m.DownloadUrl, new { @class = "project-add-input" })
+        </div>
+
+        <div class="project-add-inputgroup">
+            @Html.LabelFor(m => m.NetVersion, new { @class = "project-add-label" })
+            @Html.TextBoxFor(m => m.NetVersion, new { @class = "project-add-input" })
+        </div>
+
+        <div class="project-add-inputgroup">
+            @Html.LabelFor(m => m.LibrariesUsed, new { @class = "project-add-label" })
+            @Html.TextBoxFor(m => m.LibrariesUsed, new { @class = "project-add-input" })
+        </div>
+
+        <div class="project-add-inputgroup">
+            @Html.LabelFor(m => m.LanguageUsed, new { @class = "project-add-label" })
+            @Html.TextBoxFor(m => m.LanguageUsed, new { @class = "project-add-input" })
+        </div>
+        
+        <h3>Images</h3>
+        @for (int i = 0; i < Model.Images.Count; i++)
+        {
+            <div class="project-add-inputgroup">
+                @Html.LabelFor(m => m.Images[i].AltText, new { @class = "project-add-label" })
+                @Html.TextBoxFor(m => m.Images[i].AltText, new { @class = "project-add-input" })
+            </div>
+            <div class="project-add-inputgroup">
+                @Html.LabelFor(m => m.Images[i].ImageFile, new { @class = "project-add-label" })
+                <input type="file" name="Images[@i].ImageFile" class="project-add-input" />
+            </div>
+        }
+        <button id="add-image" type="button">Add Another Image</button>
+
+        <h3>Additional Links</h3>
+        @for (int i = 0; i < Model.AdditionalLinks.Count; i++)
+        {
+            <div class="project-add-inputgroup">
+                @Html.LabelFor(m => m.AdditionalLinks[i].LinkText, new { @class = "project-add-label" })
+                @Html.TextBoxFor(m => m.AdditionalLinks[i].LinkText, new { @class = "project-add-input" })
+            </div>
+
+            <div class="project-add-inputgroup">
+                @Html.LabelFor(m => m.AdditionalLinks[i].LinkUrl, new { @class = "project-add-label" })
+                @Html.TextBoxFor(m => m.AdditionalLinks[i].LinkUrl, new { @class = "project-add-input" })
+            </div>
+        }
+        <button id="add-link" type="button">Add Additional Link</button>
+        <br /><hr /><br />
+        <button type="submit">Add Project</button>
+    }
+</div>
+
+<script>
+    var linkCount = @Model.AdditionalLinks.Count;
+    var imageCount = @Model.Images.Count;
+
+    document.querySelector('#add-link').addEventListener('click', function () {
+        var index = linkCount++;
+        var template = `
+        <div class="project-add-inputgroup">
+            <label for="AdditionalLinks_${index}__LinkText" class="project-add-label">Link Text</label>
+            <input type="text" name="AdditionalLinks[${index}].LinkText" id="AdditionalLinks_${index}__LinkText" class="project-add-input" />
+        </div>
+        <div class="project-add-inputgroup">
+            <label for="AdditionalLinks_${index}__LinkUrl" class="project-add-label">Link URL</label>
+            <input type="text" name="AdditionalLinks[${index}].LinkUrl" id="AdditionalLinks_${index}__LinkUrl" class="project-add-input" />
+        </div>`;
+        document.querySelector('#add-link').insertAdjacentHTML('beforebegin', template);
+    });
+
+    document.querySelector('#add-image').addEventListener('click', function () {
+        var index = imageCount++;
+        var template = `
+        <div class="project-add-inputgroup">
+            <label for="Images_${index}__AltText" class="project-add-label">Alt Text</label>
+            <input type="text" name="Images[${index}].AltText" id="Images_${index}__AltText" class="project-add-input" />
+        </div>
+        <div class="project-add-inputgroup">
+            <label for="Images_${index}__ImageFile" class="project-add-label">Image File</label>
+            <input type="file" name="Images[${index}].ImageFile" id="Images_${index}__ImageFile" class="project-add-input" />
+        </div>`;
+        document.querySelector('#add-image').insertAdjacentHTML('beforebegin', template);
+    });
+
+</script>
