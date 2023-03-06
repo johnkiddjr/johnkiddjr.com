@@ -44,11 +44,7 @@ namespace Infrastructure.Contexts
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //TODO: remove this manual config, this is only so this works in the designer
-                var connectionString = "Server=10.0.20.41;Port=1337;Database=johnkiddjr;Uid=pcuser;Pwd=@@Pw0rdz@@;";
-                var mariaDbVersion = ServerVersion.AutoDetect(connectionString);
-                optionsBuilder.UseMySql(connectionString, mariaDbVersion);
-                //throw new NotSupportedException("DbContext must be configured!");
+                throw new NotSupportedException("DbContext must be configured!");
             }
             
             base.OnConfiguring(optionsBuilder);
