@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Models
+﻿namespace Infrastructure.Enumerations
 {
     public enum RepositoryType
     {

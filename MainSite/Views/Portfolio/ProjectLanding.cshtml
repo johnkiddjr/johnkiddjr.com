@@ -4,13 +4,37 @@
 
 <div class="project-details">
     <div class="project-content">
-        @if (!string.IsNullOrWhiteSpace(Model?.Images?.First()?.ImageUrl))
+        @if(Model.Images != null)
         {
-            <div class="project-image">
-                <img src="@(ContentHelper.GetUrlForResource(ContentType.images, Model?.Images?.First()?.ImageUrl))" alt="@(Model.Name)" />
-            </div>
+            if(Model.Images.Count > 1)
+            {
+                <div class="slideshow-container">
+                    @for(int slide = 0; slide < Model.Images.Count; slide++)
+                    {
+                        <div class="slideshow-slide slide-fade">
+                            <div class="slide-numbertext">@(slide + 1) / @Model.Images.Count</div>
+                            <img src="@(ContentHelper.GetUrlForResource(ContentType.images, Model.Images[slide].ImageUrl))" class="slide-image" alt="@Model.Images[slide].AltText" />
+                            <div class="slide-text">@Model.Images[slide].AltText</div>
+                        </div>
+                    }
+                </div>
+                <br />
+                <div class="slideshow-dot-nav">
+                    <a class="slide-previous" onclick="advanceSlide(-1)">&#10094;</a>
+                    @for (int slide = 0; slide < Model.Images.Count; slide++)
+                    {
+                        <span class="slideshow-dot-nav-dot" onclick="displaySlide(@(slide + 1))"></span>
+                    }
+                    <a class="slide-next" onclick="advanceSlide(1)">&#10095;</a>
+                </div>
+            }
+            else if(Model.Images.Count == 1 && !string.IsNullOrWhiteSpace(Model?.Images?.First()?.ImageUrl))
+            {
+                <div class="project-image">
+                    <img src="@(ContentHelper.GetUrlForResource(ContentType.images, Model?.Images?.First()?.ImageUrl))" alt="@(Model.Name)" />
+                </div>
+            }                
         }
-
         <br /><br />
     </div>
 
@@ -58,5 +82,49 @@
         <div class="project-section">
             <p>@Model.Description</p>
         </div>
+        <br />
+        @if (Model.AdditionalLinks != null && Model.AdditionalLinks.Any())
+        {
+            <div class="project-section-tab"><span>Additional Links</span></div>
+            <div class="project-section">
+                @foreach (var link in Model.AdditionalLinks)
+                {
+                    <div class="project-info-section">
+                        <a href="@link.LinkUrl">@link.LinkText</a>
+                    </div>
+                }
+            </div>
+        }
     </div>
 </div>
+
+<script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    // Next/previous controls
+    function advanceSlide(n) {
+      showSlides(slideIndex += n);
+    }
+
+    // Thumbnail image controls
+    function displaySlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+      let i;
+      let slides = document.getElementsByClassName("slideshow-slide");
+      let dots = document.getElementsByClassName("slideshow-dot-nav-dot");
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" slide-active", "");
+      }
+      slides[slideIndex-1].style.display = "block";
+      dots[slideIndex-1].className += " slide-active";
+    }
+</script>

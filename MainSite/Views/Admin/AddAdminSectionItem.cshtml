@@ -1,0 +1,75 @@
+﻿@model AdminSectionItemViewModel
+
+<div class="admin-dashboard">
+    <h1 style="margin-bottom: 40px;">Add New Admin Section Item</h1>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+    @using (Html.BeginForm("AddAdminSectionItem", "Admin", FormMethod.Get, new { id = "AdminSectionForm" }))
+    {
+        <div class="admin-section-add">
+            <label class="admin-section-add-label">Select a Section:</label>
+            @Html.DropDownList(
+                "selectedSectionId",
+                new SelectList(ViewBag.AdminSections, "SectionId", "HeaderText"),
+                "Select a Section",
+                new { @class = "admin-section-add-input", @onchange = "form.submit();", @id = "selectedSectionId" })
+        </div>
+    }
+
+    <br />
+    <hr />
+
+    @if (!string.IsNullOrWhiteSpace(Model.AdminSectionId))
+    {
+        <form asp-action="AddAdminSectionItem" method="post">
+            <h3>Add New Item</h3>
+            <input asp-for="AdminSectionId" type="hidden" value="@Model.AdminSectionId" />
+            <div class="admin-section-add">
+                <label asp-for="LinkText" class="admin-section-add-label">Link Text:</label>
+                <input asp-for="LinkText" class="admin-section-add-input" />
+            </div>
+            <div class="admin-section-add">
+                <label asp-for="LinkUrl" class="admin-section-add-label">Link Url:</label>
+                <input asp-for="LinkUrl" class="admin-section-add-input" />
+            </div>
+            <br /><br />
+            <div>
+                <button type="submit" value="submit">Add Section Header</button>
+            </div>
+            <br /><br /><br />
+            @if (!string.IsNullOrWhiteSpace(Model.AdminSectionId))
+            {
+                <hr />
+                List<AdminSectionViewModel> adminSections = ViewBag.AdminSections;
+                var adminSectionItems = adminSections.Where(x => x.SectionId == Model.AdminSectionId).FirstOrDefault()?.SectionItems;
+
+                <h3>Items In Section</h3>
+                <table class="centered-table">
+                    <thead>
+                        <tr>
+                            <th>Link Text</th>
+                            <th>Link URL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!adminSectionItems.Any())
+                        {
+                            <tr>
+                                <td class="padded-cell" colspan="2">No items in section...</td>
+                            </tr>
+                        }
+
+                        @foreach (var sectionItem in adminSectionItems)
+                        {
+                            <tr>
+                                <td class="padded-cell">@sectionItem.LinkText</td>
+                                <td class="padded-cell">@sectionItem.LinkUrl</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </form>
+    }
+</div>

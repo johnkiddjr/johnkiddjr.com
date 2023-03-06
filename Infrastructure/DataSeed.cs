@@ -1,4 +1,5 @@
-﻿using Infrastructure.Models;
+﻿using Infrastructure.Enumerations;
+using Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -270,6 +271,87 @@ namespace Infrastructure
                         AltText = "Portfolio Home Snippet",
                         ProjectId = Guid.Parse("5B4A154E-4C71-45E5-8DEE-D7BBDAE7ABE2"),
                         ProjectImageId = Guid.Parse("6d18f31c-beba-44a8-8ad2-494f0ae8089f")
+                    },
+                    new ProjectImage
+                    {
+                        Url = "f03912f92b3e4f96be8df8e6fc481986.png",
+                        AltText = "Title Screen for Knockout Arcade",
+                        ProjectId = Guid.Parse("08db1e06-2e6d-415c-8bb9-435e511b2a56"),
+                        ProjectImageId = Guid.Parse("08db1e06-2e75-49ab-896f-9788075da899")
+                    },
+                    new ProjectImage
+                    {
+                        Url = "8a1635ea5b05404883bf8f0c488172eb.png",
+                        AltText = "Fight!",
+                        ProjectId = Guid.Parse("08db1e06-2e6d-415c-8bb9-435e511b2a56"),
+                        ProjectImageId = Guid.Parse("08db1e06-2e76-4ee2-8768-aa567530f060")
+                    },
+                    new ProjectImage
+                    {
+                        Url = "4bf524eb3b584c66b822e8056c3ddee4.png",
+                        AltText = "Character Select screen for Knockout Arcade",
+                        ProjectId = Guid.Parse("08db1e06-2e6d-415c-8bb9-435e511b2a56"),
+                        ProjectImageId = Guid.Parse("08db1e06-2e77-4ca4-8782-afb4b7d6d86e")
+                    },
+                    new ProjectImage
+                    {
+                        Url = "10ac07360ab749d0bbc3b8a63e09bb10.png",
+                        AltText = "Stage Select screen for Knockout Arcade",
+                        ProjectId = Guid.Parse("08db1e06-2e6d-415c-8bb9-435e511b2a56"),
+                        ProjectImageId = Guid.Parse("08db1e06-2e78-47e6-8845-2a3ef9a1f023")
+                    },
+                    new ProjectImage
+                    {
+                        Url = "9f83759f89c14e979311acd4cb3c14ce.png",
+                        AltText = "Close up of a kick happening in Knockout Arcade",
+                        ProjectId = Guid.Parse("08db1e06-2e6d-415c-8bb9-435e511b2a56"),
+                        ProjectImageId = Guid.Parse("08db1e06-2e79-42c5-8560-3997e920306d")
+                    },
+                    new ProjectImage
+                    {
+                        Url = "3e54a89bd2684eba95f68c838cd95ce3.png",
+                        AltText = "Editor Project Selection Page",
+                        ProjectId = Guid.Parse("08db1e07-c533-41a9-86e9-aafee37468dd"),
+                        ProjectImageId = Guid.Parse("08db1e07-c53a-446b-81a2-82876521112f")
+                    },
+                    new ProjectImage
+                    {
+                        Url = "1af8b33b248e4fb985691b6cbe9f12f4.png",
+                        AltText = "Editor Character Selection Page",
+                        ProjectId = Guid.Parse("08db1e07-c533-41a9-86e9-aafee37468dd"),
+                        ProjectImageId = Guid.Parse("08db1e07-c53a-4d9f-8777-04fdc4b93ae7")
+                    },
+                    new ProjectImage
+                    {
+                        Url = "2613367a2bdc4cbea5fbbf4a241a2f97.png",
+                        AltText = "Default palette, move editor visible.",
+                        ProjectId = Guid.Parse("08db1e07-c533-41a9-86e9-aafee37468dd"),
+                        ProjectImageId = Guid.Parse("08db1e07-c53b-4b3f-854d-f3fc6f3c73b2")
+                    },
+                    new ProjectImage
+                    {
+                        Url = "4a29d56dd5124a2fb310ddb814334f1e.png",
+                        AltText = "Yellow palette, palette editor visible.",
+                        ProjectId = Guid.Parse("08db1e07-c533-41a9-86e9-aafee37468dd"),
+                        ProjectImageId = Guid.Parse("08db1e07-c53c-4852-8185-7f60db2bbee2")
+                    }
+                );
+
+            modelBuilder.Entity<ProjectLink>()
+                .HasData(
+                    new ProjectLink
+                    {
+                        ProjectId = Guid.Parse("08db1e06-2e6d-415c-8bb9-435e511b2a56"),
+                        ProjectLinkId = Guid.Parse("08db1e06-2e79-4530-8bcd-de7c94012db5"),
+                        Text = "Character Editor Tool",
+                        Url = "/portfolio/KOArcadeTool"
+                    },
+                    new ProjectLink
+                    {
+                        ProjectId = Guid.Parse("08db1e07-c533-41a9-86e9-aafee37468dd"),
+                        ProjectLinkId = Guid.Parse("08db1e07-c53c-4866-88a1-69d0f8e25d06"),
+                        Text = "Knockout Arcade",
+                        Url = "/portfolio/KOArcade"
                     }
                 );
 
@@ -288,7 +370,8 @@ namespace Infrastructure
                         NetVersion = null,
                         ProjectSlug = "FantasticFrienemies",
                         RepositoryType = RepositoryType.None,
-                        ProjectType = ProjectType.Other
+                        ProjectType = ProjectType.Other,
+                        DateAdded = DateTime.Now
                     },
                     new Project
                     {
@@ -303,7 +386,8 @@ namespace Infrastructure
                         NetVersion = null,
                         ProjectSlug = "BizTapper",
                         RepositoryType = RepositoryType.None,
-                        ProjectType = ProjectType.Programming
+                        ProjectType = ProjectType.Programming,
+                        DateAdded = DateTime.Now
                     },
                     new Project
                     {
@@ -318,7 +402,8 @@ namespace Infrastructure
                         LibrariesUsed = "Markdig, RestSharp",
                         ProjectSlug = "Portfolio",
                         RepositoryType = RepositoryType.GitLab,
-                        ProjectType = ProjectType.Programming
+                        ProjectType = ProjectType.Programming,
+                        DateAdded = DateTime.Now
                     },
                     new Project
                     {
@@ -334,6 +419,90 @@ namespace Infrastructure
                         RepositoryType = RepositoryType.GitLab,
                         ProjectType = ProjectType.Programming,
                         Description = "This implementation of Tic Tac Toe is written in C++ and outputs everything to the console. When the game starts, the console will display an empty 3x3 grid representing the Tic Tac Toe board. The two players will take turns placing their symbols on the board by entering the row and column numbers of the space they want to occupy. The game will then check if the move is valid and update the board accordingly. If a player achieves three in a row or all spaces on the board are filled, the game will end and display the result on the console.  This implementation does not include an AI player option, so it is intended for two human players to play against each other.",
+                        DateAdded = DateTime.Now
+                    },
+                    new Project
+                    {
+                        ProjectId = Guid.Parse("08db1e06-2e6d-415c-8bb9-435e511b2a56"),
+                        Name = "Knockout Arcade",
+                        ShortDescription = "This is a 2D retro-inspired fighting game with easy-to-pick-up controls and stylish combos. The game takes place at a famous arcade, owned by a dangerous businessman.",
+                        RepositoryUrl = "https://github.com/KnockoutArcade/KnockoutArcade",
+                        DownloadUrl = "https://jazz-boy.itch.io/knock-out-arcade",
+                        LanguageUsed = "GameMaker Language (GML)",
+                        LibrariesUsed = null,
+                        NetVersion = null,
+                        ProjectSlug = "KOArcade",
+                        RepositoryType = RepositoryType.GitHub,
+                        ProjectType = ProjectType.Programming,
+                        Description = "I served as Programming Lead on this project, supervising two other programmers while contributing to both this project and the Character Data Editor Tool.\r\n\r\nOfficial description of the game:\r\n\r\nWelcome to KNOCK-OUT ARCADE!\r\n\r\nThis is a 2D retro-inspired fighting game with easy-to-pick-up controls and stylish combos. The game takes place at a famous arcade, owned by a dangerous businessman.",
+                        DateAdded = DateTime.Now
+                    },
+                    new Project
+                    {
+                        ProjectId = Guid.Parse("08db1e07-c533-41a9-86e9-aafee37468dd"),
+                        Name = "Knockout Arcade Character Editor Tool",
+                        ShortDescription = "This is an editor for creating and modifying the data for the characters in Knockout Arcade!",
+                        RepositoryUrl = "https://github.com/KnockoutArcade/Character-Data-Editor",
+                        DownloadUrl = "https://github.com/KnockoutArcade/Character-Data-Editor/releases",
+                        LanguageUsed = "C#, GLSL",
+                        LibrariesUsed = "ImGui.Net, Raylib-cs, Newtonsoft.Json, Serilog, System.Commandline, Hardware.Info",
+                        NetVersion = "7.0",
+                        ProjectSlug = "KOArcadeTool",
+                        RepositoryType = RepositoryType.GitHub,
+                        ProjectType = ProjectType.Programming,
+                        Description = "For Knockout Arcade I served as the Lead Programmer. As part of my responsibilities, I created and maintained this Character Editor Tool.\r\n\r\nThis editor is used to create and modify the data for the characters in Knockout Arcade. The data is exported in JSON format to be imported and used by the game directly. This greatly improved the usability of the code and made it trivial to add new characters or make changes to the character's stats or moves.\r\n\r\nAdditionally, this tool allows designers to make palette changes in real-time. Greatly reducing the time it takes to try out new palettes for the characters.",
+                        DateAdded = DateTime.Now
+                    }
+                );
+
+            modelBuilder.Entity<AdminSection>()
+                .HasData(
+                    new AdminSection
+                    {
+                        AdminSectionId = Guid.Parse("860d2bd2-c8ac-4011-980b-a76830b32541"),
+                        SectionTitle = "Article Management"
+                    },
+                    new AdminSection
+                    {
+                        AdminSectionId = Guid.Parse("08db1dc5-3dd3-425c-820c-4268e219dadd"),
+                        SectionTitle = "Project Management"
+                    },
+                    new AdminSection
+                    {
+                        AdminSectionId = Guid.Parse("08db1dc5-1ebc-4334-81b4-22ff3c75b527"),
+                        SectionTitle = "Admin Management"
+                    }
+                );
+
+            modelBuilder.Entity<AdminSectionItem>()
+                .HasData(
+                    new AdminSectionItem
+                    {
+                        AdminSectionItemId = Guid.Parse("fd4afcdb-14b4-40b7-a490-75d92168bee6"),
+                        AdminSectionId = Guid.Parse("860d2bd2-c8ac-4011-980b-a76830b32541"),
+                        LinkText = "Upload New Article",
+                        LinkUrl = "/Article/Upload"
+                    },
+                    new AdminSectionItem
+                    {
+                        AdminSectionId = Guid.Parse("08db1dc5-1ebc-4334-81b4-22ff3c75b527"),
+                        AdminSectionItemId = Guid.Parse("08db1dd1-dc20-4aac-8d68-94390a576ec9"),
+                        LinkText = "Add Section",
+                        LinkUrl = "/Admin/AddSection"
+                    },
+                    new AdminSectionItem
+                    {
+                        AdminSectionId = Guid.Parse("08db1dc5-1ebc-4334-81b4-22ff3c75b527"),
+                        AdminSectionItemId = Guid.Parse("08db1dd1-ec7e-4daf-8d3d-859391d415cf"),
+                        LinkText = "Add Section Item",
+                        LinkUrl = "/Admin/AddSectionItem"
+                    },
+                    new AdminSectionItem
+                    {
+                        AdminSectionId = Guid.Parse("08db1dc5-3dd3-425c-820c-4268e219dadd"),
+                        AdminSectionItemId = Guid.Parse("f410c76b-e8d5-4315-ac94-a739b98f7a0c"),
+                        LinkText = "Add Project",
+                        LinkUrl = "/Project/AddProject"
                     }
                 );
 

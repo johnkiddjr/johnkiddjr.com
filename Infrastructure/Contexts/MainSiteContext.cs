@@ -2,6 +2,7 @@
 using Infrastructure.Models.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 
 namespace Infrastructure.Contexts
@@ -36,13 +37,18 @@ namespace Infrastructure.Contexts
         public virtual DbSet<HighScore> HighScores { get; set; }
         public virtual DbSet<ProjectImage> ProjectImages { get; set; }
         public virtual DbSet<ProjectLink> ProjectLinks { get; set; }
-
+        public virtual DbSet<AdminSection> AdminSections { get; set; }
+        public virtual DbSet<AdminSectionItem> AdminSectionsItems { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                throw new NotSupportedException("DbContext must be configured!");
+                //TODO: remove this manual config, this is only so this works in the designer
+                var connectionString = "Server=10.0.20.41;Port=1337;Database=johnkiddjr;Uid=pcuser;Pwd=@@Pw0rdz@@;";
+                var mariaDbVersion = ServerVersion.AutoDetect(connectionString);
+                optionsBuilder.UseMySql(connectionString, mariaDbVersion);
+                //throw new NotSupportedException("DbContext must be configured!");
             }
             
             base.OnConfiguring(optionsBuilder);
