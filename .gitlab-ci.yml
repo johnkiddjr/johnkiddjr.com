@@ -11,16 +11,12 @@ variables:
   STAGE_API_IMAGE_TAG: $CI_REGISTRY/$CI_PROJECT_PATH/johnkiddjrcomapi-qa:latest
 
 include:
-- template: Security/SAST.gitlab-ci.yml
-
-security-code-scan-sast:
-  variables:
-    SAST_ANALYZER_IMAGE_TAG: 3
+- template: Security/SAST.gitlab-ci.yml  
 
 stages:
 - build
 - test
-- publish
+- sast
 - containerize
 - deploy
 - notify
@@ -38,6 +34,51 @@ dotnet test:
   script:
     - dotnet restore
     - dotnet test -v n --no-restore
+
+security-code-scan-sast:
+  stage: sast
+  artifacts:
+    paths:
+      - sast/
+    expire_in: 1 week
+  variables:
+    SAST_ANALYZER_IMAGE_TAG: 3
+  after_script:
+    - mkdir sast
+    - cp gl-sast-report.json sast/security-code-scan-sast.json
+
+semgrep-sast:
+  stage: sast
+  artifacts:
+    paths:
+      - sast/
+    expire_in: 1 week
+  variables:
+    SAST_ANALYZER_IMAGE_TAG: 3
+  after_script:
+    - mkdir sast
+    - cp gl-sast-report.json sast/semgrep-sast.json
+
+eslint-sast:
+  stage: sast
+  artifacts:
+    paths:
+      - sast/
+    expire_in: 1 week
+  variables:
+    SAST_ANALYZER_IMAGE_TAG: 3
+  after_script:
+    - mkdir sast
+    - cp gl-sast-report.json sast/eslint-sast.json
+
+upload sast artifcats:
+  needs: ["eslint-sast", "semgrep-sast", "security-code-scan-sast"]
+  stage: sast
+  image: $DOTNET_BUILD
+  script:
+    # upload sast to sast analyzer
+    - ls sast/
+    - tail sast/semgrep-sast.json
 
 publish dotnet for qa:
   stage: publish
