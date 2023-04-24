@@ -17,6 +17,7 @@ stages:
 - build
 - test
 - sast
+- publish
 - containerize
 - deploy
 - notify
