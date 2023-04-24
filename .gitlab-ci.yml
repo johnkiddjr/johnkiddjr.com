@@ -66,8 +66,6 @@ eslint-sast:
     paths:
       - sast/
     expire_in: 1 week
-  variables:
-    SAST_ANALYZER_IMAGE_TAG: 3
   after_script:
     - mkdir sast
     - cp gl-sast-report.json sast/eslint-sast.json
@@ -79,7 +77,15 @@ upload sast artifcats:
   script:
     # upload sast to sast analyzer
     - ls sast/
-    - tail sast/semgrep-sast.json
+    - >
+      curl --location 'http://sast.johnkiddjr.com/api/UploadReport'
+      --form 'Content=sast/eslint-sast.json' \
+      --form 'Content=sast/semgrep-sast.json' \
+      --form 'Content=sast/security-code-scan-sast.json' \
+      --form 'UserName="${GITLAB_USER_LOGIN}"' \
+      --form 'Email="${GITLAB_USER_EMAIL}"' \
+      --form 'ProjectName="{CI_PROJECT_NAME}"' \
+      --form 'CommitId="{CI_COMMIT_SHORT_SHA}}"'
 
 publish dotnet for qa:
   stage: publish
