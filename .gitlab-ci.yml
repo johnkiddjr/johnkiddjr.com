@@ -78,14 +78,15 @@ upload sast artifcats:
     # upload sast to sast analyzer
     - ls sast/
     - >
-      curl --location 'https://sast.johnkiddjr.com/api/UploadReport'
-      --form 'Content=sast/eslint-sast.json' \
-      --form 'Content=sast/semgrep-sast.json' \
-      --form 'Content=sast/security-code-scan-sast.json' \
+      curl --location 'http://10.0.40.2:5000/api/UploadReport'
+      --form "Content=@//app/sast/eslint-sast.json" \
+      --form "Content=@//app/sast/semgrep-sast.json" \
+      --form "Content=@//app/sast/security-code-scan-sast.json" \
       --form 'UserName="${GITLAB_USER_LOGIN}"' \
       --form 'Email="${GITLAB_USER_EMAIL}"' \
       --form 'ProjectName="{CI_PROJECT_NAME}"' \
-      --form 'CommitId="{CI_COMMIT_SHORT_SHA}"'
+      --form 'CommitId="{CI_COMMIT_SHORT_SHA}"' \
+      -v
 
 publish dotnet for qa:
   stage: publish
