@@ -82,7 +82,7 @@ upload sast artifcats:
     - echo ${CI_COMMIT_SHORT_SHA}
     - workdir=$(pwd)
     - >
-      curl --location 'http://10.0.40.2:5000/api/UploadReport'
+      curl --location 'https://sast.johnkiddjr.com/api/UploadReport'
       --form "Content=@/${workdir}/sast/eslint-sast.json"
       --form "Content=@/${workdir}/sast/semgrep-sast.json"
       --form "Content=@/${workdir}/sast/security-code-scan-sast.json"
