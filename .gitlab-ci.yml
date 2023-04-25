@@ -76,17 +76,16 @@ upload sast artifcats:
   image: $DOTNET_BUILD
   script:
     # upload sast to sast analyzer
-    - ls sast/
-    - pwd
+    - workdir=$(pwd)
     - >
       curl --location 'http://10.0.40.2:5000/api/UploadReport'
-      --form "Content=@//app/sast/eslint-sast.json" \
-      --form "Content=@//app/sast/semgrep-sast.json" \
-      --form "Content=@//app/sast/security-code-scan-sast.json" \
+      --form "Content=@/${workdir}/sast/eslint-sast.json" \
+      --form "Content=@/${workdir}/sast/semgrep-sast.json" \
+      --form "Content=@/${workdir}/sast/security-code-scan-sast.json" \
       --form 'UserName="${GITLAB_USER_LOGIN}"' \
       --form 'Email="${GITLAB_USER_EMAIL}"' \
-      --form 'ProjectName="{CI_PROJECT_NAME}"' \
-      --form 'CommitId="{CI_COMMIT_SHORT_SHA}"' \
+      --form 'ProjectName="${CI_PROJECT_NAME}"' \
+      --form 'CommitId="${CI_COMMIT_SHORT_SHA}"' \
       -v
 
 publish dotnet for qa:
