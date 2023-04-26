@@ -9,6 +9,7 @@
 variables:
   API_IMAGE_TAG: $CI_REGISTRY/$CI_PROJECT_PATH/johnkiddjrcomapi:latest
   STAGE_API_IMAGE_TAG: $CI_REGISTRY/$CI_PROJECT_PATH/johnkiddjrcomapi-qa:latest
+  SAST_EXCLUDED_PATHS: spec,test,test,tmp,/**/wwwroot/lib/*
 
 include:
 - template: Security/SAST.gitlab-ci.yml  
