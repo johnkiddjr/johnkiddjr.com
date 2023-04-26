@@ -1,5 +1,7 @@
 ﻿@model ProjectViewModel
 
+@Html.AntiForgeryToken()
+
 <div class="project-add">
     <h1>Add New Project</h1>
     @using (Html.BeginForm("PostAddProject", "Project", FormMethod.Post, new { enctype = "multipart/form-data" }))

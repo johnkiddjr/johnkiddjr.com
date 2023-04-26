@@ -42,6 +42,7 @@ namespace MainSite.Controllers
 
         [HttpPost("AddProject")]
         [RequestSizeLimit(209715200)]
+        [ValidateAntiForgeryToken]
         public IActionResult PostAddProject([FromForm] ProjectViewModel viewModel)
         {
             //check all required fields...

@@ -50,7 +50,9 @@ namespace MainSite.Helpers
 
             if (possibleImages.Any())
             {
+                #pragma warning disable SCS0005 // this is not used for cryptographic purposes
                 selectedImage = possibleImages[_random.Next(possibleImages.Count)];
+                #pragma warning restore SCS0005
             }
 
             var returnImage = new CardBackgroundViewModel();
