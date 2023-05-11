@@ -10,6 +10,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>John Kidd Jr</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <link rel="stylesheet" href="~/lib/prism/css/prism.css" />
@@ -21,27 +22,11 @@
 <body class="line-numbers">
     <!-- header -->
     <div class="app">
-        <div>
-            <img src="@ContentHelper.GetUrlForResource(ContentType.images, "header.png")" alt="John Kidd Jr Header" />
-            <nav>
-                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/", "nav-selected"))" href="/">Home</a> |
-                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/portfolio", "nav-selected", false))" href="/portfolio">Portfolio</a> |
-                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/objectives", "nav-selected", false))" href="/objectives">Objectives</a> |
-                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/article", "nav-selected", false))" href="/article">Articles</a> |
-                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/about", "nav-selected", false))" href="/about">About</a> |
-                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/contact", "nav-selected", false))" href="/contact">Contact</a>
-                @if (SignInManager.IsSignedIn(User))
-                {
-                    <span> |</span>
-                    <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/admin", "nav-selected", false))" href="/admin">Admin</a>
-                }
-            </nav>
-            <hr class="drop-shadow" />
-        </div>
+        @await Component.InvokeAsync(nameof(NavigationBar))
         @RenderBody()
         <div class="pad-bottom"></div>
         <div class="footer">
-            &copy; 2022 John Kidd Jr. All rights reserved. <a asp-controller="About" asp-action="Privacy">Privacy Policy</a>
+            &copy; 2022-2023 John Kidd Jr. All rights reserved. <a asp-controller="About" asp-action="Privacy">Privacy Policy</a>
             <br />
             <partial name="_LoginPartial" />
         </div>
