@@ -1,49 +1,116 @@
 ﻿@model PortfolioPageViewModel
+@inject MainSite.Services.IProjectService projectService
 
-<div class="portfolio">
-    <h1>Portfolio</h1>
-    <div class="section bodytext">
-        <h2>Projects</h2>
-        @if(Model.ProjectData != null)
-        {
-            <ul class="project-card-container">
-                @foreach (var project in Model.ProjectData.Projects)
-                {
-                        <li class="project-card">
-                            <a class="no-decoration" href="@Url.Action("ProjectLanding", new { slug = project.Slug })">
-                                <h3 class="project-card-title"><span>@project.Name</span></h3>
-                                <div class="project-card-section">
-                                    <p class="project-card-description">@project.ShortDescription</p>
-                                    @if (project.Images != null && project.Images.Any())
-                                    {
-                                        var image = project.Images.First();
-                                        <div class="project-card-image">
-                                            <img src="@(ContentHelper.GetUrlForResource(ContentType.images, image.ImageUrl))" alt="@image.AltText" />
-                                        </div>
-                                    }
-                                </div>
-                            </a>
-                        </li>
-                }
-            </ul>
-        }
-        else
-        {
-            <span>No projects to show</span>
-        }
+<h1>Portfolio</h1>
+
+<div class="row">
+    <div class="col-3">
+        <h2 class="text-start">Projects</h2>
     </div>
-    @foreach (var group in Model.PortfolioData.LinkGroups)
+    <label for="ShowPlatform" class="col-sm-2 offset-sm-5 col-form-label">Show Platform</label>
+    <div class="col-sm">
+        @{
+            var platforms = (await projectService.GetPlatforms()).OrderBy(x => x.PlatformName).Select(x => x.PlatformName).ToList();
+            platforms.Insert(0, "All");
+        }
+        @Html.DropDownList("ShowPlatform", new SelectList(platforms), new { title = "ShowPlatform", @class = "form-control form-control-sm", id = "showPlatform" })
+    </div>
+</div>
+
+<div class="row">
+    @if(Model.ProjectData != null)
     {
-        <div class="section bodytext">
-            <h2>@group.GroupName</h2>
+        <div id="noneShown" class="py-2 fs-5 fw-bold" style="display: none;">
+            No projects match the selected filter.
+        </div>
+        foreach (var project in Model.ProjectData.Projects)
+        {
+            <div class="col-6 py-2" data-platforms="@project.Platform">
+                <a class="text-decoration-none" href="@Url.Action("ProjectLanding", new { slug = project.Slug })">
+                    <div class="card text-bg-dark project-card-height">
+                        @if (project.Images != null && project.Images.Any())
+                        {
+                            var image = project.Images.First();
+                            <div class="row g=0">
+                                <div class="col-md-5">
+                                    <img class="img-fluid rounded-start" src="@(ContentHelper.GetUrlForResource(ContentType.images, image.ImageUrl))" alt="@image.AltText" />
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@project.Name</h5>
+                                        <hr />
+                                        <p class="card-text">
+                                            @project.ShortDescription
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="card-body">
+                                <h5 class="card-title">@project.Name</h5>
+                                <p class="card-text">
+                                    @project.ShortDescription
+                                </p>
+                            </div>
+                        }
+                    </div>
+                </a>
+            </div>
+        }
+    }
+    else
+    {
+        <span>No projects to show</span>
+    }
+</div>
+
+@foreach (var group in Model.PortfolioData.LinkGroups)
+{
+    <h2 class="text-start">@group.GroupName</h2>
+    <div class="row">
+        <div class="col-8">
             <ul>
                 @foreach (var link in group.Links)
                 {
-                    <li>
+                    <li class="text-start">
                         <a href="@(link.Link)" target="_blank">@link.Text</a>
                     </li>
                 }
             </ul>
         </div>
-    }
-</div>
+    </div>
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var showPlatformDropdown = document.getElementById("showPlatform");
+        var projectDivs = document.querySelectorAll('[data-platforms]');
+        var noneShownDiv = document.getElementById("noneShown");
+
+        showPlatformDropdown.addEventListener("change", function () {
+            var selectedPlatform = this.value;
+            var projectsShown = 0;
+
+            projectDivs.forEach(function (projectDiv) {
+                var platforms = projectDiv.getAttribute("data-platforms").split(",");
+
+                if (selectedPlatform === "All" || platforms.includes(selectedPlatform)) {
+                    projectDiv.style.display = "block";
+                    projectsShown++;
+                }
+                else {
+                    projectDiv.style.display = "none";
+                }
+            });
+
+            if (projectsShown === 0) {
+                noneShownDiv.style.display = "block";
+            }
+            else {
+                noneShownDiv.style.display = "none";
+            }
+        });
+    });
+</script>

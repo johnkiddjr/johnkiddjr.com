@@ -1,16 +1,16 @@
 ﻿@model AboutViewModel
 
-<div class="about">
+<div class="col-8 offset-2 align-self-center">
     <h1>@Model.Name</h1>
-    <img src="@(ContentHelper.GetUrlForResource(ContentType.images, Model.PictureUrl))" alt="The man himself" />
+    <img class="mw-300" src="@(ContentHelper.GetUrlForResource(ContentType.images, Model.PictureUrl))" alt="The man himself" />
     @{
         var i = 0;
     }
     @foreach (var section in Model.Sections)
     {
-        <div class="bodytext">
-            <h2>@(section.Name)</h2>
-            <table>
+        <div>
+            <h2 class="pt-4">@(section.Name)</h2>
+            <table class="table">
                 @foreach (var detail in section.Details)
                 {
                     if(i % 2 == 0)
@@ -18,18 +18,18 @@
                         <tr>
                             @if (detail.PhotoUrl != null)
                             {
-                                <td><img src="@(ContentHelper.GetUrlForResource(ContentType.images, detail.PhotoUrl))" alt="@(section.Name)" /></td>
+                                <td><img class="mw-300" src="@(ContentHelper.GetUrlForResource(ContentType.images, detail.PhotoUrl))" alt="@(section.Name)" /></td>
                             }
-                            <td class="align-top">@(detail.Description)</td>
+                            <td class="align-text-top text-start ps-4">@(detail.Description)</td>
                         </tr>
                     }
                     else
                     {
                         <tr>
-                            <td class="align-top">@(detail.Description)</td>
+                            <td class="align-text-top text-start pe-4">@(detail.Description)</td>
                             @if (detail.PhotoUrl != null)
                             {
-                                <td><img src="@(ContentHelper.GetUrlForResource(ContentType.images, detail.PhotoUrl))" alt="@(section.Name)" /></td>
+                                <td><img class="mw-300" src="@(ContentHelper.GetUrlForResource(ContentType.images, detail.PhotoUrl))" alt="@(section.Name)" /></td>
                             }
                         </tr>
                     }

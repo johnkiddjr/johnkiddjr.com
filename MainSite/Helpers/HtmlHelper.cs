@@ -46,11 +46,13 @@ namespace MainSite.Helpers
         {
             var possibleImages = _imageTagService.GetBackgroundByTags(tags);
 
-            var selectedImage = new CardBackground();
+            CardBackground selectedImage = null;
 
             if (possibleImages.Any())
             {
+                #pragma warning disable SCS0005 // this is not used for cryptographic purposes
                 selectedImage = possibleImages[_random.Next(possibleImages.Count)];
+                #pragma warning restore SCS0005
             }
 
             var returnImage = new CardBackgroundViewModel();

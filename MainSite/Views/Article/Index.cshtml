@@ -1,34 +1,47 @@
 ﻿@model ArticleIndexViewModel
 
-<div class="article-index">
-    <h1>Articles</h1>
-    @if(Model.Articles.Any())
-    {
+<h1>Articles</h1>
+@if(Model.Articles.Any())
+{
+    <div class="row">
         @foreach(var article in Model.Articles)
         {
             var cardBackground = MainSite.Helpers.HtmlHelper.GetImageByTags(article.Tags);
             if(cardBackground == null)
             {
-                <div class="article-card card-background-image">
-                    <a asp-controller="Article" asp-action="ViewArticle" asp-route-articleSlug="@(article.Slug)" class="no-decoration">
-                        <span class="article-title">@article.Title</span>
-                        <span class="article-preview">@article.PreviewText</span>
+                <div class="col-4 p-1">
+                    <a asp-controller="Article" asp-action="ViewArticle" asp-route-articleSlug="@(article.Slug)" class="text-decoration-none">
+                        <div class="card text-bg-dark">
+                            <div class="card-body article-card-height">
+                                <h5 class="card-title text-light">@article.Title</h5>
+                                <hr class="text-light" />
+                                <p class="card-text text-light">@article.PreviewText</p>
+                            </div>
+                        </div>
                     </a>
                 </div>
             }
             else
             {
-                <div class="article-card card-background-image" style="background-image: url(@(cardBackground.ImageFileName));">
-                    <a asp-controller="Article" asp-action="ViewArticle" asp-route-articleSlug="@(article.Slug)" class="no-decoration">
-                        <span class="article-title" style="color: @(cardBackground.TitleFontColor)">@article.Title</span>
-                        <span class="article-preview" style="color: @(cardBackground.DescriptionFontColor)">@article.PreviewText</span>
+                <div class="col-4 p-1">
+                    <a asp-controller="Article" asp-action="ViewArticle" asp-route-articleSlug="@(article.Slug)" class="text-decoration-none">
+                        <div class="card text-bg-dark">
+                            <img src="@cardBackground.ImageFileName" class="card-img img-fluid" alt="...">
+                            <div class="card-img-overlay article-card-height">
+                                <h5 class="card-title" style="color: @(cardBackground.TitleFontColor);">@article.Title</h5>
+                                <hr style="color: @(cardBackground.TitleFontColor);" />
+                                <p class="card-text" style="color: @(cardBackground.DescriptionFontColor);">@article.PreviewText</p>
+                            </div>
+                        </div>
                     </a>
                 </div>
             }
         }
-    }
-    else
-    {
+    </div>
+}
+else
+{
+    <div class="row">
         <span>No articles to show...</span>
-    }
-</div>
+    </div>
+}

@@ -119,6 +119,13 @@ namespace MainSite.Controllers
                            where proj.ProjectId.ToString() == projectId.ToString()
                            select proj).FirstOrDefault();
 
+            var platforms = (from projplat in _context.ProjectPlatforms
+                             join plat in _context.Platforms on projplat.PlatformId equals plat.PlatformId
+                             where projplat.ProjectId == project.ProjectId
+                             select plat.Name).ToList();
+
+            var platform = platforms == null ? string.Empty : string.Join(", ", platforms);
+
             if (project == null)
             {
                 return null;
@@ -136,6 +143,7 @@ namespace MainSite.Controllers
                 RepositoryUrl = project.RepositoryUrl,
                 ShortDescription = project.ShortDescription,
                 Slug = project.ProjectSlug,
+                Platform = platform,
                 ProjectType = project.ProjectType.ToString()
             };
 

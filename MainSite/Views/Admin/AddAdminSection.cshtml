@@ -1,17 +1,21 @@
 ﻿@model AdminSectionViewModel
 
 <div class="admin-dashboard">
-    <h1 style="margin-bottom: 40px;">Add New Admin Section</h1>
+    <h1 class="mb-4">Add New Admin Section</h1>
 
     <form asp-action="AddAdminSection" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-        <div class="admin-section-add">
-            <label asp-for="HeaderText" class="admin-section-add-label">Section Header Text:</label>
-            <input asp-for="HeaderText" class="admin-section-add-input" />
+        <div class="row">
+            <div class="col-4 offset-1">
+                <label asp-for="HeaderText" class="me-1 fw-bold">Section Header Text:</label>
+            </div>
+            <div class="col-6">
+                <input asp-for="HeaderText" class="p-1 rounded" />
+            </div>
         </div>
         <br /><br />
         <div>
-            <button type="submit" value="submit">Add Section Header</button>
+            <button type="submit" value="submit" class="btn btn-primary">Add Section Header</button>
         </div>
     </form>
 </div>
