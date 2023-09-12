@@ -34,6 +34,8 @@ public class Startup
         services.AddSingleton<IMarkdownService, MarkdownService>();
         services.AddSingleton<IImageTagService, ImageTagService>();
 
+        services.AddScoped<IProjectService, ProjectService>();
+
         services.AddCors();
         services.AddControllersWithViews();
         services.AddRazorPages();
