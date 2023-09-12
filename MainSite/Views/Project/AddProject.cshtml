@@ -1,5 +1,7 @@
 ﻿@model ProjectViewModel
 
+@inject MainSite.Services.IProjectService projectService
+
 @Html.AntiForgeryToken()
 
 <div class="project-add">
@@ -15,6 +17,13 @@
             @Html.LabelFor(m => m.Slug, new { @class = "project-add-label" })*
             @Html.TextBoxFor(m => m.Slug, new { @class = "project-add-input" })
         </div>
+
+        <div class="project-add-inputgroup">
+            @Html.LabelFor(m => m.Platform, new { @class = "project-add-label" })*
+            @Html.DropDownList("SelectedPlatforms", new SelectList((await projectService.GetPlatforms()).Select(x => x.PlatformName).ToList()), new { @class = "project-add-input", multiple = "multiple", id = "platformDropdown" })
+        </div>
+
+        <input type="hidden" asp-for="Platform" id="platformHidden" />
 
         <div class="project-add-inputgroup">
             @Html.LabelFor(m => m.ShortDescription, new { @class = "project-add-label" })*
@@ -98,6 +107,29 @@
 <script>
     var linkCount = @Model.AdditionalLinks.Count;
     var imageCount = @Model.Images.Count;
+
+    var dropdown = document.querySelector("#platformDropdown");
+    var hiddenInput = document.querySelector("#platformHidden");
+
+    dropdown.addEventListener("change", function () {
+        var selectedOptions = Array.from(dropdown.selectedOptions).map(function (option) {
+            return option.value;
+        });
+
+        hiddenInput.value = selectedOptions.join(",");
+
+        console.log(hiddenInput.value);
+    });
+
+    document.querySelector("form").addEventListener("submit", function () {
+        var selectedOptions = Array.from(dropdown.selectedOptions).map(function (option) {
+            return option.value;
+        });
+
+        hiddenInput.value = selectedOptions.join(",");
+
+        console.log(hiddenInput.value);
+    });
 
     document.querySelector('#add-link').addEventListener('click', function () {
         var index = linkCount++;

@@ -1,0 +1,22 @@
+﻿@model UploadResumeViewModel
+
+<h1>Upload New Resume</h1>
+<div>
+    <form asp-action="UploadResumePost" enctype="multipart/form-data" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+        <table class="center">
+            <tr>
+                <td class="align-right"><label asp-for="Content"></label></td>
+                <td class="align-left"><input asp-for="Content" type="file" /><span asp-validation-for="Content"></span></td>
+            </tr>
+        </table>
+        <br /><br />
+        <input type="submit" value="Submit" />
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,20 @@
+﻿@model PlatformViewModel
+
+@Html.AntiForgeryToken()
+
+<div class="project-add">
+    <h1>Add New Platform</h1>
+    @using (Html.BeginForm("PostAddPlatform", "Project", FormMethod.Post))
+    {
+        <div class="project-add-inputgroup">
+            @Html.LabelFor(m => m.PlatformName, new { @class = "project-add-label" })*
+            @Html.TextBoxFor(m => m.PlatformName, new { @class = "project-add-input" })
+        </div>
+        <br />
+
+        <hr />
+
+        <br />
+        <button type="submit">Add Platform</button>
+    }
+</div>
