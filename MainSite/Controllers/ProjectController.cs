@@ -88,7 +88,7 @@ namespace MainSite.Controllers
                 string.IsNullOrWhiteSpace(viewModel.Platform))
             {
                 ModelState.AddModelError("", "One of the required fields is missing: Name, Platform, Short Description, Description, Slug");
-                return View(viewModel);
+                return View("AddProject", viewModel);
             }
 
             //slug has to be unique!
@@ -99,7 +99,7 @@ namespace MainSite.Controllers
             if (matchingSlugs != null && matchingSlugs.Any())
             {
                 ModelState.AddModelError("", $"Slug must be unique! Slug {viewModel.Slug} was found in the database!");
-                return View(viewModel);
+                return View("AddProject", viewModel);
             }
 
             var platforms = viewModel.Platform.Split(',');
@@ -126,7 +126,7 @@ namespace MainSite.Controllers
             if (_context.SaveChanges() < 1)
             {
                 ModelState.AddModelError("", "Failed to save project to database!");
-                return View(viewModel);
+                return View("AddProject", viewModel);
             }
 
             // add the platforms
@@ -194,10 +194,10 @@ namespace MainSite.Controllers
                 }
             }
 
-            if ((viewModel.AdditionalLinks.Count > 0 || viewModel.Images.Count > 0) && _context.SaveChanges() < 1)
+            if (((viewModel.AdditionalLinks?.Any() ?? false) || (viewModel.Images?.Any() ?? false)) && _context.SaveChanges() < 1)
             {
                 ModelState.AddModelError("", "Failed to save images or additional links!");
-                return View(viewModel);
+                return View("AddProject", viewModel);
             }
 
             return RedirectToAction("Index", "Admin", new { message = "Project Added!" });
