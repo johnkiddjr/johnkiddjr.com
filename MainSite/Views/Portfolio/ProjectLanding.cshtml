@@ -38,7 +38,7 @@
             else if(Model.Images.Count == 1 && !string.IsNullOrWhiteSpace(Model?.Images?.First()?.ImageUrl))
             {
                 <div class="project-image">
-                    <img src="@(ContentHelper.GetUrlForResource(ContentType.images, Model?.Images?.First()?.ImageUrl))" alt="@(Model.Name)" />
+                    <img src="@(ContentHelper.GetUrlForResource(ContentType.images, Model?.Images?.First()?.ImageUrl))" class="d-block w-100" alt="@(Model.Name)" />
                 </div>
             }
         <br /><br />
@@ -59,7 +59,7 @@
                 {
                     <div class="mb-2 row">
                         <div class="col-5 fw-bold text-start">Platform:</div>
-                        <div class="col-7 text-start">@Model.Platform</div>
+                        <div class="col-7 text-start">@Model.Platform.Replace(",", ", ")</div>
                     </div>
                 }
                 <div class="mb-2 row">

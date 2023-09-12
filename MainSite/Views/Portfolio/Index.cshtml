@@ -31,9 +31,9 @@
                         @if (project.Images != null && project.Images.Any())
                         {
                             var image = project.Images.First();
-                            <div class="row g=0">
-                                <div class="col-md-5">
-                                    <img class="img-fluid rounded-start" src="@(ContentHelper.GetUrlForResource(ContentType.images, image.ImageUrl))" alt="@image.AltText" />
+                            <div class="row g-0 mh-100 mw-100">
+                                <div class="col-md-5 text-start mh-100 mw-100">
+                                    <img class="img-fluid rounded-start mw-100 mh-100" src="@(ContentHelper.GetUrlForResource(ContentType.images, image.ImageUrl))" alt="@image.AltText" />
                                 </div>
                                 <div class="col-md-7">
                                     <div class="card-body">

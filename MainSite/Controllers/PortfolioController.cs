@@ -124,7 +124,7 @@ namespace MainSite.Controllers
                              where projplat.ProjectId == project.ProjectId
                              select plat.Name).ToList();
 
-            var platform = platforms == null ? string.Empty : string.Join(", ", platforms);
+            var platform = platforms == null ? string.Empty : string.Join(",", platforms);
 
             if (project == null)
             {
