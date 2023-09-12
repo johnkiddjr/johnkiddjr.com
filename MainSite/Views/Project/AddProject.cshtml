@@ -70,33 +70,40 @@
             @Html.LabelFor(m => m.LanguageUsed, new { @class = "project-add-label" })
             @Html.TextBoxFor(m => m.LanguageUsed, new { @class = "project-add-input" })
         </div>
-        
+
         <h3>Images</h3>
-        @for (int i = 0; i < Model.Images.Count; i++)
+        @if (Model.Images.Any())
         {
-            <div class="project-add-inputgroup">
-                @Html.LabelFor(m => m.Images[i].AltText, new { @class = "project-add-label" })
-                @Html.TextBoxFor(m => m.Images[i].AltText, new { @class = "project-add-input" })
-            </div>
-            <div class="project-add-inputgroup">
-                @Html.LabelFor(m => m.Images[i].ImageFile, new { @class = "project-add-label" })
-                <input type="file" name="Images[@i].ImageFile" class="project-add-input" />
-            </div>
+            for (int i = 0; i < Model.Images.Count; i++)
+            {
+                <div class="project-add-inputgroup">
+                    @Html.LabelFor(m => m.Images[i].AltText, new { @class = "project-add-label" })
+                    @Html.TextBoxFor(m => m.Images[i].AltText, new { @class = "project-add-input" })
+                </div>
+                <div class="project-add-inputgroup">
+                    @Html.LabelFor(m => m.Images[i].ImageFile, new { @class = "project-add-label" })
+                    <input type="file" name="Images[@i].ImageFile" class="project-add-input" />
+                </div>
+            }
         }
         <button id="add-image" type="button">Add Another Image</button>
 
         <h3>Additional Links</h3>
-        @for (int i = 0; i < Model.AdditionalLinks.Count; i++)
+        @if (Model.AdditionalLinks.Any())
         {
-            <div class="project-add-inputgroup">
-                @Html.LabelFor(m => m.AdditionalLinks[i].LinkText, new { @class = "project-add-label" })
-                @Html.TextBoxFor(m => m.AdditionalLinks[i].LinkText, new { @class = "project-add-input" })
-            </div>
+            for (int i = 0; i < Model.AdditionalLinks.Count; i++)
+            {
+                <div class="project-add-inputgroup">
+                    @Html.LabelFor(m => m.AdditionalLinks[i].LinkText, new { @class = "project-add-label" })
+                    @Html.TextBoxFor(m => m.AdditionalLinks[i].LinkText, new { @class = "project-add-input" })
+                </div>
 
-            <div class="project-add-inputgroup">
-                @Html.LabelFor(m => m.AdditionalLinks[i].LinkUrl, new { @class = "project-add-label" })
-                @Html.TextBoxFor(m => m.AdditionalLinks[i].LinkUrl, new { @class = "project-add-input" })
-            </div>
+                <div class="project-add-inputgroup">
+                    @Html.LabelFor(m => m.AdditionalLinks[i].LinkUrl, new { @class = "project-add-label" })
+                    @Html.TextBoxFor(m => m.AdditionalLinks[i].LinkUrl, new { @class = "project-add-input" })
+                </div>
+            }
+
         }
         <button id="add-link" type="button">Add Additional Link</button>
         <br /><hr /><br />
