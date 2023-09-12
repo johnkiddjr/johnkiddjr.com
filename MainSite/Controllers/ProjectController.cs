@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Infrastructure.Models;
 using Infrastructure.Enumerations;
+using MainSite.Services;
 
 namespace MainSite.Controllers
 {
@@ -15,14 +16,16 @@ namespace MainSite.Controllers
     public class ProjectController : Controller
     {
         private readonly ILogger<ProjectController> _logger;
+        private readonly IProjectService _projectService;
         private readonly MainSiteContext _context;
         private readonly CDNOptions _cdnOptions;
 
-        public ProjectController(ILogger<ProjectController> logger, MainSiteContext context, IOptions<CDNOptions> cdnOptions)
+        public ProjectController(ILogger<ProjectController> logger, MainSiteContext context, IOptions<CDNOptions> cdnOptions, IProjectService projectService)
         {
             _logger = logger;
             _context = context;
             _cdnOptions = cdnOptions.Value;
+            _projectService = projectService;
         }
 
         public IActionResult Index()
@@ -30,7 +33,38 @@ namespace MainSite.Controllers
             return View();
         }
 
+        [HttpGet("DeleteProject")]
+        [Authorize]
+        public IActionResult DeleteProject()
+        {
+            return View(new DeleteProjectViewModel());
+        }
+
+        [HttpPost("DeleteProject")]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> PostDeleteProject(DeleteProjectViewModel viewModel)
+        {
+            // this is just a validation step to trigger an error before leroy jenkinsing the database
+            var project = await _projectService.GetProjectBySlug(viewModel.Slug);
+
+            if (project == null)
+            {
+                ModelState.AddModelError("", $"No project found with the slug: {viewModel.Slug}");
+                return View("DeleteProject", viewModel);
+            }
+
+            if (!await _projectService.DeleteProjectBySlug(viewModel.Slug))
+            {
+                ModelState.AddModelError("", $"Unable to delete project: {viewModel.Slug}");
+                return View("DeleteProject", viewModel);
+            }
+
+            return RedirectToAction("Index", "Admin", new { message = $"Project {project.Name} Deleted!" });
+        }
+
         [HttpGet("AddProject")]
+        [Authorize]
         public IActionResult AddProject()
         {
             var viewModel = new ProjectViewModel();
@@ -120,38 +154,44 @@ namespace MainSite.Controllers
             }
 
             //upload images to CDN and save to database
-            foreach (var image in viewModel.Images)
+            if (viewModel.Images != null)
             {
-                //ignore anything that is not an image
-                if (!image.ImageFile.IsImageFile())
+                foreach (var image in viewModel.Images)
                 {
-                    continue;
+                    //ignore anything that is not an image
+                    if (!image.ImageFile.IsImageFile())
+                    {
+                        continue;
+                    }
+
+                    var newImageName = image.ImageFile.GenerateRandomFilename();
+                    image.ImageUrl = newImageName;
+
+                    using var fileStream = IO.File.Create($"{_cdnOptions.LocalStoragePath}{_cdnOptions.ImagesStub}/{newImageName}");
+                    image.ImageFile.OpenReadStream().CopyTo(fileStream);
+                    fileStream.Close();
+
+                    _context.ProjectImages.Add(new ProjectImage
+                    {
+                        AltText = image.AltText,
+                        ProjectId = project.ProjectId,
+                        Url = image.ImageUrl
+                    });
                 }
-
-                var newImageName = image.ImageFile.GenerateRandomFilename();
-                image.ImageUrl = newImageName;
-
-                using var fileStream = IO.File.Create($"{_cdnOptions.LocalStoragePath}{_cdnOptions.ImagesStub}/{newImageName}");
-                image.ImageFile.OpenReadStream().CopyTo(fileStream);
-                fileStream.Close();
-
-                _context.ProjectImages.Add(new ProjectImage
-                {
-                    AltText = image.AltText,
-                    ProjectId = project.ProjectId,
-                    Url = image.ImageUrl
-                });
             }
 
             //save extra links to database
-            foreach (var link in viewModel.AdditionalLinks)
+            if (viewModel.AdditionalLinks != null)
             {
-                _context.ProjectLinks.Add(new ProjectLink
+                foreach (var link in viewModel.AdditionalLinks)
                 {
-                    ProjectId = project.ProjectId,
-                    Text = link.LinkText,
-                    Url = link.LinkUrl
-                });
+                    _context.ProjectLinks.Add(new ProjectLink
+                    {
+                        ProjectId = project.ProjectId,
+                        Text = link.LinkText,
+                        Url = link.LinkUrl
+                    });
+                }
             }
 
             if ((viewModel.AdditionalLinks.Count > 0 || viewModel.Images.Count > 0) && _context.SaveChanges() < 1)
