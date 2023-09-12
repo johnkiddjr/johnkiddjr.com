@@ -10,9 +10,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>John Kidd Jr</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/prism.css" />
+    <link rel="stylesheet" href="~/lib/prism/css/prism.css" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -20,34 +21,21 @@
 </head>
 <body class="line-numbers">
     <!-- header -->
-    <div class="app">
-        <div>
-            <img src="@ContentHelper.GetUrlForResource(ContentType.images, "header.png")" alt="John Kidd Jr Header" />
-            <nav>
-                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/", "nav-selected"))" href="/">Home</a> |
-                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/portfolio", "nav-selected", false))" href="/portfolio">Portfolio</a> |
-                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/objectives", "nav-selected", false))" href="/objectives">Objectives</a> |
-                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/article", "nav-selected", false))" href="/article">Articles</a> |
-                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/about", "nav-selected", false))" href="/about">About</a> |
-                <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/contact", "nav-selected", false))" href="/contact">Contact</a>
-                @if (SignInManager.IsSignedIn(User))
-                {
-                    <span> |</span>
-                    <a class="nav @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/admin", "nav-selected", false))" href="/admin">Admin</a>
-                }
-            </nav>
-            <hr class="drop-shadow" />
+    <div class="text-center">
+        @await Component.InvokeAsync(nameof(NavigationBar))
+        <div class="container">
+            @RenderBody()
         </div>
-        @RenderBody()
-        <div class="pad-bottom"></div>
-        <div class="footer">
-            &copy; 2022 John Kidd Jr. All rights reserved. <a asp-controller="About" asp-action="Privacy">Privacy Policy</a>
+        <div class="pt-lg-5"></div>
+        <div class="mx-auto pt-5 pb-3">
+            &copy; 2022-2023 John Kidd Jr. All rights reserved. <a asp-controller="About" asp-action="Privacy">Privacy Policy</a>
             <br />
             <partial name="_LoginPartial" />
         </div>
-        <script src="~/js/prism.js"></script>
+
+        <script src="~/lib/prism/js/prism.js"></script>
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         @await RenderSectionAsync("Scripts", required: false)
     </div>

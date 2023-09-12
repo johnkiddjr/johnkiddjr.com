@@ -13,6 +13,7 @@
         public string NetVersion { get; set; }
         public string LibrariesUsed { get; set; }
         public string LanguageUsed { get; set; }
+        public string Platform { get; set; }
         public List<ProjectLinkViewModel> AdditionalLinks { get; set; }
         public List<ProjectImageViewModel> Images { get; set; }
     }

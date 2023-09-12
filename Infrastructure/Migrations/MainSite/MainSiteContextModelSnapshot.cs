@@ -639,8 +639,34 @@ namespace Infrastructure.Migrations.MainSite
                         {
                             OverviewId = new Guid("416c2518-4151-4241-8ede-70d97ef8855c"),
                             BodyHtml = "Welcome to my portfolio! Use the navigation to look at what I have to offer. Feel free to contact me through email or LinkedIn if you want to talk about a job, a collaboration, or even if just to say \"Hi!\"",
-                            CreatedDate = new DateTime(2023, 3, 6, 2, 6, 36, 350, DateTimeKind.Local).AddTicks(6286),
+                            CreatedDate = new DateTime(2023, 9, 9, 22, 52, 33, 166, DateTimeKind.Local).AddTicks(1753),
                             HeaderText = "Software Engineer with years of experience with C++, C#, VB, and many others on multiple platforms"
+                        });
+                });
+
+            modelBuilder.Entity("Infrastructure.Models.Platform", b =>
+                {
+                    b.Property<Guid>("PlatformId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("PlatformId");
+
+                    b.ToTable("Platforms");
+
+                    b.HasData(
+                        new
+                        {
+                            PlatformId = new Guid("4f279f13-bec0-45ea-965c-9dde847f03ca"),
+                            Name = "Windows"
+                        },
+                        new
+                        {
+                            PlatformId = new Guid("f8cbbfaa-d89e-4cb1-a4b1-912aa0da1d4d"),
+                            Name = "Physical"
                         });
                 });
 
@@ -768,7 +794,7 @@ namespace Infrastructure.Migrations.MainSite
                         new
                         {
                             ProjectId = new Guid("2590613c-6eed-4dab-93f6-f687d52dc9fe"),
-                            DateAdded = new DateTime(2023, 3, 6, 2, 6, 36, 350, DateTimeKind.Local).AddTicks(6396),
+                            DateAdded = new DateTime(2023, 9, 9, 22, 52, 33, 166, DateTimeKind.Local).AddTicks(1902),
                             Description = "This is a board game created as part of my GAM125 class, for this project I served as a content creator and organizer. It plays 2-6 players as they try to work their way through a dungeon together. Only one person gets the treasure though, so watch out for traps by your allies!",
                             Name = "Fantastic Frienemies",
                             ProjectSlug = "FantasticFrienemies",
@@ -779,7 +805,7 @@ namespace Infrastructure.Migrations.MainSite
                         new
                         {
                             ProjectId = new Guid("35da0f22-1a01-4e36-8e67-986d2f194308"),
-                            DateAdded = new DateTime(2023, 3, 6, 2, 6, 36, 350, DateTimeKind.Local).AddTicks(6399),
+                            DateAdded = new DateTime(2023, 9, 9, 22, 52, 33, 166, DateTimeKind.Local).AddTicks(1906),
                             Description = "This is a clone of Tapper made by myself and several others at BizStream, written in C++ and using Lua for scripting. While I wrote most of the source code, it is property of BizStream and not linked here.",
                             LanguageUsed = "C++, Lua",
                             LibrariesUsed = "SDL, Lua, sol, glm, ImGui",
@@ -792,7 +818,7 @@ namespace Infrastructure.Migrations.MainSite
                         new
                         {
                             ProjectId = new Guid("5b4a154e-4c71-45e5-8dee-d7bbdae7abe2"),
-                            DateAdded = new DateTime(2023, 3, 6, 2, 6, 36, 350, DateTimeKind.Local).AddTicks(6402),
+                            DateAdded = new DateTime(2023, 9, 9, 22, 52, 33, 166, DateTimeKind.Local).AddTicks(1909),
                             Description = "This is a website written with C# for backend, with Vue as the frontend. The Vue side utilizes Typescript. Database is MariaDb.",
                             LanguageUsed = "C#",
                             LibrariesUsed = "Markdig, RestSharp",
@@ -807,7 +833,7 @@ namespace Infrastructure.Migrations.MainSite
                         new
                         {
                             ProjectId = new Guid("0a46c060-d62c-4e12-b58c-bed903f98e0f"),
-                            DateAdded = new DateTime(2023, 3, 6, 2, 6, 36, 350, DateTimeKind.Local).AddTicks(6405),
+                            DateAdded = new DateTime(2023, 9, 9, 22, 52, 33, 166, DateTimeKind.Local).AddTicks(1912),
                             Description = "This implementation of Tic Tac Toe is written in C++ and outputs everything to the console. When the game starts, the console will display an empty 3x3 grid representing the Tic Tac Toe board. The two players will take turns placing their symbols on the board by entering the row and column numbers of the space they want to occupy. The game will then check if the move is valid and update the board accordingly. If a player achieves three in a row or all spaces on the board are filled, the game will end and display the result on the console.  This implementation does not include an AI player option, so it is intended for two human players to play against each other.",
                             DownloadUrl = "https://source.kiddclan.com/johnkiddjr/console-tictactoe/-/releases",
                             LanguageUsed = "C++",
@@ -821,7 +847,7 @@ namespace Infrastructure.Migrations.MainSite
                         new
                         {
                             ProjectId = new Guid("08db1e06-2e6d-415c-8bb9-435e511b2a56"),
-                            DateAdded = new DateTime(2023, 3, 6, 2, 6, 36, 350, DateTimeKind.Local).AddTicks(6407),
+                            DateAdded = new DateTime(2023, 9, 9, 22, 52, 33, 166, DateTimeKind.Local).AddTicks(1915),
                             Description = "I served as Programming Lead on this project, supervising two other programmers while contributing to both this project and the Character Data Editor Tool.\r\n\r\nOfficial description of the game:\r\n\r\nWelcome to KNOCK-OUT ARCADE!\r\n\r\nThis is a 2D retro-inspired fighting game with easy-to-pick-up controls and stylish combos. The game takes place at a famous arcade, owned by a dangerous businessman.",
                             DownloadUrl = "https://jazz-boy.itch.io/knock-out-arcade",
                             LanguageUsed = "GameMaker Language (GML)",
@@ -835,7 +861,7 @@ namespace Infrastructure.Migrations.MainSite
                         new
                         {
                             ProjectId = new Guid("08db1e07-c533-41a9-86e9-aafee37468dd"),
-                            DateAdded = new DateTime(2023, 3, 6, 2, 6, 36, 350, DateTimeKind.Local).AddTicks(6410),
+                            DateAdded = new DateTime(2023, 9, 9, 22, 52, 33, 166, DateTimeKind.Local).AddTicks(1918),
                             Description = "For Knockout Arcade I served as the Lead Programmer. As part of my responsibilities, I created and maintained this Character Editor Tool.\r\n\r\nThis editor is used to create and modify the data for the characters in Knockout Arcade. The data is exported in JSON format to be imported and used by the game directly. This greatly improved the usability of the code and made it trivial to add new characters or make changes to the character's stats or moves.\r\n\r\nAdditionally, this tool allows designers to make palette changes in real-time. Greatly reducing the time it takes to try out new palettes for the characters.",
                             DownloadUrl = "https://github.com/KnockoutArcade/Character-Data-Editor/releases",
                             LanguageUsed = "C#, GLSL",
@@ -996,6 +1022,61 @@ namespace Infrastructure.Migrations.MainSite
                             ProjectId = new Guid("08db1e07-c533-41a9-86e9-aafee37468dd"),
                             Text = "Knockout Arcade",
                             Url = "/portfolio/KOArcade"
+                        });
+                });
+
+            modelBuilder.Entity("Infrastructure.Models.ProjectPlatform", b =>
+                {
+                    b.Property<Guid>("ProjectPlatformId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("PlatformId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("ProjectPlatformId");
+
+                    b.ToTable("ProjectPlatforms");
+
+                    b.HasData(
+                        new
+                        {
+                            ProjectPlatformId = new Guid("6cb3a514-03da-4602-a5ab-68a4e02be07c"),
+                            PlatformId = new Guid("4f279f13-bec0-45ea-965c-9dde847f03ca"),
+                            ProjectId = new Guid("08db1e06-2e6d-415c-8bb9-435e511b2a56")
+                        },
+                        new
+                        {
+                            ProjectPlatformId = new Guid("42cf8fbc-d043-4ef2-8207-45ca92f29ec9"),
+                            PlatformId = new Guid("4f279f13-bec0-45ea-965c-9dde847f03ca"),
+                            ProjectId = new Guid("0a46c060-d62c-4e12-b58c-bed903f98e0f")
+                        },
+                        new
+                        {
+                            ProjectPlatformId = new Guid("d5bf7480-2ee7-411d-a6ff-5f6ce4ce7ee1"),
+                            PlatformId = new Guid("4f279f13-bec0-45ea-965c-9dde847f03ca"),
+                            ProjectId = new Guid("5b4a154e-4c71-45e5-8dee-d7bbdae7abe2")
+                        },
+                        new
+                        {
+                            ProjectPlatformId = new Guid("78a504f8-671d-4fe6-a87b-4e0ef7957d4d"),
+                            PlatformId = new Guid("4f279f13-bec0-45ea-965c-9dde847f03ca"),
+                            ProjectId = new Guid("08db1e07-c533-41a9-86e9-aafee37468dd")
+                        },
+                        new
+                        {
+                            ProjectPlatformId = new Guid("f8fbf0c6-a925-48a4-921e-3b1380f4a6c9"),
+                            PlatformId = new Guid("4f279f13-bec0-45ea-965c-9dde847f03ca"),
+                            ProjectId = new Guid("35da0f22-1a01-4e36-8e67-986d2f194308")
+                        },
+                        new
+                        {
+                            ProjectPlatformId = new Guid("54b3c3b5-0e70-4d0f-a163-a089027599b5"),
+                            PlatformId = new Guid("f8cbbfaa-d89e-4cb1-a4b1-912aa0da1d4d"),
+                            ProjectId = new Guid("2590613c-6eed-4dab-93f6-f687d52dc9fe")
                         });
                 });
 

@@ -1,7 +1,10 @@
 ﻿@model HomeViewModel
 
-<div class="home">
-    <h1>Welcome!</h1>
-    <h2>@Model.HeaderText</h2>
-    <p class="bodytext">@Model.BodyHtml</p>
+<div class="row">
+    <div class="col-8 offset-2 align-self-center">
+        <h1>Welcome!</h1>
+        <h3>@Model.HeaderText</h3>
+        <br />
+        <div class="text-start">@Model.BodyHtml</div>
+    </div>
 </div>

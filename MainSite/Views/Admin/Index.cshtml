@@ -1,25 +1,30 @@
 ﻿@model AdminViewModel
 
-<div class="admin-dashboard">
-    <h1>Admin Dashboard</h1>
+<h1 class="pb-3">Admin Dashboard</h1>
 
-    @if(!string.IsNullOrWhiteSpace(Model.Message))
-    {
-        <div class="admin-message-text">@Model.Message</div>
-    }
+@if (!string.IsNullOrWhiteSpace(Model.Message))
+{
+    <div class="alert alert-info alert-dismissible fade show w-25 mx-auto" role="alert">
+        @Model.Message
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
 
-    @foreach(var adminSection in Model.Sections)
-    {
-        <div class="admin-section">
-            <div class="admin-section-header">@adminSection.HeaderText</div>
-            <ul class="admin-section-items">
-                @foreach(var sectionItem in adminSection.SectionItems)
-                {
-                    <li class="admin-section-item"><a href="@sectionItem.LinkUrl">@sectionItem.LinkText</a></li>
-                }
-            </ul>
+<div class="row">
+    <div class="col-10 offset-1">
+        <div class="row">
+            @foreach(var adminSection in Model.Sections)
+            {
+                <div class="col-4">
+                    <div class="fs-3 fw-bold mb-2">@adminSection.HeaderText</div>
+                    <ul class="list-unstyled m-0 p-0">
+                        @foreach(var sectionItem in adminSection.SectionItems)
+                        {
+                            <li class="mb-1"><a class="text-decoration-none text-primary-emphasis" href="@sectionItem.LinkUrl">@sectionItem.LinkText</a></li>
+                        }
+                    </ul>
+                </div>
+            }
         </div>
-    }
-
-    <div class="clearFix"></div>
+    </div>
 </div>

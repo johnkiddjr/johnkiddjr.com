@@ -1,29 +1,31 @@
 ﻿@model ContactViewModel
 
-<div class="contact">
-    <h1>Contact Me</h1>
-    <span class="bodytext">
-        @Model.ContactDetails.HeaderText
-    </span><br /><br />
-    <span class="name">@Model.ContactDetails.Name</span><br />
-    <a href="mailto:@(Model.ContactDetails.EmailAddress)">
-        @Model.ContactDetails.EmailAddress
-    </a>
-    <br /><br />
-    Download a copy of my resume <a asp-controller="Contact" asp-action="DownloadFile" asp-route-fileGuid="@(Model.ResumeGuid)" asp download>here</a>.
-    <br /><br />
-    <div style="width: 250px; margin: auto;">
-        <div
-            class="badge-base LI-profile-badge"
-            data-locale="en_US"
-            data-size="medium"
-            data-theme="dark"
-            data-type="VERTICAL"
-            data-vanity="johnkiddjr"
-            data-version="v1">
-        <a class="badge-base__link LI-simple-link" href="https://www.linkedin.com/in/johnkiddjr?trk=profile-badge">
-            <img src="@(ContentHelper.GetUrlForResource(ContentType.images, "linkedin.png"))" alt="Connect with me on LinkedIn" width="50" />
+<div class="row">
+    <div class="col-8 offset-2">
+        <h1>Contact Me</h1>
+        <div class="text-start">
+            @Model.ContactDetails.HeaderText
+        </div><br />
+        @Model.ContactDetails.Name<br />
+        <a href="mailto:@(Model.ContactDetails.EmailAddress)">
+            @Model.ContactDetails.EmailAddress
         </a>
-      </div>
+        <br /><br />
+        Download a copy of my resume <a asp-controller="Contact" asp-action="DownloadFile" asp-route-fileGuid="@(Model.ResumeGuid)" asp download>here</a>.
+        <br /><br />
+        <div style="width: 250px; margin: auto;">
+            <div
+                class="badge-base LI-profile-badge"
+                data-locale="en_US"
+                data-size="medium"
+                data-theme="dark"
+                data-type="VERTICAL"
+                data-vanity="johnkiddjr"
+                data-version="v1">
+            <a class="badge-base__link LI-simple-link" href="https://www.linkedin.com/in/johnkiddjr?trk=profile-badge">
+                <img src="@(ContentHelper.GetUrlForResource(ContentType.images, "linkedin.png"))" alt="Connect with me on LinkedIn" width="50" />
+            </a>
+          </div>
+        </div>
     </div>
 </div>

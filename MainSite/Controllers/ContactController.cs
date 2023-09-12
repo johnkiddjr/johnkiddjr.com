@@ -1,5 +1,6 @@
 using Infrastructure.Contexts;
 using MainSite.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MainSite.Controllers
@@ -20,6 +21,53 @@ namespace MainSite.Controllers
             var viewModel = GenerateViewModel();
 
             return View(viewModel);
+        }
+
+        [HttpGet("{controller}/UploadResume")]
+        public IActionResult UploadResume()
+        {
+            var viewModel = new UploadResumeViewModel();
+
+            return View(viewModel);
+        }
+
+        [HttpPost("{controller}/UploadResume")]
+        [RequestSizeLimit(209715200)]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public IActionResult UploadResumePost([FromForm] UploadResumeViewModel viewModel)
+        {
+            if (!viewModel.Content.FileName.EndsWith(".docx", true, null) &&
+                !viewModel.Content.FileName.EndsWith(".pdf", true, null))
+            {
+                ModelState.AddModelError("", "File must be a Word document or a PDF!");
+                return View(viewModel);
+            }
+
+            var details = (from contacts in _context.Contacts
+                           select contacts).FirstOrDefault();
+
+            var resumeFile = (from f in _context.Files
+                              where f.FileId == details.ResumeId
+                              select f).FirstOrDefault();
+
+            if (resumeFile == null)
+            {
+                ModelState.AddModelError("", "Unable to find Resume!");
+                return View(viewModel);
+            }
+
+            resumeFile.FileName = viewModel.Content.FileName;
+
+            using var fStream = viewModel.Content.OpenReadStream();
+            using var mStream = new MemoryStream();
+
+            fStream.CopyTo(mStream);
+            resumeFile.FileData = mStream.ToArray();
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index", "Admin", new { message = "Resume Changed!" });
         }
 
         [HttpGet("{controller}/{fileGuid}")]

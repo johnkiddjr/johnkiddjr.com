@@ -1,31 +1,38 @@
 ﻿@model ProjectViewModel
 
-<h1 class="project-header">@Model.Name</h1>
+<h1 class="pb-3">@Model.Name</h1>
 
-<div class="project-details">
-    <div class="project-content">
-        @if(Model.Images != null)
-        {
-            if(Model.Images.Count > 1)
+<div class="row py-2">
+    @if(Model.Images != null)
+    {
+        <div class="col-3 offset-3">
+            @if(Model.Images.Count > 1)
             {
-                <div class="slideshow-container">
-                    @for(int slide = 0; slide < Model.Images.Count; slide++)
-                    {
-                        <div class="slideshow-slide slide-fade">
-                            <div class="slide-numbertext">@(slide + 1) / @Model.Images.Count</div>
-                            <img src="@(ContentHelper.GetUrlForResource(ContentType.images, Model.Images[slide].ImageUrl))" class="slide-image" alt="@Model.Images[slide].AltText" />
-                            <div class="slide-text">@Model.Images[slide].AltText</div>
-                        </div>
-                    }
-                </div>
-                <br />
-                <div class="slideshow-dot-nav">
-                    <a class="slide-previous" onclick="advanceSlide(-1)">&#10094;</a>
-                    @for (int slide = 0; slide < Model.Images.Count; slide++)
-                    {
-                        <span class="slideshow-dot-nav-dot" onclick="displaySlide(@(slide + 1))"></span>
-                    }
-                    <a class="slide-next" onclick="advanceSlide(1)">&#10095;</a>
+                <div id="project-slideshow" class="carousel slide">
+                    <div class="carousel-indicators">
+                        @for(int i = 0; i < Model.Images.Count; i++)
+                        {
+                            <button type="button" data-bs-target="#project-slideshow" data-bs-slide-to="@i"
+                                @(i == 0 ? Html.Raw("class='active' aria-current='true' ") : "")
+                                aria-label="slide @(i + 1)"></button>
+                        }
+                    </div>
+                    <div class="carousel-inner">
+                        @for(int i = 0; i < Model.Images.Count; i++)
+                        {
+                            <div @(i == 0 ? Html.Raw("class='carousel-item active'") : Html.Raw("class='carousel-item'"))>
+                                <img src="@(ContentHelper.GetUrlForResource(ContentType.images, Model.Images[i].ImageUrl))" class="d-block w-100" alt="@Model.Images[i].AltText" />
+                            </div>
+                        }
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#project-slideshow" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#project-slideshow" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
             }
             else if(Model.Images.Count == 1 && !string.IsNullOrWhiteSpace(Model?.Images?.First()?.ImageUrl))
@@ -33,63 +40,88 @@
                 <div class="project-image">
                     <img src="@(ContentHelper.GetUrlForResource(ContentType.images, Model?.Images?.First()?.ImageUrl))" alt="@(Model.Name)" />
                 </div>
-            }                
-        }
+            }
         <br /><br />
-    </div>
+        </div>
+    }
 
-    <div class="project-info">
+    <div
+        @(Model.Images == null || !Model.Images.Any() ? Html.Raw("class='col-4 offset-4'") : Html.Raw("class='col-4'"))
+    >
         @if (Model.ProjectType == "Programming")
         {
-            <div class="project-section-tab"><span>Project Details</span></div>
-            <div class="project-section">
-                <div class="project-info-section">
-                    <div class="project-info-label">Language Used:</div>
-                    <div class="project-info-value">@Model.LanguageUsed</div>
+            <div class="bg-secondary text-white fs-5 fw-bold px-3 py-2 mt-2 rounded-top">
+                Project Details
+            </div>
+
+            <div class="bg-light text-dark rounded-bottom p-2 border">
+                @if (!string.IsNullOrWhiteSpace(Model.Platform))
+                {
+                    <div class="mb-2 row">
+                        <div class="col-5 fw-bold text-start">Platform:</div>
+                        <div class="col-7 text-start">@Model.Platform</div>
+                    </div>
+                }
+                <div class="mb-2 row">
+                    <div class="col-5 fw-bold text-start">Language Used:</div>
+                    <div class="col-7 text-start">@Model.LanguageUsed</div>
                 </div>
                 @if (!string.IsNullOrWhiteSpace(Model.LibrariesUsed))
                 {
-                    <div class="project-info-section">
-                        <div class="project-info-label">Libraries Used:</div>
-                        <div class="project-info-value">@Model.LibrariesUsed</div>
+                    <div class="mb-2 row">
+                        <div class="col-5 fw-bold text-start">Libraries Used:</div>
+                        <div class="col-7 text-start">@Model.LibrariesUsed</div>
                     </div>
                 }
                 @if (!string.IsNullOrWhiteSpace(Model.LanguageUsed) && Model.LanguageUsed.ToLowerInvariant().Contains("c#"))
                 {
-                    <div class="project-info-section">
-                        <div class="project-info-label">.NET Version:</div>
-                        <div class="project-info-value">@Model.NetVersion</div>
+                    <div class="mb-2 row">
+                        <div class="col-5 fw-bold text-start">.NET Version:</div>
+                        <div class="col-7 text-start">@Model.NetVersion</div>
                     </div>
                 }
                 @if (!string.IsNullOrWhiteSpace(Model.RepositoryType))
                 {
-                    <div class="project-info-section">
-                        <div class="project-info-label">Code Repository:</div>
-                        <div class="project-info-value"><a href="@Model.RepositoryUrl">@Model.RepositoryType</a></div>
+                    <div class="mb-2 row">
+                        <div class="col-5 fw-bold text-start">Code Repository:</div>
+                        <div class="col-7 text-start"><a href="@Model.RepositoryUrl">@Model.RepositoryType</a></div>
                     </div>
                 }
                 @if (!string.IsNullOrWhiteSpace(Model.DownloadUrl))
                 {
-                    <div class="project-info-section">
-                        <div class="project-info-label">Download Binary:</div>
-                        <div class="project-info-value"><a href="@Model.DownloadUrl">Download</a></div>
+                    <div class="mb-2 row">
+                        <div class="col-5 fw-bold text-start">Download Binary:</div>
+                        <div class="col-7 text-start"><a href="@Model.DownloadUrl">Download</a></div>
                     </div>
                 }
             </div>
             <br />
         }
-        <div class="project-section-tab"><span>Project Description</span></div>
-        <div class="project-section">
-            <p>@Model.Description</p>
-        </div>
-        <br />
+        else
+        {
+            @if (!string.IsNullOrWhiteSpace(Model.Platform))
+            {
+                <div class="bg-secondary text-white fs-5 fw-bold px-3 py-2 mt-2 rounded-top">
+                    Project Details
+                </div>
+                <div class="bg-light text-dark rounded-bottom p-2 border">
+                    <div class="mb-2 row">
+                        <div class="col-5 fw-bold text-start">Platform:</div>
+                        <div class="col-7 text-start">@Model.Platform</div>
+                    </div>
+                </div>
+                <br />
+            }
+        }
         @if (Model.AdditionalLinks != null && Model.AdditionalLinks.Any())
         {
-            <div class="project-section-tab"><span>Additional Links</span></div>
-            <div class="project-section">
+            <div class="bg-secondary text-white fs-5 fw-bold px-3 py-2 mt-2 rounded-top">
+                Additional Links
+            </div>
+            <div class="bg-light text-dark rounded-bottom p-2 border">
                 @foreach (var link in Model.AdditionalLinks)
                 {
-                    <div class="project-info-section">
+                    <div class="mb-2 row">
                         <a href="@link.LinkUrl">@link.LinkText</a>
                     </div>
                 }
@@ -97,34 +129,13 @@
         }
     </div>
 </div>
-
-<script>
-    let slideIndex = 1;
-    showSlides(slideIndex);
-
-    // Next/previous controls
-    function advanceSlide(n) {
-      showSlides(slideIndex += n);
-    }
-
-    // Thumbnail image controls
-    function displaySlide(n) {
-      showSlides(slideIndex = n);
-    }
-
-    function showSlides(n) {
-      let i;
-      let slides = document.getElementsByClassName("slideshow-slide");
-      let dots = document.getElementsByClassName("slideshow-dot-nav-dot");
-      if (n > slides.length) {slideIndex = 1}
-      if (n < 1) {slideIndex = slides.length}
-      for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-      }
-      for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" slide-active", "");
-      }
-      slides[slideIndex-1].style.display = "block";
-      dots[slideIndex-1].className += " slide-active";
-    }
-</script>
+<div class="row py-2">
+    <div class="col-6 offset-3">
+        <div class="bg-secondary text-white fs-5 fw-bold px-3 py-2 mt-2 rounded-top">
+            Project Description
+        </div>
+        <div class="bg-light text-dark rounded-bottom p-2 border">
+            <p>@Model.Description</p>
+        </div>
+    </div>
+</div>
