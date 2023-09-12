@@ -43,15 +43,17 @@ namespace MainSite.Controllers
         [HttpPost("AddProject")]
         [RequestSizeLimit(209715200)]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public IActionResult PostAddProject([FromForm] ProjectViewModel viewModel)
         {
             //check all required fields...
             if (string.IsNullOrWhiteSpace(viewModel.Name) ||
                 string.IsNullOrWhiteSpace(viewModel.ShortDescription) ||
                 string.IsNullOrWhiteSpace(viewModel.Description) ||
-                string.IsNullOrWhiteSpace(viewModel.Slug))
+                string.IsNullOrWhiteSpace(viewModel.Slug) ||
+                string.IsNullOrWhiteSpace(viewModel.Platform))
             {
-                ModelState.AddModelError("", "One of the required fields is missing: Name, Short Description, Description, Slug");
+                ModelState.AddModelError("", "One of the required fields is missing: Name, Platform, Short Description, Description, Slug");
                 return View(viewModel);
             }
 
@@ -65,6 +67,8 @@ namespace MainSite.Controllers
                 ModelState.AddModelError("", $"Slug must be unique! Slug {viewModel.Slug} was found in the database!");
                 return View(viewModel);
             }
+
+            var platforms = viewModel.Platform.Split(',');
 
             //save to database
             var project = new Project
@@ -89,6 +93,30 @@ namespace MainSite.Controllers
             {
                 ModelState.AddModelError("", "Failed to save project to database!");
                 return View(viewModel);
+            }
+
+            // add the platforms
+            foreach (var platform in platforms)
+            {
+                //find the platform
+                var foundPlatform = (from plat in _context.Platforms
+                                     where plat.Name == platform
+                                     select plat.PlatformId).FirstOrDefault();
+
+                if (foundPlatform == Guid.Empty)
+                {
+                    //Can't find the platform...
+                    ModelState.AddModelError("", "Database Error: Unable to add platform");
+                    return View(viewModel);
+                }
+
+                _context.ProjectPlatforms.Add(new ProjectPlatform
+                {
+                    PlatformId = foundPlatform,
+                    ProjectId = project.ProjectId
+                });
+
+                _context.SaveChanges();
             }
 
             //upload images to CDN and save to database
@@ -133,6 +161,37 @@ namespace MainSite.Controllers
             }
 
             return RedirectToAction("Index", "Admin", new { message = "Project Added!" });
+        }
+
+        [HttpGet("AddPlatform")]
+        public IActionResult AddPlatform()
+        {
+            var viewModel = new PlatformViewModel();
+
+            return View(viewModel);
+        }
+
+        [HttpPost("AddPlatform")]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public IActionResult PostAddPlatform(PlatformViewModel viewModel)
+        {
+            // validate
+            if (string.IsNullOrWhiteSpace(viewModel.PlatformName))
+            {
+                ModelState.AddModelError("", "Required field is missing: Name");
+                return View(viewModel);
+            }
+
+            // save to database
+            _context.Platforms.Add(new Platform { Name = viewModel.PlatformName });
+            if (_context.SaveChanges() == 0)
+            {
+                ModelState.AddModelError("", "Database Error: Unable to save");
+                return View(viewModel);
+            }
+
+            return RedirectToAction("Index", "Admin", new { message = "Platform Added!" });
         }
     }
 }
