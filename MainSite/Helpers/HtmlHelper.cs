@@ -46,7 +46,7 @@ namespace MainSite.Helpers
         {
             var possibleImages = _imageTagService.GetBackgroundByTags(tags);
 
-            var selectedImage = new CardBackground();
+            CardBackground selectedImage = null;
 
             if (possibleImages.Any())
             {
