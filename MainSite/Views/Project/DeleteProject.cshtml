@@ -1,0 +1,30 @@
+﻿@model DeleteProjectViewModel
+
+@Html.AntiForgeryToken()
+@inject MainSite.Services.IProjectService projectService
+
+<h1 class="pb-5">Delete a Project</h1>
+
+@using (Html.BeginForm("PostDeleteProject", "Project", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-1 offset-5 text-start">
+            <label asp-for="Slug" class="form-label fw-bold"></label>
+        </div>
+        <div class="col-3">
+            @{
+                var projects = (await projectService.GetProjects()).OrderBy(x => x.Name).ToList();
+                projects.Insert(0, new ProjectViewModel { Slug = "", Name = "=== Select a Project === " });
+
+                var projectSelectList = new SelectList(projects, "Slug", "Name");
+            }
+            @Html.DropDownListFor(m => m.Slug, projectSelectList, new { @class = "form-control form-control-sm text-center" })
+        </div>
+    </div>
+    <br />
+
+    <hr />
+
+    <br />
+    <button type="submit">Delete Project</button>
+}
