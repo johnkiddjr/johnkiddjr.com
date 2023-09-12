@@ -176,6 +176,20 @@ namespace Infrastructure
                     }
                 );
 
+            modelBuilder.Entity<Platform>()
+                .HasData(
+                    new Platform
+                    {
+                        PlatformId = Guid.Parse("4f279f13-bec0-45ea-965c-9dde847f03ca"),
+                        Name = "Windows"
+                    },
+                    new Platform
+                    {
+                        PlatformId = Guid.Parse("f8cbbfaa-d89e-4cb1-a4b1-912aa0da1d4d"),
+                        Name = "Physical"
+                    }
+                );
+
             modelBuilder.Entity<ObjectiveDetail>()
                 .HasData(
                     new ObjectiveDetail
@@ -352,6 +366,46 @@ namespace Infrastructure
                         ProjectLinkId = Guid.Parse("08db1e07-c53c-4866-88a1-69d0f8e25d06"),
                         Text = "Knockout Arcade",
                         Url = "/portfolio/KOArcade"
+                    }
+                );
+
+            modelBuilder.Entity<ProjectPlatform>()
+                .HasData(
+                    new ProjectPlatform
+                    {
+                        ProjectPlatformId = Guid.Parse("6cb3a514-03da-4602-a5ab-68a4e02be07c"),
+                        ProjectId = Guid.Parse("08db1e06-2e6d-415c-8bb9-435e511b2a56"),
+                        PlatformId = Guid.Parse("4f279f13-bec0-45ea-965c-9dde847f03ca")
+                    },
+                    new ProjectPlatform
+                    {
+                        ProjectPlatformId = Guid.Parse("42cf8fbc-d043-4ef2-8207-45ca92f29ec9"),
+                        ProjectId = Guid.Parse("0A46C060-D62C-4E12-B58C-BED903F98E0F"),
+                        PlatformId = Guid.Parse("4f279f13-bec0-45ea-965c-9dde847f03ca")
+                    },
+                    new ProjectPlatform
+                    {
+                        ProjectPlatformId = Guid.Parse("d5bf7480-2ee7-411d-a6ff-5f6ce4ce7ee1"),
+                        ProjectId = Guid.Parse("5B4A154E-4C71-45E5-8DEE-D7BBDAE7ABE2"),
+                        PlatformId = Guid.Parse("4f279f13-bec0-45ea-965c-9dde847f03ca")
+                    },
+                    new ProjectPlatform
+                    {
+                        ProjectPlatformId = Guid.Parse("78a504f8-671d-4fe6-a87b-4e0ef7957d4d"),
+                        ProjectId = Guid.Parse("08db1e07-c533-41a9-86e9-aafee37468dd"),
+                        PlatformId = Guid.Parse("4f279f13-bec0-45ea-965c-9dde847f03ca")
+                    },
+                    new ProjectPlatform
+                    {
+                        ProjectPlatformId = Guid.Parse("f8fbf0c6-a925-48a4-921e-3b1380f4a6c9"),
+                        ProjectId = Guid.Parse("35DA0F22-1A01-4E36-8E67-986D2F194308"),
+                        PlatformId = Guid.Parse("4f279f13-bec0-45ea-965c-9dde847f03ca")
+                    },
+                    new ProjectPlatform
+                    {
+                        ProjectPlatformId = Guid.Parse("54b3c3b5-0e70-4d0f-a163-a089027599b5"),
+                        ProjectId = Guid.Parse("2590613C-6EED-4DAB-93F6-F687D52DC9FE"),
+                        PlatformId = Guid.Parse("f8cbbfaa-d89e-4cb1-a4b1-912aa0da1d4d")
                     }
                 );
 

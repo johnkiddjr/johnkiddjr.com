@@ -39,6 +39,8 @@ namespace Infrastructure.Contexts
         public virtual DbSet<ProjectLink> ProjectLinks { get; set; }
         public virtual DbSet<AdminSection> AdminSections { get; set; }
         public virtual DbSet<AdminSectionItem> AdminSectionsItems { get; set; }
+        public virtual DbSet<Platform> Platforms { get; set; }
+        public virtual DbSet<ProjectPlatform> ProjectPlatforms { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
