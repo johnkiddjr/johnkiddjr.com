@@ -48,7 +48,7 @@ publish dotnet for qa:
     - rm appsettings.temp
     - dotnet restore
     - dotnet publish -c Release -o ./publish $PROJECT_CSPROJ --no-restore
-    - dotnet tool install --global dotnet-ef
+    - dotnet tool install --global dotnet-ef --version 7.0.14
     - export PATH="$PATH:/root/.dotnet/tools"
     - dotnet ef database update --project ./Infrastructure/ --startup-project ./MainSite/ --context MainSiteContext
     - dotnet ef database update --project ./Infrastructure/ --startup-project ./MainSite/ --context AnalyticsContext
@@ -71,7 +71,7 @@ publish dotnet for prod:
     - rm appsettings.temp
     - dotnet restore
     - dotnet publish -c Release -o ./publish $PROJECT_CSPROJ --no-restore
-    - dotnet tool install --global dotnet-ef
+    - dotnet tool install --global dotnet-ef --version 7.0.14
     - export PATH="$PATH:/root/.dotnet/tools"
     - dotnet ef database update --project ./Infrastructure/ --startup-project ./MainSite/ --context MainSiteContext
     - dotnet ef database update --project ./Infrastructure/ --startup-project ./MainSite/ --context AnalyticsContext
