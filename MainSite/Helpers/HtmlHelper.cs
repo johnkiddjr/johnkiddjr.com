@@ -21,7 +21,7 @@ namespace MainSite.Helpers
             _random = new Random(psedoseed);
         }
 
-        public static string SelectedCssOnRequestPath(string testPath, string cssClass, bool matchEntirePath = true)
+        public static string SelectedCssOnRequestPath(string testPath, string cssClass, string cssElseClass = "", bool matchEntirePath = true)
         {
             var contextRequestPath = _accessor.HttpContext.Request.Path.Value.ToLowerInvariant();
             if (matchEntirePath)
@@ -39,7 +39,7 @@ namespace MainSite.Helpers
                 }
             }
 
-            return string.Empty;
+            return cssElseClass;
         }
 
         public static CardBackgroundViewModel GetImageByTags(List<TagViewModel> tags)

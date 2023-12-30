@@ -1,47 +1,62 @@
 ﻿@model ArticleIndexViewModel
 
-<h1>Articles</h1>
-@if(Model.Articles.Any())
-{
-    <div class="row">
-        @foreach(var article in Model.Articles)
+<div class="w3-row w3-center w3-padding">
+    <div class="w3-col l2 m3 s1">&nbsp;</div>
+    <div class="w3-col l8 m6 s10">
+        <header class="w3-container w3-padding-32 w3-center w3-black">
+            <h1 class="w3-jumbo">Articles</h1>
+        </header>
+
+        @if(Model.Articles.Any())
         {
-            var cardBackground = MainSite.Helpers.HtmlHelper.GetImageByTags(article.Tags);
-            if(cardBackground == null)
-            {
-                <div class="col-4 p-1">
-                    <a asp-controller="Article" asp-action="ViewArticle" asp-route-articleSlug="@(article.Slug)" class="text-decoration-none">
-                        <div class="card text-bg-dark">
-                            <div class="card-body article-card-height">
-                                <h5 class="card-title text-light">@article.Title</h5>
-                                <hr class="text-light" />
-                                <p class="card-text text-light">@article.PreviewText</p>
-                            </div>
+            <div class="w3-row">
+                @foreach(var article in Model.Articles)
+                {
+                    var cardBackground = MainSite.Helpers.HtmlHelper.GetImageByTags(article.Tags);
+                    if (cardBackground == null)
+                    {
+                        <div class="w3-col l6 m8">
+                            <a asp-controller="Article" asp-action="ViewArticle" asp-route-articleSlug="@(article.Slug)" class="text-decoration-none">
+                                <div class="w3-card-4 w3-margin-left w3-margin-right w3-margin-bottom w3-border">
+                                    <header class="w3-container">
+                                        <h5 class="card-title text-light">@article.Title</h5>
+                                        <hr class="text-light" />
+                                    </header>
+                                    <div class="w3-container">
+                                        <p>@article.PreviewText</p>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-            }
-            else
-            {
-                <div class="col-4 p-1">
-                    <a asp-controller="Article" asp-action="ViewArticle" asp-route-articleSlug="@(article.Slug)" class="text-decoration-none">
-                        <div class="card text-bg-dark">
-                            <img src="@cardBackground.ImageFileName" class="card-img img-fluid" alt="...">
-                            <div class="card-img-overlay article-card-height">
-                                <h5 class="card-title" style="color: @(cardBackground.TitleFontColor);">@article.Title</h5>
-                                <hr style="color: @(cardBackground.TitleFontColor);" />
-                                <p class="card-text" style="color: @(cardBackground.DescriptionFontColor);">@article.PreviewText</p>
-                            </div>
+                    }
+                    else
+                    {
+                        <div class="w3-col l6 m8">
+                            <a asp-controller="Article" asp-action="ViewArticle" asp-route-articleSlug="@(article.Slug)" class="w3-hover-grayscale">
+                                <div class="w3-card-4 w3-margin-left w3-margin-right w3-margin-bottom w3-border">
+                                    <div class="w3-display-container">
+                                        <img class="w3-opacity-max" src="@cardBackground.ImageFileName" alt="..." style="width: 100%;">
+                                        <div class="img-card-header w3-container">
+                                            <h5 style="color: @(cardBackground.TitleFontColor);">@article.Title</h5>
+                                            <hr style="color: @(cardBackground.TitleFontColor);" />
+                                        </div>
+                                        <div class="img-card-text w3-container">
+                                            <p style="color: @(cardBackground.DescriptionFontColor);">@article.PreviewText</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                    </a>
-                </div>
-            }
+                    }
+                }
+            </div>
+        }
+        else
+        {
+            <p>
+                No articles to show...
+            </p>
+            <div class="w3-padding-64"></div>
         }
     </div>
-}
-else
-{
-    <div class="row">
-        <span>No articles to show...</span>
-    </div>
-}
+</div>

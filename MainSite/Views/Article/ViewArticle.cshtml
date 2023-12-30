@@ -1,19 +1,25 @@
 ﻿@model ArticleViewModel
 
-<div class="">
-    <span>
-        <a asp-action="Index"><span class="material-icons">undo</span> Back to Articles Index</a>
-    </span>
-    <h1 class="pt-2">@Model.Title</h1>
-    <h5 class="fs-6 p-2">
-        By: @Model.Author on
-        @Model.PublishDate.ToString("MM/dd/yyyy hh:mm tt")
-    </h5>
-    <div class="row">
-        <div class="col-8 offset-2 text-start">
+<div class="w3-row w3-padding">
+    <div class="w3-col l2 m3 s1">&nbsp;</div>
+    <div class="w3-col l8 m6 s10">
+        <header class="w3-container w3-padding w3-center w3-black">
+            <span class="w3-center">
+                <a asp-action="Index"><span class="material-icons">undo</span> Back to Articles Index</a>
+            </span>
+            <h1 class="w3-jumbo">@Model.Title</h1>
+        </header>
+
+        <h5 class="w3-center">
+            By: @Model.Author on
+            @Model.PublishDate.ToString("MM/dd/yyyy hh:mm tt")
+        </h5>
+        <p>
             <?prettify linenums=true?>
             @Html.Raw(Model.HtmlText)
-        </div>
+        </p>
+        <p class="w3-center w3-padding-16">
+            <a asp-action="Index"><span class="material-icons">undo</span> Back to Articles Index</a>
+        </p>
     </div>
-    <span><a asp-action="Index"><span class="material-icons">undo</span> Back to Articles Index</a></span>
 </div>

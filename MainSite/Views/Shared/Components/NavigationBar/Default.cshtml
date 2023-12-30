@@ -1,22 +1,44 @@
 ﻿@model NavigationBarViewModel
 
-<div>
-    <img src="@ContentHelper.GetUrlForResource(ContentType.images, "header.png")" alt="John Kidd Jr Header" class="pb-2" />
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <div class="navbar-nav position-absolute translate-middle start-50">
-                <a class="nav nav-link @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/", "nav-selected"))" href="/">Home</a>
-                <a class="nav nav-link @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/portfolio", "nav-selected", false))" href="/portfolio">Portfolio</a>
-                @* <a class="nav nav-link @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/objectives", "nav-selected", false))" href="/objectives">Objectives</a> *@
-                <a class="nav nav-link @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/article", "nav-selected", false))" href="/article">Articles</a>
-                <a class="nav nav-link @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/about", "nav-selected", false))" href="/about">About</a>
-                <a class="nav nav-link @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/contact", "nav-selected", false))" href="/contact">Contact</a>
-                @if (Model.AdminLoggedIn)
-                {
-                    <a class="nav nav-link @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/admin", "nav-selected", false))" href="/admin">Admin</a>
-                }
-            </div>
-        </div>
-    </nav>
-    <hr class="drop-shadow" />
+<nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
+    <!-- Avatar image in top left corner -->
+    <img src="@ContentHelper.GetUrlForResource(ContentType.images, "me-small.jpg")" style="width:100%">
+    <a href="/" class="w3-bar-item w3-button w3-padding-large @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/", "w3-black", "w3-hover-black"))">
+        <i class="fa fa-home w3-xxlarge"></i>
+        <p>HOME</p>
+    </a>
+    <a href="/portfolio" class="w3-bar-item w3-button w3-padding-large @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/portfolio", "w3-black", "w3-hover-black", false))">
+        <i class="fa fa-briefcase w3-xxlarge"></i>
+        <p>PORTFOLIO</p>
+    </a>
+    <a href="/article" class="w3-bar-item w3-button w3-padding-large @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/article", "w3-black", "w3-hover-black", false))">
+        <i class="fa-solid fa-newspaper w3-xxlarge"></i>
+        <p>ARTICLES</p>
+    </a>
+    <a href="/about" class="w3-bar-item w3-button w3-padding-large @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/about", "w3-black", "w3-hover-black", false))">
+        <i class="fa fa-user w3-xxlarge"></i>
+        <p>ABOUT</p>
+    </a>
+    <a href="/contact" class="w3-bar-item w3-button w3-padding-large @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/contact", "w3-black", "w3-hover-black", false))">
+        <i class="fa fa-envelope w3-xxlarge"></i>
+        <p>CONTACT</p>
+    </a>
+    @if (Model.AdminLoggedIn)
+    {
+        <a href="/admin" class="w3-bar-item w3-button w3-padding-large @(MainSite.Helpers.HtmlHelper.SelectedCssOnRequestPath("/admin", "w3-black", "w3-hover-black", false))">
+            <i class="fa-solid fa-toolbox w3-xxlarge"></i>
+            <p>ADMIN</p>
+        </a>
+    }
+</nav>
+
+<!-- Navbar on small screens (Hidden on medium and large screens) -->
+<div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
+    <div class="w3-bar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
+        <a href="/" class="w3-bar-item w3-button" style="width:20% !important">HOME</a>
+        <a href="/portfolio" class="w3-bar-item w3-button" style="width:20% !important">PORTFOLIO</a>
+        <a href="/article" class="w3-bar-item w3-button" style="width:20% !important">ARTICLES</a>
+        <a href="/about" class="w3-bar-item w3-button" style="width:20% !important">ABOUT</a>
+        <a href="/contact" class="w3-bar-item w3-button" style="width:20% !important">CONTACT</a>
+    </div>
 </div>

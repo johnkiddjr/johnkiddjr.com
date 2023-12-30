@@ -1,87 +1,99 @@
 ﻿@model PortfolioPageViewModel
 @inject MainSite.Services.IProjectService projectService
 
-<h1>Portfolio</h1>
-
-<div class="row">
-    <div class="col-3">
-        <h2 class="text-start">Projects</h2>
-    </div>
-    <label for="ShowPlatform" class="col-sm-2 offset-sm-5 col-form-label">Show Platform</label>
-    <div class="col-sm">
-        @{
-            var platforms = (await projectService.GetPlatforms()).OrderBy(x => x.PlatformName).Select(x => x.PlatformName).ToList();
-            platforms.Insert(0, "All");
-        }
-        @Html.DropDownList("ShowPlatform", new SelectList(platforms), new { title = "ShowPlatform", @class = "form-control form-control-sm", id = "showPlatform" })
-    </div>
-</div>
-
-<div class="row">
-    @if(Model.ProjectData != null)
-    {
-        <div id="noneShown" class="py-2 fs-5 fw-bold" style="display: none;">
-            No projects match the selected filter.
+<div class="w3-row w3-center w3-padding">
+    <div class="w3-col l1 m3 s1">&nbsp;</div>
+    <div class="w3-col l10 m6 s10">
+        <header class="w3-container w3-padding-32 w3-center w3-black">
+            <h1 class="w3-jumbo">Portfolio</h1>
+        </header>
+        <div class="w3-row">
+            <div class="w3-col l2 m3">
+                <h2 class="w3-left-align vertical-center">Projects</h2>
+            </div>
+            <div class="w3-col l6 m2">&nbsp;</div>
+            <div class="w3-col l2 m6 w3-container">
+                <label for="ShowPlatform">Show Platform</label>
+            </div>
+            <div class="w3-col l2 m1">
+                @{
+                    var platforms = (await projectService.GetPlatforms()).OrderBy(x => x.PlatformName).Select(x => x.PlatformName).ToList();
+                    platforms.Insert(0, "All");
+                }
+                @Html.DropDownList("ShowPlatform", new SelectList(platforms), new { title = "ShowPlatform", id = "showPlatform" })
+            </div>
         </div>
-        foreach (var project in Model.ProjectData.Projects)
-        {
-            <div class="col-6 py-2" data-platforms="@project.Platform">
-                <a class="text-decoration-none" href="@Url.Action("ProjectLanding", new { slug = project.Slug })">
-                    <div class="card text-bg-dark project-card-height">
-                        @if (project.Images != null && project.Images.Any())
-                        {
-                            var image = project.Images.First();
-                            <div class="row g-0 mh-100 mw-100">
-                                <div class="col-md-5 text-start mh-100 mw-100">
-                                    <img class="img-fluid rounded-start mw-100 mh-100" src="@(ContentHelper.GetUrlForResource(ContentType.images, image.ImageUrl))" alt="@image.AltText" />
-                                </div>
-                                <div class="col-md-7">
-                                    <div class="card-body">
-                                        <h5 class="card-title">@project.Name</h5>
-                                        <hr />
-                                        <p class="card-text">
+        <div class="w3-row">
+            @if(Model.ProjectData != null)
+            {
+                <div id="noneShown" style="display: none;">
+                    <b>No projects match the selected filter.</b>
+                </div>
+                foreach(var project in Model.ProjectData.Projects)
+                {
+                    @if (project.Images != null && project.Images.Any())
+                    {
+                        var image = project.Images.First();
+
+                        <div class="w3-col l6" data-platforms="@project.Platform">
+                            <div class="w3-margin-right w3-margin-left w3-margin-bottom">
+                                <a href="@Url.Action("ProjectLanding", new { slug = project.Slug })" style="text-decoration: none;">
+                                    <div class="w3-card-4 w3-border">
+                                        <div style="height: 200px;">
+                                            <img class="w3-left w3-round w3-margin-right" style="height: auto; max-height: 100%; max-width: 45%" src="@(ContentHelper.GetUrlForResource(ContentType.images, image.ImageUrl))" alt="@image.AltText" />
+                                            <h5>@project.Name</h5>
+                                            <p>
+                                                @project.ShortDescription
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="w3-col l6 m6" data-platforms="@project.Platform">
+                            <a href="@Url.Action("ProjectLanding", new { slug = project.Slug })" style="text-decoration: none;">
+                                <div class="w3-card-4 w3-border">
+                                    <div style="height: 200px;">
+                                        <h5>@project.Name</h5>
+                                        <p>
                                             @project.ShortDescription
                                         </p>
                                     </div>
                                 </div>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="card-body">
-                                <h5 class="card-title">@project.Name</h5>
-                                <p class="card-text">
-                                    @project.ShortDescription
-                                </p>
-                            </div>
-                        }
-                    </div>
-                </a>
-            </div>
-        }
-    }
-    else
-    {
-        <span>No projects to show</span>
-    }
-</div>
-
-@foreach (var group in Model.PortfolioData.LinkGroups)
-{
-    <h2 class="text-start">@group.GroupName</h2>
-    <div class="row">
-        <div class="col-8">
-            <ul>
-                @foreach (var link in group.Links)
-                {
-                    <li class="text-start">
-                        <a href="@(link.Link)" target="_blank">@link.Text</a>
-                    </li>
+                            </a>
+                        </div>
+                    }
                 }
-            </ul>
+            }
+            else
+            {
+                <span>No projects to show</span>
+            }
+        </div>
+
+        <div class="w3-left-align">
+            @foreach (var group in Model.PortfolioData.LinkGroups)
+            {
+                <h2>@group.GroupName</h2>
+                <div class="w3-row">
+                    <div class="w3-col">
+                        <ul>
+                            @foreach (var link in group.Links)
+                            {
+                                <li class="text-start">
+                                    <a href="@(link.Link)" target="_blank">@link.Text</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
         </div>
     </div>
-}
+</div>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
