@@ -7,11 +7,11 @@
             <h1 class="w3-jumbo">@Model.Name</h1>
         </header>
 
-        <img class="w3-hover-grayscale w3-padding-16" src="@(ContentHelper.GetUrlForResource(ContentType.images, Model.PictureUrl))" alt="The man himself" style="width: 100%; max-width: 400px;" />
+        
         @foreach(var section in Model.Sections)
         {
-            <div class="w3-card-4 w3-margin-bottom">
-                <header class="w3-container">
+            <div class="w3-card-4 w3-margin-bottom w3-border w3-round-large w3-margin-left w3-margin-right">
+                <header class="w3-container w3-dark-gray round-top-large">
                     <h2>@(section.Name)</h2>
                 </header>
                 @foreach(var detail in section.Details)
