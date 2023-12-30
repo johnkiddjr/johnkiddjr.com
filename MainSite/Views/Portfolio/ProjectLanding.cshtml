@@ -1,141 +1,178 @@
 ﻿@model ProjectViewModel
 
-<h1 class="pb-3">@Model.Name</h1>
-
-<div class="row py-2">
-    @if(Model.Images != null)
-    {
-        <div class="col-3 offset-3">
-            @if(Model.Images.Count > 1)
+<div class="w3-row w3-center w3-padding">
+    <div class="w3-col l2 m3 s1">&nbsp;</div>
+    <div class="w3-col l8 m6 s10">
+        <header class="w3-container w3-padding-32 w3-center w3-black">
+            <h1 class="w3-jumbo">@Model.Name</h1>
+        </header>
+        <div class="w3-row">
+            @if(Model.Images != null && Model.Images.Any())
             {
-                <div id="project-slideshow" class="carousel slide">
-                    <div class="carousel-indicators">
-                        @for(int i = 0; i < Model.Images.Count; i++)
-                        {
-                            <button type="button" data-bs-target="#project-slideshow" data-bs-slide-to="@i"
-                                @(i == 0 ? Html.Raw("class='active' aria-current='true' ") : "")
-                                aria-label="slide @(i + 1)"></button>
-                        }
+                <div class="w3-col l6">
+                    <div class="w3-card-4 w3-border w3-round-large w3-margin-left w3-margin-right">
+                        <header class="w3-container w3-light-gray round-top-large">
+                            <h3>Project Image(s)</h3>
+                        </header>
+                        <div class="w3-container">
+                            @if (Model.Images.Count > 1)
+                            {
+                                <div class="w3-content w3-display-container">
+                                    @foreach (var image in Model.Images)
+                                    {
+                                        <img class="slideshowImages" src="@(ContentHelper.GetUrlForResource(ContentType.images, image.ImageUrl))" style="width: 100%;" alt="@image.AltText" />
+                                    }
+                                    <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                                    <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+                                </div>
+                            }
+                            else if (Model.Images.Count == 1 && !string.IsNullOrWhiteSpace(Model?.Images?.First()?.ImageUrl))
+                            {
+                                <div class="w3-content w3-display-container">
+                                    <img src="@(ContentHelper.GetUrlForResource(ContentType.images, Model?.Images?.First()?.ImageUrl))" style="width: 100%;" alt="@(Model.Name)" />
+                                </div>
+                            }
+                        </div>
                     </div>
-                    <div class="carousel-inner">
-                        @for(int i = 0; i < Model.Images.Count; i++)
-                        {
-                            <div @(i == 0 ? Html.Raw("class='carousel-item active'") : Html.Raw("class='carousel-item'"))>
-                                <img src="@(ContentHelper.GetUrlForResource(ContentType.images, Model.Images[i].ImageUrl))" class="d-block w-100" alt="@Model.Images[i].AltText" />
+                </div>
+            }
+            <div
+                @(Model.Images == null || !Model.Images.Any() ? Html.Raw("class='w3-col'") : Html.Raw("class='w3-col l6'"))
+            >
+                @if (Model.ProjectType == "Programming")
+                {
+                    <div class="w3-card-4 w3-border w3-round-large w3-margin-left w3-margin-right">
+                        <header class="w3-container w3-light-gray round-top-large">
+                            <h3>Project Details</h3>
+                        </header>
+                        <div class="w3-container w3-left-align">
+                            @if (!string.IsNullOrWhiteSpace(Model.Platform))
+                            {
+                                <div class="w3-row">
+                                    <div class="w3-col l5 m5 s5">
+                                        <b>@Html.LabelFor(x => x.Platform):</b>
+                                    </div>
+                                    <div class="w3-col l7 m7 s7">
+                                        @Model.Platform.Replace(",", ", ")
+                                    </div>
+                                </div>
+                            }
+                            <div class="w3-row">
+                                <div class="w3-col l5 m5 s5"><b>@Html.LabelFor(x => x.LanguageUsed)</b></div>
+                                <div class="w3-col l7 m7 s7">@Html.DisplayFor(x => x.LanguageUsed)</div>
                             </div>
-                        }
+                            @if (!string.IsNullOrWhiteSpace(Model.LibrariesUsed))
+                            {
+                                <div class="w3-row">
+                                    <div class="w3-col l5 m5 s5"><b>@Html.LabelFor(x => x.LibrariesUsed)</b></div>
+                                    <div class="w3-col l7 m7 s7">@Html.DisplayFor(x => x.LibrariesUsed)</div>
+                                </div>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(Model.LanguageUsed) && Model.LanguageUsed.ToLowerInvariant().Contains("c#"))
+                            {
+                                <div class="w3-row">
+                                    <div class="w3-col l5 m5 s5"><b>@Html.LabelFor(x => x.NetVersion)</b></div>
+                                    <div class="w3-col l7 m7 s7">@Html.DisplayFor(x => x.NetVersion)</div>
+                                </div>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(Model.RepositoryType))
+                            {
+                                <div class="w3-row">
+                                    <div class="w3-col l5 m5 s5"><b>Code Repository:</b></div>
+                                    <div class="w3-col l7 m7 s7"><a href="@Model.RepositoryUrl">@Model.RepositoryType</a></div>
+                                </div>
+                            }
+                            @if (!string.IsNullOrWhiteSpace(Model.DownloadUrl))
+                            {
+                                <div class="w3-row">
+                                    <div class="w3-col l5 m5 s5"><b>@Html.LabelFor(x => x.DownloadUrl)</b></div>
+                                    <div class="w3-col l7 m7 s7"><a href="@Model.DownloadUrl">Download</a></div>
+                                </div>
+                            }
+                        </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#project-slideshow" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#project-slideshow" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-            }
-            else if(Model.Images.Count == 1 && !string.IsNullOrWhiteSpace(Model?.Images?.First()?.ImageUrl))
-            {
-                <div class="project-image">
-                    <img src="@(ContentHelper.GetUrlForResource(ContentType.images, Model?.Images?.First()?.ImageUrl))" class="d-block w-100" alt="@(Model.Name)" />
-                </div>
-            }
-        <br /><br />
+                }
+                else
+                {
+                    @if (!string.IsNullOrWhiteSpace(Model.Platform))
+                    {
+                        <div class="w3-card-4 w3-border w3-round-large w3-margin-left w3-margin-right">
+                            <header class="w3-container w3-light-gray round-top-large">
+                                <h3>Project Details</h3>
+                            </header>
+                            <div class="w3-container w3-left-align">
+                                <div class="w3-row">
+                                    <div class="w3-col l5 m5 s5">
+                                        <b>@Html.LabelFor(x => x.Platform):</b>
+                                    </div>
+                                    <div class="w3-col l7 m7 s7">
+                                        @Html.DisplayFor(x => x.Platform)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                @if (Model.AdditionalLinks != null && Model.AdditionalLinks.Any())
+                {
+                    <div class="w3-card-4 w3-border w3-round-large w3-margin-left w3-margin-right w3-margin-top">
+                        <header class="w3-container w3-light-gray round-top-large">
+                            <h3>Additional Links</h3>
+                        </header>
+                        <div class="w3-container">
+                            @foreach(var link in Model.AdditionalLinks)
+                            {
+                                <div class="w3-row">
+                                    <div class="w3-col">
+                                        <a href="@link.LinkUrl">@link.LinkText</a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
+        <div class="w3-row w3-margin-top">
+            <div class="w3-col l2 m1 s1">&nbsp;</div>
+            <div class="w3-col l8 m10 s10">
+                <div class="w3-card-4 w3-border w3-round-large">
+                    <header class="w3-container w3-light-gray round-top-large">
+                        <h3>Project Description</h3>
+                    </header>
+                    <div class="w3-container">
+                        <p>
+                            @Model.Description
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var slideIndex = 1;
+    showDivs(slideIndex);
+
+    function plusDivs(n) {
+        showDivs(slideIndex += n);
     }
 
-    <div
-        @(Model.Images == null || !Model.Images.Any() ? Html.Raw("class='col-4 offset-4'") : Html.Raw("class='col-4'"))
-    >
-        @if (Model.ProjectType == "Programming")
-        {
-            <div class="bg-secondary text-white fs-5 fw-bold px-3 py-2 mt-2 rounded-top">
-                Project Details
-            </div>
+    function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("slideshowImages");
+        if (n > x.length) {
+            slideIndex = 1;
+        }
+        if (n < 1) {
+            slideIndex = x.length;
+        }
 
-            <div class="bg-light text-dark rounded-bottom p-2 border">
-                @if (!string.IsNullOrWhiteSpace(Model.Platform))
-                {
-                    <div class="mb-2 row">
-                        <div class="col-5 fw-bold text-start">Platform:</div>
-                        <div class="col-7 text-start">@Model.Platform.Replace(",", ", ")</div>
-                    </div>
-                }
-                <div class="mb-2 row">
-                    <div class="col-5 fw-bold text-start">Language Used:</div>
-                    <div class="col-7 text-start">@Model.LanguageUsed</div>
-                </div>
-                @if (!string.IsNullOrWhiteSpace(Model.LibrariesUsed))
-                {
-                    <div class="mb-2 row">
-                        <div class="col-5 fw-bold text-start">Libraries Used:</div>
-                        <div class="col-7 text-start">@Model.LibrariesUsed</div>
-                    </div>
-                }
-                @if (!string.IsNullOrWhiteSpace(Model.LanguageUsed) && Model.LanguageUsed.ToLowerInvariant().Contains("c#"))
-                {
-                    <div class="mb-2 row">
-                        <div class="col-5 fw-bold text-start">.NET Version:</div>
-                        <div class="col-7 text-start">@Model.NetVersion</div>
-                    </div>
-                }
-                @if (!string.IsNullOrWhiteSpace(Model.RepositoryType))
-                {
-                    <div class="mb-2 row">
-                        <div class="col-5 fw-bold text-start">Code Repository:</div>
-                        <div class="col-7 text-start"><a href="@Model.RepositoryUrl">@Model.RepositoryType</a></div>
-                    </div>
-                }
-                @if (!string.IsNullOrWhiteSpace(Model.DownloadUrl))
-                {
-                    <div class="mb-2 row">
-                        <div class="col-5 fw-bold text-start">Download Binary:</div>
-                        <div class="col-7 text-start"><a href="@Model.DownloadUrl">Download</a></div>
-                    </div>
-                }
-            </div>
-            <br />
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
         }
-        else
-        {
-            @if (!string.IsNullOrWhiteSpace(Model.Platform))
-            {
-                <div class="bg-secondary text-white fs-5 fw-bold px-3 py-2 mt-2 rounded-top">
-                    Project Details
-                </div>
-                <div class="bg-light text-dark rounded-bottom p-2 border">
-                    <div class="mb-2 row">
-                        <div class="col-5 fw-bold text-start">Platform:</div>
-                        <div class="col-7 text-start">@Model.Platform</div>
-                    </div>
-                </div>
-                <br />
-            }
-        }
-        @if (Model.AdditionalLinks != null && Model.AdditionalLinks.Any())
-        {
-            <div class="bg-secondary text-white fs-5 fw-bold px-3 py-2 mt-2 rounded-top">
-                Additional Links
-            </div>
-            <div class="bg-light text-dark rounded-bottom p-2 border">
-                @foreach (var link in Model.AdditionalLinks)
-                {
-                    <div class="mb-2 row">
-                        <a href="@link.LinkUrl">@link.LinkText</a>
-                    </div>
-                }
-            </div>
-        }
-    </div>
-</div>
-<div class="row py-2">
-    <div class="col-6 offset-3">
-        <div class="bg-secondary text-white fs-5 fw-bold px-3 py-2 mt-2 rounded-top">
-            Project Description
-        </div>
-        <div class="bg-light text-dark rounded-bottom p-2 border">
-            <p>@Model.Description</p>
-        </div>
-    </div>
-</div>
+
+        x[slideIndex - 1].style.display = "block";
+    }
+</script>

@@ -116,3 +116,32 @@ input[type=text] {
 .project-add-input {
     flex: 2;
 }
+
+.img-card-text {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    transform: translate(-5%, -30%);
+    -ms-transform: translate(-5%, -30%);
+}
+
+.img-card-header {
+    position: absolute;
+    left: 10%;
+    top: 0;
+    width: 100%;
+    transform: translate(-10%, 0%);
+    -ms-transform: translate(-10%, 0%);
+}
+
+.vertical-center {
+    margin: 0;
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-30%);
+    transform: translateY(-30%);
+}
+
+.round-top-large {
+    border-radius: 8px 8px 0px 0px;
+}
