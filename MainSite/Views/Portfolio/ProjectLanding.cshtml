@@ -58,34 +58,34 @@
                                 </div>
                             }
                             <div class="w3-row">
-                                <div class="w3-col l5 m5 s5"><b>@Html.LabelFor(x => x.LanguageUsed)</b></div>
+                                <div class="w3-col l5 m5 s5"><b>@Html.LabelFor(x => x.LanguageUsed):</b></div>
                                 <div class="w3-col l7 m7 s7">@Html.DisplayFor(x => x.LanguageUsed)</div>
                             </div>
                             @if (!string.IsNullOrWhiteSpace(Model.LibrariesUsed))
                             {
                                 <div class="w3-row">
-                                    <div class="w3-col l5 m5 s5"><b>@Html.LabelFor(x => x.LibrariesUsed)</b></div>
+                                    <div class="w3-col l5 m5 s5"><b>@Html.LabelFor(x => x.LibrariesUsed):</b></div>
                                     <div class="w3-col l7 m7 s7">@Html.DisplayFor(x => x.LibrariesUsed)</div>
                                 </div>
                             }
                             @if (!string.IsNullOrWhiteSpace(Model.LanguageUsed) && Model.LanguageUsed.ToLowerInvariant().Contains("c#"))
                             {
                                 <div class="w3-row">
-                                    <div class="w3-col l5 m5 s5"><b>@Html.LabelFor(x => x.NetVersion)</b></div>
+                                    <div class="w3-col l5 m5 s5"><b>@Html.LabelFor(x => x.NetVersion):</b></div>
                                     <div class="w3-col l7 m7 s7">@Html.DisplayFor(x => x.NetVersion)</div>
                                 </div>
                             }
                             @if (!string.IsNullOrWhiteSpace(Model.RepositoryType))
                             {
                                 <div class="w3-row">
-                                    <div class="w3-col l5 m5 s5"><b>Code Repository:</b></div>
+                                    <div class="w3-col l5 m5 s5"><b>@Html.LabelFor(x => x.RepositoryUrl):</b></div>
                                     <div class="w3-col l7 m7 s7"><a href="@Model.RepositoryUrl">@Model.RepositoryType</a></div>
                                 </div>
                             }
                             @if (!string.IsNullOrWhiteSpace(Model.DownloadUrl))
                             {
                                 <div class="w3-row">
-                                    <div class="w3-col l5 m5 s5"><b>@Html.LabelFor(x => x.DownloadUrl)</b></div>
+                                    <div class="w3-col l5 m5 s5"><b>@Html.LabelFor(x => x.DownloadUrl):</b></div>
                                     <div class="w3-col l7 m7 s7"><a href="@Model.DownloadUrl">Download</a></div>
                                 </div>
                             }

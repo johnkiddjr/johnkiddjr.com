@@ -66,7 +66,9 @@ namespace MainSite.Helpers
             else
             {
                 // set default background
-                returnImage = null;
+                returnImage.ImageFileName = ContentHelper.GetUrlForResource(ContentType.images, "card-background-default.png");
+                returnImage.TitleFontColor = "#fff";
+                returnImage.DescriptionFontColor = "#fff";
             }
 
             return returnImage;
