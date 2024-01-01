@@ -1,8 +1,8 @@
 ﻿@model ArticleIndexViewModel
 
 <div class="w3-row w3-center w3-padding">
-    <div class="w3-col l2 m3 s1">&nbsp;</div>
-    <div class="w3-col l8 m6 s10">
+    <div class="w3-col l1 m2 s0">&nbsp;</div>
+    <div class="w3-col l10 m10">
         <header class="w3-container w3-padding-32 w3-center w3-black">
             <h1 class="w3-jumbo">Articles</h1>
         </header>
@@ -15,7 +15,7 @@
                     var cardBackground = MainSite.Helpers.HtmlHelper.GetImageByTags(article.Tags);
                     if (cardBackground == null)
                     {
-                        <div class="w3-col l6 m8">
+                        <div class="w3-col l6">
                             <a asp-controller="Article" asp-action="ViewArticle" asp-route-articleSlug="@(article.Slug)" class="text-decoration-none">
                                 <div class="w3-card-4 w3-margin-left w3-margin-right w3-margin-bottom w3-border">
                                     <header class="w3-container">
@@ -31,7 +31,7 @@
                     }
                     else
                     {
-                        <div class="w3-col l6 m8">
+                        <div class="w3-col l6">
                             <a asp-controller="Article" asp-action="ViewArticle" asp-route-articleSlug="@(article.Slug)" class="w3-hover-grayscale">
                                 <div class="w3-card-4 w3-margin-left w3-margin-right w3-margin-bottom w3-border">
                                     <div class="w3-display-container">
