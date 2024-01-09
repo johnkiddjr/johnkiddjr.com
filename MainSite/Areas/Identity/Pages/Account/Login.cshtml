@@ -5,31 +5,48 @@
     ViewData["Title"] = "Log In";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div>
-    <form id="account" method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-        <table class="center">
-            <tr>
-                <td class="align-right"><label asp-for="Input.Email">Email</label></td>
-                <td class="align-left"><input asp-for="Input.Email" autocomplete="username" aria-required="true" placeholder="name@example.com" /><span asp-validation-for="Input.Email"></span></td>
-            </tr>
-            <tr>
-                <td class="align-right"><label asp-for="Input.Password">Password</label></td>
-                <td class="align-left"><input asp-for="Input.Password" autocomplete="current-password" aria-required="true" placeholder="password" /><span asp-validation-for="Input.Password"></span></td>
-            </tr>
-            <tr>
-                <td colspan="2">
+<div class="w3-row w3-center w3-padding">
+    <div class="w3-col l1 m2 s0">&nbsp;</div>
+    <div class="w3-col l10 m10">
+        <header class="w3-container w3-padding-32 w3-center w3-black">
+            <h1 class="w3-jumbo">@ViewData["Title"]</h1>
+        </header>
+        <div class="w3-row">
+            <form id="account" method="post">
+                <div class="w3-row">
+                    <div class="w3-col l4 m0 s0">&nbsp;</div>
+                    <div class="w3-col l2">
+                        <label asp-for="Input.Email">Email</label>
+                    </div>
+                    <div class="w3-col l2">
+                        <input asp-for="Input.Email" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                        <span asp-validation-for="Input.Email"></span>
+                    </div>
+                    <div class="w3-col l4 m0 s0">&nbsp;</div>
+                </div>
+                <div class="w3-row">
+                    <div class="w3-col l4 m0 s0">&nbsp;</div>
+                    <div class="w3-col l2">
+                        <label asp-for="Input.Password">Password</label>
+                    </div>
+                    <div class="w3-col l2">
+                        <input asp-for="Input.Password" autocomplete="current-password" aria-required="true" placeholder="password" />
+                        <span asp-validation-for="Input.Password"></span>
+                    </div>
+                    <div class="w3-col l4 m0 s0">&nbsp;</div>
+                </div>
+                <div class="w3-col">
                     <label asp-for="Input.RememberMe">
                         <input asp-for="Input.RememberMe" />
                         @Html.DisplayNameFor(m => m.Input.RememberMe)
                     </label>
-                </td>
-            </tr>
-        </table>
-        <br /><br />
-        <input type="submit" value="Log in" />
-    </form>
+                </div>
+                <div class="w3-col">
+                    <input type="submit" value="Log in" />
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
