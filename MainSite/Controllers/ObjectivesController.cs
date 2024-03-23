@@ -17,11 +17,9 @@ namespace MainSite.Controllers
 
         public IActionResult Index()
         {
-            return RedirectToAction("Index", "Home");
+            var viewModel = GenerateViewModel();
 
-            //var viewModel = GenerateViewModel();
-
-            //return View(viewModel);
+            return View(viewModel);
         }
 
         private ObjectivesViewModel GenerateViewModel()
