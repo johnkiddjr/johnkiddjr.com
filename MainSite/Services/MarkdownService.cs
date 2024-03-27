@@ -27,14 +27,14 @@ namespace MainSite.Services
 
         public string GetHtmlFromMarkdown(string markdown, Action<MarkdownDocument> customProcessing)
         {
-            var mDocument = Markdown.Parse(markdown);
+            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+
+            var mDocument = Markdown.Parse(markdown, pipeline);
             
             if (customProcessing != null)
             {
                 customProcessing(mDocument);
             }
-            
-            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
 
             return mDocument.ToHtml(pipeline);
         }

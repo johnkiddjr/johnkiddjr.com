@@ -2,6 +2,6 @@
 {
     public class ObjectivesViewModel
     {
-        public List<ObjectiveViewModel> Objectives { get; set; }
+        public List<ProgramObjectiveViewModel> Programs { get; set; }
     }
 }

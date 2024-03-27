@@ -2,24 +2,33 @@
 
 <div class="objectives">
     <h1>Objectives</h1>
-    <div class="bodytext">
-        @foreach (var objective in Model.Objectives)
+    <select id="programSelect" class="form-select w-25 text-center d-inline-block">
+        <option value="">Select a Program of Study</option>
+        @foreach (var program in Model.Programs)
         {
-            <div>
-                <h2>@(objective.Name)</h2>
-                <p>@(objective.Description)</p>
-                @if(objective.Details.Any())
-                {
-                    <ul>
-                        @foreach (var detail in objective.Details)
-                        {
-                            <li>
-                                <a href="@(detail.LinkUrl)">@(detail.Name)</a>
-                            </li>
-                        }
-                    </ul>
-                }
-            </div>
+            <option value="@program.ProgramNameId">@program.ProgramName</option>
         }
-    </div>
+    </select>
+    <br /><br /><br />
+    @foreach (var programHtml in Model.Programs)
+    {
+        <div id="@programHtml.ProgramNameId" class="programContent w-75" style="display: none;">
+            @Html.Raw(programHtml.RawSectionHtml)
+        </div>
+    }
 </div>
+
+<script>
+    document.getElementById('programSelect').addEventListener('change', function () {
+        var selectedOption = this.value;
+        var contents = document.getElementsByClassName('programContent');
+        for (var i = 0; i < contents.length; i++) {
+            var content = contents[i];
+            if (content.id == selectedOption) {
+                content.style.display = 'inline-block';
+            } else {
+                content.style.display = 'none';
+            }
+        }
+    });
+</script>
